@@ -1,8 +1,8 @@
-import axios from "../axiosInstance.js";
+import axiosInstance from "../axiosInstance.js";
 
 const register = async (formRegister) => {
   try {
-    const response = await axios.post("/users/register", formRegister);
+    const response = await axiosInstance.post("/users/register", formRegister);
     return response.results;
   } catch (error) {
     throw new Error(error.message);
@@ -11,7 +11,9 @@ const register = async (formRegister) => {
 
 const login = async (formLogin) => {
   try {
-    const response = await axios.post("/users/login", formLogin);
+    const response = await axiosInstance.post("/users/login", formLogin, {
+      withCredentials: true,
+    });
     return response.results;
   } catch (error) {
     throw new Error(error.message);
@@ -20,7 +22,7 @@ const login = async (formLogin) => {
 
 const logout = async (userId) => {
   try {
-    const response = await axios.get(`/users/logout/${userId}`);
+    const response = await axiosInstance.get(`/users/logout/${userId}`);
     return response.results;
   } catch (error) {
     throw new Error(error.message);
@@ -29,7 +31,7 @@ const logout = async (userId) => {
 
 const getUserInfo = async (userId) => {
   try {
-    const response = await axios.get(`/users/${userId}`);
+    const response = await axiosInstance.get(`/users/${userId}`);
     return response.results;
   } catch (error) {
     throw new Error(error.message);

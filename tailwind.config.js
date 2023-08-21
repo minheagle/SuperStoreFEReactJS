@@ -6,6 +6,10 @@ export default {
       colors: {
         primary: "#fa541c",
       },
+      width: {
+        "with-navbar": "calc(100% - 192px)",
+      },
+      padding: {},
     },
   },
   plugins: [],

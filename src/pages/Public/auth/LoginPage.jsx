@@ -77,6 +77,7 @@ const LoginPage = () => {
           <input
             type="password"
             name="password"
+            autoComplete="off"
             value={formLogin.password}
             onChange={(e) => handleOnChangeForm(e)}
             className="w-full outline-1 outline-primary"

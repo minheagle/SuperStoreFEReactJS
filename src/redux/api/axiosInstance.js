@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   withCredentials: true,
   timeout: 3 * 1000,
   headers: {
+    "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
   },
 });
@@ -14,7 +15,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
     }
     return config;
   },

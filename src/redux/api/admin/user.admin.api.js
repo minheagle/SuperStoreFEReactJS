@@ -2,7 +2,7 @@ import axios from "../axiosInstance.js";
 
 const getAllUser = async () => {
   try {
-    const response = await axios.get("/admin/users");
+    const response = await axios.get("/admin/users", { withCredentials: true });
     return response.results;
   } catch (error) {
     throw new Error(error.message);

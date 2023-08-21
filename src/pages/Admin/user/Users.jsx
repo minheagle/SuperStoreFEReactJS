@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, generatePath } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { getAllUser } from "../../../redux/slice/userForAdmin.slice";
 
 import Paging from "../../../components/Admin/Paging";
@@ -52,7 +54,21 @@ const Users = () => {
 
   return (
     <div className="w-full flex justify-center items-center p-4">
-      <div className="w-full flex flex-col justify-center items-center bg-white rounded p-8">
+      <div className="w-full flex flex-col justify-center items-center gap-4 bg-white rounded p-8">
+        <div className="w-full">
+          <div className="w-1/3 flex justify-center items-center border rounded">
+            <FontAwesomeIcon
+              icon="fas fa-search"
+              className="w-1/12 px-2 text-slate-500"
+            />
+            <input type="text" className="w-9/12" />
+            <div className="w-2/12 p-1">
+              <button className="w-full bg-slate-500 text-white rounded">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
         <table className="w-full border-collapse">
           <thead className="bg-slate-600 text-white">
             <tr className="h-12">

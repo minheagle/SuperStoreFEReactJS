@@ -14,6 +14,7 @@ import Register from "./pages/Public/auth/Register.jsx";
 import Admin from "./layouts/Admin.jsx";
 import Dashboard from "./pages/Admin/Dashboard.jsx";
 import Products from "./pages/Admin/product/Products.jsx";
+import CreateProduct from "./pages/Admin/product/CreateProduct.jsx";
 import Users from "./pages/Admin/user/Users.jsx";
 import UserDetail from "./pages/Admin/user/DetailUser.jsx";
 import EditUser from "./pages/Admin/user/EditUser.jsx";
@@ -41,7 +42,13 @@ function App() {
         </Route>
         <Route element={<Admin />}>
           <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
-          <Route path={ROUTES.ADMIN.PRODUCTS} element={<Products />} />
+          {/* Product Management */}
+          <Route path={ROUTES.ADMIN.PRODUCTS.LIST} element={<Products />} />
+          <Route
+            path={ROUTES.ADMIN.PRODUCTS.CREATE}
+            element={<CreateProduct />}
+          />
+          {/* User Management */}
           <Route path={ROUTES.ADMIN.USERS.LIST} element={<Users />} />
           <Route path={ROUTES.ADMIN.USERS.DETAIL} element={<UserDetail />} />
           <Route path={ROUTES.ADMIN.USERS.EDIT} element={<EditUser />} />

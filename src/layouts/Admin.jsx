@@ -1,15 +1,20 @@
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+
 import Header from "../components/Admin/Header";
-import BreadCum from "../components/Admin/Breadcum";
 import Navbar from "../components/Admin/Navbar";
 
 const Admin = () => {
+  const { isOpen } = useSelector((state) => state.UIAdmin.navbar);
   return (
-    <div className="flex bg-slate-300 min-h-screen">
+    <div className="relative w-full flex bg-slate-300 min-h-screen">
       <Navbar />
-      <div className="flex flex-col flex-1">
+      <div
+        className={`relative flex flex-col flex-1 ${
+          isOpen ? "w-with-navbar" : "w-full"
+        }`}
+      >
         <Header />
-        <BreadCum />
         <Outlet />
       </div>
     </div>

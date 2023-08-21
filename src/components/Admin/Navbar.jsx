@@ -11,7 +11,7 @@ const Navbar = () => {
   const { information, logout } = useSelector((state) => state.Auth);
   const categories = [
     { id: 1, title: "Dashboard", path: ROUTES.ADMIN.DASHBOARD },
-    { id: 2, title: "Product", path: ROUTES.ADMIN.PRODUCTS },
+    { id: 2, title: "Product", path: ROUTES.ADMIN.PRODUCTS.LIST },
     { id: 3, title: "User", path: ROUTES.ADMIN.USERS.LIST },
   ];
 
@@ -34,7 +34,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-48 h-screen flex flex-col bg-slate-500 ${
+      className={`sticky top-0 left-0 bottom-0 w-48 h-screen flex flex-col bg-slate-500 ${
         isOpen ? "block" : "hidden"
       }`}
     >
@@ -49,7 +49,7 @@ const Navbar = () => {
                 key={item.id}
                 to={item.path}
                 end
-                className="w-full h-10 pt-1 text-white"
+                className="w-full h-10 pt-1 text-white hover:bg-slate-600"
               >
                 {({ isActive }) => (
                   <li

@@ -35,6 +35,7 @@ function* loginSaga(action) {
       "accessToken",
       JSON.stringify(response.accessToken)
     );
+    // yield Cookies.set("refreshToken", response.refreshToken);
     yield put(loginSuccess(response.data));
     if (response.data.role === "admin") {
       yield callback.goToAdmin();
