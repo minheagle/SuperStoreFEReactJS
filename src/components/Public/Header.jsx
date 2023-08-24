@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { toggleMenu, toggleAuth } from "../../redux/slice/UIPublic.slice";
+import { toggleMenu } from "../../redux/slice/UIPublic.slice";
 import { log_out } from "../../redux/slice/auth.slice";
 import ROUTES from "../../constants/ROUTES";
 
@@ -19,12 +19,9 @@ const Header = () => {
   const navigate = useNavigate();
   const { menu, auth } = useSelector((state) => state.UIPublic);
   const { information, logout } = useSelector((state) => state.Auth);
+
   const handleToggleMenu = () => {
     dispatch(toggleMenu());
-  };
-
-  const handleToggleAuth = () => {
-    dispatch(toggleAuth());
   };
 
   const handleLogout = () => {
@@ -98,17 +95,22 @@ const Header = () => {
         </div>
         <div className="col-span-2 flex justify-center items-center text-white">
           <div className="relative h-12 flex justify-end items-center gap-8">
-            <FontAwesomeIcon icon="fas fa-shopping-cart" className="text-2xl" />
-            <FontAwesomeIcon icon="fas fa-bell" className="text-2xl" />
-            <button
-              onClick={() => handleToggleAuth()}
-              className="flex justify-center items-center gap-1"
-            >
-              <FontAwesomeIcon icon="fas fa-user" className="text-2xl" />
-              <FontAwesomeIcon icon="fas fa-caret-down" className="text-2xl" />
+            <button>
+              <FontAwesomeIcon
+                icon="fas fa-shopping-cart"
+                className="text-2xl"
+              />
             </button>
-            {auth.isOpen ? (
-              <div className="absolute top-12 w-32 bg-slate-50 border-2 border-primary p-2 rounded">
+            <FontAwesomeIcon icon="fas fa-bell" className="text-2xl" />
+            <div className="group inline-block relative">
+              <button className="flex justify-center items-center gap-1">
+                <FontAwesomeIcon icon="fas fa-user" className="text-2xl" />
+                <FontAwesomeIcon
+                  icon="fas fa-caret-down"
+                  className="text-2xl"
+                />
+              </button>
+              <div className="absolute hidden top-6 w-32 bg-slate-50 border-2 border-primary p-2 rounded group-hover:block">
                 {information?.data ? (
                   information?.data?.role === "admin" ? (
                     <div className="flex flex-col justify-center items-start gap-2 rounded">
@@ -155,9 +157,7 @@ const Header = () => {
                   </div>
                 )}
               </div>
-            ) : (
-              ""
-            )}
+            </div>
           </div>
         </div>
       </div>

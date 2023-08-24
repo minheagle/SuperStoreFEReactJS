@@ -1,4 +1,4 @@
-const SelectCustom = ({ onChange }) => {
+const SelectCustom = ({ field, form }) => {
   const cateList = [
     { id: 1, title: "Cate 1" },
     { id: 2, title: "Cate 2" },
@@ -8,7 +8,9 @@ const SelectCustom = ({ onChange }) => {
     { id: 6, title: "Cate 6" },
   ];
 
-  const newCateList = [{ id: 0, title: "Select an option" }, ...cateList];
+  const newCateList = [{ id: "", title: "Select an option" }, ...cateList];
+
+  const isError = form.errors[field.name] && form.touched[field.name];
 
   const handleRenderCateList = () => {
     return newCateList.map((item) => {
@@ -22,10 +24,11 @@ const SelectCustom = ({ onChange }) => {
 
   return (
     <select
-      name="category"
-      id=""
-      onChange={(e) => onChange(e)}
-      className="outline-none"
+      {...field}
+      onChange={(e) => field.onChange(e)}
+      className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
+        isError ? "outline outline-2 outline-red-500" : ""
+      }`}
     >
       {handleRenderCateList()}
     </select>

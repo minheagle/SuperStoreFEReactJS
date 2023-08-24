@@ -4,13 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ModalForProduct from "./ModalForProduct";
 
-const OptionForProduct = ({ handleOnChangeOptions }) => {
-  const [options, setOptions] = useState([]);
+const OptionForProduct = ({ field, form }) => {
+  const [options, setOptions] = useState(field.value || []);
   const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    handleOnChangeOptions(options);
-  }, [options]);
 
   const handleAddNewOption = () => {
     setOpenModal(true);
@@ -22,11 +18,13 @@ const OptionForProduct = ({ handleOnChangeOptions }) => {
 
   const handleGetNewOption = (newOptionForm) => {
     setOptions([...options, newOptionForm]);
+    form.setFieldValue(field.name, [...options, newOptionForm]);
   };
 
   const handleDeleteOption = (indexRemove) => {
     const newOptions = options.filter((item, index) => index !== indexRemove);
     setOptions(newOptions);
+    form.setFieldValue(field.name, newOptions);
   };
 
   const handleRenderOptions = () => {
