@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const registerValidatorSchema = Yup.object().shape({
+const createUserValidatorSchema = Yup.object().shape({
   fullName: Yup.string()
     .required("Required")
     .min(2, "Min 2 character")
@@ -21,8 +21,9 @@ const registerValidatorSchema = Yup.object().shape({
     .min(8, "Min 8 character")
     .max(32, "Max 32  character"),
   re_password: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Not match")
-    .required("Required"),
+    .required("Required")
+    .oneOf([Yup.ref("password"), null], "Not match"),
+  role: Yup.string().required("Required"),
 });
 
-export default registerValidatorSchema;
+export default createUserValidatorSchema;

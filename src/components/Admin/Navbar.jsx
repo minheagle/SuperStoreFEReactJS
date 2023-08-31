@@ -11,8 +11,9 @@ const Navbar = () => {
   const { information, logout } = useSelector((state) => state.Auth);
   const categories = [
     { id: 1, title: "Dashboard", path: ROUTES.ADMIN.DASHBOARD },
-    { id: 2, title: "Product", path: ROUTES.ADMIN.PRODUCTS.LIST },
-    { id: 3, title: "User", path: ROUTES.ADMIN.USERS.LIST },
+    { id: 2, title: "Category", path: ROUTES.ADMIN.CATEGORIES.LIST },
+    { id: 3, title: "Product", path: ROUTES.ADMIN.PRODUCTS.LIST },
+    { id: 4, title: "User", path: ROUTES.ADMIN.USERS.LIST },
   ];
 
   const spanStyleActive = "bg-slate-600";

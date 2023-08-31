@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ModalForProduct from "./ModalForProduct";
 
-const OptionForProduct = ({ field, form }) => {
+const OptionForProduct = ({ field, form, errors }) => {
   const [options, setOptions] = useState(field.value || []);
   const [openModal, setOpenModal] = useState(false);
+
+  // console.log(errors);
 
   const handleAddNewOption = () => {
     setOpenModal(true);

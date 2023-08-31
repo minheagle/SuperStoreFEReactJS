@@ -11,11 +11,17 @@ import Home from "./pages/Public/Home.jsx";
 import LoginPage from "./pages/Public/auth/LoginPage.jsx";
 import Register from "./pages/Public/auth/Register.jsx";
 
+import User from "./layouts/User.jsx";
+import Profile from "./pages/User/Profile.jsx";
+
 import Admin from "./layouts/Admin.jsx";
 import Dashboard from "./pages/Admin/Dashboard.jsx";
+import Categories from "./pages/Admin/category/Categories.jsx";
+import CreateCategory from "./pages/Admin/category/CreateCategory.jsx";
 import Products from "./pages/Admin/product/Products.jsx";
 import CreateProduct from "./pages/Admin/product/CreateProduct.jsx";
 import Users from "./pages/Admin/user/Users.jsx";
+import CreateUser from "./pages/Admin/user/CreateUser.jsx";
 import UserDetail from "./pages/Admin/user/DetailUser.jsx";
 import EditUser from "./pages/Admin/user/EditUser.jsx";
 
@@ -40,8 +46,17 @@ function App() {
           <Route path={ROUTES.PUBLIC.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.PUBLIC.REGISTER} element={<Register />} />
         </Route>
+        <Route element={<User />}>
+          <Route path={ROUTES.USER.ACCOUNT_PROFILE} element={<Profile />} />
+        </Route>
         <Route element={<Admin />}>
           <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
+          {/* Category Management */}
+          <Route path={ROUTES.ADMIN.CATEGORIES.LIST} element={<Categories />} />
+          <Route
+            path={ROUTES.ADMIN.CATEGORIES.CREATE}
+            element={<CreateCategory />}
+          />
           {/* Product Management */}
           <Route path={ROUTES.ADMIN.PRODUCTS.LIST} element={<Products />} />
           <Route
@@ -50,6 +65,7 @@ function App() {
           />
           {/* User Management */}
           <Route path={ROUTES.ADMIN.USERS.LIST} element={<Users />} />
+          <Route path={ROUTES.ADMIN.USERS.CREATE} element={<CreateUser />} />
           <Route path={ROUTES.ADMIN.USERS.DETAIL} element={<UserDetail />} />
           <Route path={ROUTES.ADMIN.USERS.EDIT} element={<EditUser />} />
         </Route>

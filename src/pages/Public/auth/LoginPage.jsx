@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
@@ -6,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../../constants/ROUTES";
 import { login } from "../../../redux/slice/auth.slice";
-import loginValidator from "../../../utils/validate/login.validator.schema";
+import loginValidator from "../../../utils/validate/Auth/login.validator.schema";
 
 const LoginPage = () => {
   const dispatch = useDispatch();

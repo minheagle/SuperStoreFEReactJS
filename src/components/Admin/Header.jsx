@@ -4,27 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../constants/ROUTES";
 import { log_out } from "../../redux/slice/auth.slice";
-import {
-  toggleNavbar,
-  toggleDropdownInfo,
-} from "../../redux/slice/UIAdmin.slice";
+import { toggleNavbar } from "../../redux/slice/UIAdmin.slice";
 
 import BreadCum from "./Breadcum";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isOpenDropdownInfo = useSelector(
-    (state) => state.UIAdmin.dropdownInfo.isOpen
-  );
   const { information, logout } = useSelector((state) => state.Auth);
 
   const handleToggleNavbar = () => {
     dispatch(toggleNavbar());
-  };
-
-  const handleToggleDropdownInfo = () => {
-    dispatch(toggleDropdownInfo());
   };
 
   const handleLogout = () => {
@@ -64,31 +54,26 @@ const Header = () => {
             <FontAwesomeIcon icon="fas fa-user" className="text-slate-500" />
           </div>
 
-          <button
-            onClick={() => handleToggleDropdownInfo()}
-            className="relative"
-          >
+          <button className="group relative">
             <FontAwesomeIcon
               icon="fas fa-caret-down"
               className="text-2xl text-slate-500"
             />
-            {isOpenDropdownInfo ? (
-              <div className="absolute right-0 min-w-[100px] text-white bg-slate-500 mt-2">
-                <ul className="flex flex-col justify-center items-start">
-                  <li className="w-full flex justify-start items-center pl-2 hover:bg-slate-800">
+            <div className="absolute hidden top-6 right-0 min-w-[120px] text-white p-2 group-hover:block">
+              <div className="w-full flex justify-center items-center p-2 bg-slate-500 rounded">
+                <ul className="w-full flex flex-col justify-center items-start">
+                  <li className="w-full flex justify-start items-center pl-2 rounded hover:bg-slate-600">
                     Info
                   </li>
                   <li
                     onClick={() => handleLogout()}
-                    className="w-full flex justify-start items-center pl-2 hover:bg-slate-800"
+                    className="w-full flex justify-start items-center pl-2 rounded hover:bg-slate-600"
                   >
                     Log out
                   </li>
                 </ul>
               </div>
-            ) : (
-              ""
-            )}
+            </div>
           </button>
         </div>
       </div>

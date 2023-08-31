@@ -5,15 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import PAGING from "../../constants/PAGING.js";
 
-const Paging = () => {
+const Paging = ({ total }) => {
   const [numberPerPage, setNumberPerPage] = useState(10);
   const [page, setPage] = useState(1);
-  const { totalCount } = useSelector((state) => state.UserForAdmin.list);
 
   const totalPage =
-    totalCount % numberPerPage === 0
-      ? totalCount / numberPerPage
-      : Math.floor(totalCount / numberPerPage) + 1;
+    total % numberPerPage === 0
+      ? total / numberPerPage
+      : Math.floor(total / numberPerPage) + 1;
 
   const previousPage = () => {
     if (page === 1) return;
@@ -57,17 +56,17 @@ const Paging = () => {
               onChange={(e) => setNumberPerPage(e.target.value)}
               className="text-slate-700"
             >
-              <option value={PAGING.ADMIN.OPTION_1}>
-                {PAGING.ADMIN.OPTION_1}
+              <option value={PAGING.ADMIN.TEN_ITEM_PER_PAGE}>
+                {PAGING.ADMIN.TEN_ITEM_PER_PAGE}
               </option>
-              <option value={PAGING.ADMIN.OPTION_2}>
-                {PAGING.ADMIN.OPTION_2}
+              <option value={PAGING.ADMIN.TWENTY_FIVE_ITEM_PER_PAGE}>
+                {PAGING.ADMIN.TWENTY_FIVE_ITEM_PER_PAGE}
               </option>
-              <option value={PAGING.ADMIN.OPTION_3}>
-                {PAGING.ADMIN.OPTION_3}
+              <option value={PAGING.ADMIN.FIFTY_ITEM_PER_PAGE}>
+                {PAGING.ADMIN.FIFTY_ITEM_PER_PAGE}
               </option>
-              <option value={PAGING.ADMIN.OPTION_4}>
-                {PAGING.ADMIN.OPTION_4}
+              <option value={PAGING.ADMIN.ONE_HUNDRED_ITEM_PER_PAGE}>
+                {PAGING.ADMIN.ONE_HUNDRED_ITEM_PER_PAGE}
               </option>
             </select>
           </div>

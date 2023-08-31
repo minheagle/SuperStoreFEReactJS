@@ -3,7 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import rootSaga from "./saga/rootSaga";
 import UIAdminReducer from "./slice/UIAdmin.slice";
 import UIPublicSlice from "./slice/UIPublic.slice";
-import userForAdminSlice from "./slice/userForAdmin.slice";
+import userForAdminSlice from "./slice/admin/userForAdmin.slice";
 import productForAdminSlice from "./slice/admin/product.slice";
 import authSlice from "./slice/auth.slice";
 

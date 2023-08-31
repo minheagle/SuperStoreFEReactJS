@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../../constants/ROUTES";
-import validatorSchema from "../../../utils/validate/register.validator.schema";
+import validatorSchema from "../../../utils/validate/Auth/register.validator.schema";
 import { register } from "../../../redux/slice/auth.slice";
 
 const Register = () => {

@@ -1,13 +1,25 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import {
+  createUser,
+  createUserSuccess,
+  createUserFailure,
   getAllUser,
   getAllUserSuccess,
   getAllUserFailure,
   getUserDetail,
   getUserDetailSuccess,
   getUserDetailFailure,
-} from "../../slice/userForAdmin.slice";
+} from "../../slice/admin/userForAdmin.slice";
 import ApiUserForAdmin from "../../api/admin/user.admin.api";
+
+function* createUserForAdminSaga(action) {
+  try {
+    const createUser = yield call(ApiUserForAdmin.createUser, action.payload);
+    yield put(createUserSuccess(createUser));
+  } catch (error) {
+    yield put(createUserFailure(error.message));
+  }
+}
 
 function* getAllUserForAdminSaga() {
   try {
@@ -31,6 +43,7 @@ function* getUserDetailForAdminSaga(action) {
 }
 
 function* userForAdminSaga() {
+  yield takeLatest(createUser, createUserForAdminSaga);
   yield takeLatest(getAllUser, getAllUserForAdminSaga);
   yield takeLatest(getUserDetail, getUserDetailForAdminSaga);
 }

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserDetail } from "../../../redux/slice/userForAdmin.slice";
+import { getUserDetail } from "../../../redux/slice/admin/userForAdmin.slice";
 
 const EditUser = () => {
   const { userId } = useLocation().state;

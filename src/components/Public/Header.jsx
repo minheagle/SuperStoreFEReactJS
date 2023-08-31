@@ -129,7 +129,10 @@ const Header = () => {
                     </div>
                   ) : (
                     <div className="flex flex-col justify-center items-start gap-2 rounded">
-                      <Link className="w-full text-slate-700 hover:text-white hover:bg-primary pl-2 rounded">
+                      <Link
+                        to={ROUTES.USER.PROFILE}
+                        className="w-full text-slate-700 hover:text-white hover:bg-primary pl-2 rounded"
+                      >
                         Information
                       </Link>
                       <button

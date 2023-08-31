@@ -3,12 +3,9 @@ import * as Yup from "yup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import optionProductValidator from "../../utils/validate/option.product.validator.schema";
+import optionProductValidator from "../../utils/validate/Product/option.product.validator.schema";
 
 const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
-  const [percent, setPercent] = useState("");
   const [option, setOption] = useState({
     type: "",
     name: "",
@@ -20,6 +17,11 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
     name: "",
     percent: "",
   });
+
+  // console.log("option");
+  // console.log(option);
+  // console.log("errors");
+  // console.log(errors);
 
   const validateField = async (fieldName, value) => {
     try {
@@ -33,20 +35,32 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setOption((prevData) => ({ ...prevData, [name]: value }));
-    validateField(name, value);
+    await validateField(name, value);
   };
 
-  const handleSubmitOption = (newOption) => {
-    handleGetNewOption(newOption);
-    handleCloseModal();
-    setOption({
-      type: "",
-      name: "",
-      percent: "",
-    });
+  const handleSubmitOption = async (newOption) => {
+    for (const property in newOption) {
+      await validateField(property, newOption[property]);
+    }
+    if (
+      newOption.name &&
+      newOption.type &&
+      newOption.percent &&
+      !errors.name &&
+      !errors.type &&
+      !errors.percent
+    ) {
+      handleGetNewOption(newOption);
+      handleCloseModal();
+      setOption({
+        type: "",
+        name: "",
+        percent: "",
+      });
+    }
   };
 
   return isOpen ? (
@@ -58,7 +72,7 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
               htmlFor="type"
               className="w-full flex justify-start items-center font-semibold"
             >
-              Type :
+              Type Option :
             </label>
             {errors.type ? (
               <div className="w-full flex justify-end items-center gap-2 text-red-500">
@@ -116,7 +130,7 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
               htmlFor="percent"
               className="w-full flex justify-start items-center font-semibold"
             >
-              Percent :
+              Percent Price :
             </label>
             {errors.percent ? (
               <div className="w-full flex justify-end items-center gap-2 text-primary">

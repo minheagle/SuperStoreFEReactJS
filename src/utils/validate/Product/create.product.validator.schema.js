@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
-import imageValidator from "./image.validator.schema";
+import imageValidator from "../Product/image.validator.schema.js";
+import optionProductValidator from "./option.product.validator.schema.js";
 
 const createProductValidatorSchema = Yup.object().shape({
   productName: Yup.string()

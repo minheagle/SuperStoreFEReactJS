@@ -17,6 +17,18 @@ const initialState = {
     loading: false,
     error: "",
   },
+  create: {
+    loading: false,
+    error: "",
+  },
+  update: {
+    loading: false,
+    error: "",
+  },
+  delete: {
+    loading: false,
+    error: "",
+  },
 };
 
 const userForAdminSlice = createSlice({
@@ -40,11 +52,21 @@ const userForAdminSlice = createSlice({
     },
     getUserDetailSuccess: (state, action) => {
       state.detail.loading = false;
-      state.detail.data = action.payload;
+      state.detail.data = action.payload.data;
     },
     getUserDetailFailure: (state, action) => {
       state.detail.loading = false;
       state.detail.error = action.payload;
+    },
+    createUser: (state, action) => {
+      state.create.loading = true;
+    },
+    createUserSuccess: (state, action) => {
+      state.create.loading = false;
+    },
+    createUserFailure: (state, action) => {
+      state.create.loading = false;
+      state.create.error = action.payload;
     },
   },
 });
@@ -56,6 +78,9 @@ export const {
   getUserDetail,
   getUserDetailSuccess,
   getUserDetailFailure,
+  createUser,
+  createUserSuccess,
+  createUserFailure,
 } = userForAdminSlice.actions;
 
 export default userForAdminSlice.reducer;
