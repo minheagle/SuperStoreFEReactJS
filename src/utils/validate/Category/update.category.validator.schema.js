@@ -1,10 +1,11 @@
 import * as Yup from "yup";
 
-const createCategoryValidatorSchema = Yup.object().shape({
+const updateCategoryValidatorSchema = Yup.object().shape({
   content: Yup.string().min(1, "Min 1 character").required("Required"),
-  parentId: Yup.string().required("Required"),
+  imageUrl: Yup.string(),
   file: Yup.mixed()
-    .required("Image is required")
+    .nullable()
+    .notRequired()
     .test("fileType", "Invalid file type", (value) => {
       if (!value) return true; // Allow empty value (no image)
       return (
@@ -20,4 +21,4 @@ const createCategoryValidatorSchema = Yup.object().shape({
     }),
 });
 
-export default createCategoryValidatorSchema;
+export default updateCategoryValidatorSchema;

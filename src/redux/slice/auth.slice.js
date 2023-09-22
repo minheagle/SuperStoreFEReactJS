@@ -37,9 +37,11 @@ const AuthSlice = createSlice({
     },
     register: (state) => {
       state.register.loading = true;
+      state.register.error = "";
     },
     registerSuccess: (state) => {
       state.register.loading = false;
+      state.register.error = "";
     },
     registerFailure: (state, action) => {
       state.register.loading = false;
@@ -51,6 +53,8 @@ const AuthSlice = createSlice({
     loginSuccess: (state, action) => {
       state.login.loading = false;
       state.information.data = action.payload;
+      state.information.error = "";
+      state.login.error = "";
     },
     loginFailure: (state, action) => {
       state.login.loading = false;

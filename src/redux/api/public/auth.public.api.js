@@ -1,37 +1,51 @@
-import axiosInstance from "../axiosInstance.js";
+import axios from "../axiosInstance.js";
 
 const register = async (formRegister) => {
   try {
-    const response = await axiosInstance.post("/users/register", formRegister);
+    const response = await axios.post("/auth/register", formRegister, {
+      method: "post",
+    });
     return response.results;
   } catch (error) {
-    throw new Error(error.message);
+    const { data } = error.response;
+    const errors = data?.map((item) => {
+      return {
+        field: item.field,
+        message: item.defaultMessage,
+      };
+    });
+    throw errors;
   }
 };
 
 const login = async (formLogin) => {
   try {
-    const response = await axiosInstance.post("/users/login", formLogin, {
+    const response = await axios.post("/auth/login", formLogin, {
       withCredentials: true,
+      method: "post",
     });
+
     return response.results;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const logout = async (userId) => {
+const logout = async () => {
   try {
-    const response = await axiosInstance.get(`/users/logout/${userId}`);
+    const response = await axios.post("/auth/logout");
     return response.results;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const getUserInfo = async (userId) => {
+const getUserInfo = async (userNameToken) => {
   try {
-    const response = await axiosInstance.get(`/users/${userId}`);
+    const response = await axios.get(`/users/${userNameToken}`, {
+      withCredentials: true,
+      method: "get",
+    });
     return response.results;
   } catch (error) {
     throw new Error(error.message);

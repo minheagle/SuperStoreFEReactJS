@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormik } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../../constants/ROUTES";
@@ -12,13 +13,41 @@ const Register = () => {
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.Auth.register);
 
+  const [displayError, setDisplayError] = useState(true);
+
   const initialValues = {
+    userName: "",
     fullName: "",
     phone: "",
-    address: "",
     email: "",
     password: "",
-    re_password: "",
+    rePassword: "",
+  };
+
+  const handleOnChangeField = (setFieldValue, e) => {
+    const fieldName = e.target.name;
+    const fieldValue = e.target.value;
+    setFieldValue(fieldName, fieldValue);
+    if (error) {
+      setDisplayError(false);
+    }
+  };
+
+  const handleErrorFromApi = (fieldName) => {
+    if (error) {
+      const errorObject = error?.find((item) => item.field === fieldName);
+      return errorObject?.message;
+    }
+  };
+
+  const handleErrorFieldFromApi = (fieldName) => {
+    if (error) {
+      const errorObject = error?.find((item) => item.field === fieldName);
+      if (errorObject) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleSubmitFormRegister = (values) => {
@@ -30,11 +59,12 @@ const Register = () => {
         },
       })
     );
+    setDisplayError(true);
   };
 
   return (
     <div className="w-full flex flex-col justify-start items-center gap-4 pt-4">
-      <div className="w-1/3 flex flex-col justify-start items-center gap-4 p-8 bg-slate-100 border rounded">
+      <div className="w-1/2 flex flex-col justify-start items-center gap-4 p-8 bg-slate-100 border rounded">
         <h2 className="text-2xl text-primary">Welcome to Super Store</h2>
         <Formik
           initialValues={initialValues}
@@ -42,8 +72,42 @@ const Register = () => {
           onSubmit={(values) => handleSubmitFormRegister(values)}
           className="w-full flex flex-col justify-start items-center gap-4"
         >
-          {({ errors }) => (
+          {({ errors, setFieldValue }) => (
             <Form className="w-full flex flex-col justify-normal items-center gap-4">
+              {/* Username */}
+              <div className="w-full flex flex-col justify-start items-center gap-2">
+                <div className="w-full flex justify-between items-center">
+                  <label
+                    htmlFor="userName"
+                    className="w-full flex justify-start items-center font-semibold"
+                  >
+                    User Name :
+                  </label>
+                  {errors.userName ||
+                  (displayError ? handleErrorFieldFromApi("userName") : "") ? (
+                    <div className="w-full flex justify-end items-center gap-2 text-primary">
+                      <FontAwesomeIcon icon="fas fa-info-circle" className="" />
+                      <span className="text-sm">
+                        {errors.userName ||
+                          (displayError ? handleErrorFromApi("userName") : "")}
+                      </span>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <Field
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  placeholder="Enter your user name"
+                  onChange={(e) => handleOnChangeField(setFieldValue, e)}
+                  className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
+                    errors.userName ? "outline outline-2 outline-red-500" : ""
+                  }`}
+                />
+              </div>
+              {/* Full Name */}
               <div className="w-full flex flex-col justify-start items-center gap-2">
                 <div className="w-full flex justify-between items-center">
                   <label
@@ -71,6 +135,7 @@ const Register = () => {
                   }`}
                 />
               </div>
+              {/* Phone */}
               <div className="w-full flex flex-col justify-start items-center gap-2">
                 <div className="w-full flex justify-between items-center">
                   <label
@@ -79,10 +144,14 @@ const Register = () => {
                   >
                     Phone :
                   </label>
-                  {errors.phone ? (
+                  {errors.phone ||
+                  (displayError ? handleErrorFieldFromApi("phone") : "") ? (
                     <div className="w-full flex justify-end items-center gap-2 text-primary">
                       <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                      <span className="text-sm">{errors.phone}</span>
+                      <span className="text-sm">
+                        {errors.phone ||
+                          (displayError ? handleErrorFromApi("phone") : "")}
+                      </span>
                     </div>
                   ) : (
                     ""
@@ -98,33 +167,7 @@ const Register = () => {
                   }`}
                 />
               </div>
-              <div className="w-full flex flex-col justify-start items-center gap-2">
-                <div className="w-full flex justify-between items-center">
-                  <label
-                    htmlFor="address"
-                    className="w-full flex justify-start items-center font-semibold"
-                  >
-                    Address :
-                  </label>
-                  {errors.address ? (
-                    <div className="w-full flex justify-end items-center gap-2 text-primary">
-                      <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                      <span className="text-sm">{errors.address}</span>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <Field
-                  type="text"
-                  id="address"
-                  name="address"
-                  placeholder="Enter your address"
-                  className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
-                    errors.address ? "outline outline-2 outline-red-500" : ""
-                  }`}
-                />
-              </div>
+              {/* Email */}
               <div className="w-full flex flex-col justify-start items-center gap-2">
                 <div className="w-full flex justify-between items-center">
                   <label
@@ -133,10 +176,14 @@ const Register = () => {
                   >
                     Email :
                   </label>
-                  {errors.email ? (
+                  {errors.email ||
+                  (displayError ? handleErrorFieldFromApi("email") : "") ? (
                     <div className="w-full flex justify-end items-center gap-2 text-primary">
                       <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                      <span className="text-sm">{errors.email}</span>
+                      <span className="text-sm">
+                        {errors.email ||
+                          (displayError ? handleErrorFromApi("email") : "")}
+                      </span>
                     </div>
                   ) : (
                     ""
@@ -152,6 +199,7 @@ const Register = () => {
                   }`}
                 />
               </div>
+              {/* Password */}
               <div className="w-full flex flex-col justify-start items-center gap-2">
                 <div className="w-full flex justify-between items-center">
                   <label
@@ -179,18 +227,19 @@ const Register = () => {
                   }`}
                 />
               </div>
+              {/* Re-password */}
               <div className="w-full flex flex-col justify-start items-center gap-2">
                 <div className="w-full flex justify-between items-center">
                   <label
-                    htmlFor="re_password"
+                    htmlFor="rePassword"
                     className="w-full flex justify-start items-center font-semibold"
                   >
                     Re-Password :
                   </label>
-                  {errors.re_password ? (
+                  {errors.rePassword ? (
                     <div className="w-full flex justify-end items-center gap-2 text-primary">
                       <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                      <span className="text-sm">{errors.re_password}</span>
+                      <span className="text-sm">{errors.rePassword}</span>
                     </div>
                   ) : (
                     ""
@@ -198,21 +247,14 @@ const Register = () => {
                 </div>
                 <Field
                   type="password"
-                  id="re_password"
-                  name="re_password"
+                  id="rePassword"
+                  name="rePassword"
                   placeholder="Enter your re-password"
                   className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
-                    errors.re_password
-                      ? "outline outline-2 outline-red-500"
-                      : ""
+                    errors.rePassword ? "outline outline-2 outline-red-500" : ""
                   }`}
                 />
               </div>
-              {error ? (
-                <span className="text-base text-primary">{error}</span>
-              ) : (
-                ""
-              )}
               <button
                 type="submit"
                 className="w-24 h-10 flex justify-center items-center gap-2 text-white bg-primary rounded"

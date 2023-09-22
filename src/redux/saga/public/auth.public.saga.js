@@ -15,6 +15,7 @@ import {
   logoutFailure,
 } from "../../slice/auth.slice.js";
 import authApi from "../../api/public/auth.public.api.js";
+import roleHelper from "../../../utils/handle/handleRoles.js";
 
 function* registerSaga(action) {
   try {
@@ -23,7 +24,7 @@ function* registerSaga(action) {
     yield put(registerSuccess());
     yield callback.goToLogin();
   } catch (error) {
-    yield put(registerFailure(error.message));
+    yield put(registerFailure(error));
   }
 }
 
@@ -37,7 +38,7 @@ function* loginSaga(action) {
     );
     // yield Cookies.set("refreshToken", response.refreshToken);
     yield put(loginSuccess(response.data));
-    if (response.data.role === "admin") {
+    if (roleHelper.checkRole("ROLE_ADMIN", response.data.roles)) {
       yield callback.goToAdmin();
     } else {
       yield callback.goToHome();
@@ -49,8 +50,8 @@ function* loginSaga(action) {
 
 function* logoutSaga(action) {
   try {
-    const { data, callback } = action.payload;
-    yield call(authApi.logout, data);
+    const { callback } = action.payload;
+    yield call(authApi.logout);
     yield localStorage.removeItem("accessToken");
     yield put(logoutSuccess());
     yield callback.goToLogin();

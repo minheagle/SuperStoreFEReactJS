@@ -1,5 +1,5 @@
-const SelectCustom = ({ field, form, options }) => {
-  const newCateList = [{ id: "", title: "Select an option" }, ...options];
+const SelectCustom = ({ field, form, options, title = "Select an option" }) => {
+  const newCateList = [{ id: "", title }, ...options];
 
   const isError = form.errors[field.name] && form.touched[field.name];
 
@@ -7,7 +7,7 @@ const SelectCustom = ({ field, form, options }) => {
     return newCateList.map((item) => {
       return (
         <option key={item.id} value={item.id}>
-          {item.title}
+          {item.title || item.content}
         </option>
       );
     });

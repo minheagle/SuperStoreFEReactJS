@@ -25,7 +25,7 @@ const initialState = {
     loading: false,
     error: "",
   },
-  delete: {
+  delete_item: {
     loading: false,
     error: "",
   },

@@ -6,6 +6,7 @@ import UIPublicSlice from "./slice/UIPublic.slice";
 import userForAdminSlice from "./slice/admin/userForAdmin.slice";
 import productForAdminSlice from "./slice/admin/product.slice";
 import authSlice from "./slice/auth.slice";
+import categorySlice from "./slice/admin/category.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -13,6 +14,7 @@ const rootReducer = {
   UserForAdmin: userForAdminSlice,
   ProductForAdmin: productForAdminSlice,
   Auth: authSlice,
+  Category: categorySlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

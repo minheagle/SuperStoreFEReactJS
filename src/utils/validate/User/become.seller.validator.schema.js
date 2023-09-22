@@ -1,0 +1,8 @@
+import * as Yup from "yup";
+
+const becomeSellerValidatorSchema = Yup.object().shape({
+  storeName: Yup.string().required("Required").min(2).max(50),
+  storeAddress: Yup.string().required("Required").min(10).max(255),
+});
+
+export default becomeSellerValidatorSchema;

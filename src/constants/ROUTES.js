@@ -4,6 +4,9 @@ const ROUTES = {
     LOGIN: "/login",
     REGISTER: "/register",
   },
+  SHOP: {
+    HOME: "/shop",
+  },
   USER: {
     ACCOUNT: "/customer/account",
     ACCOUNT_PROFILE: "/customer/account/profile",
@@ -17,9 +20,25 @@ const ROUTES = {
     NOTIFICATION_PROMOTION: "/customer/notification/promotion",
     NOTIFICATION_WALLET: "/customer/notification/wallet",
     VOUCHER_WALLET: "/customer/voucher-wallet",
+    BECOME_SELLER: "/customer/become-seller",
   },
-  EMPLOYEE: {},
-  MANAGER: {},
+  SELLER: {
+    HOME_PAGE: {
+      PAGE: "/seller",
+      EDIT_PAGE: "/seller/edit",
+    },
+    PRODUCT: {
+      LIST: "/seller/:shopName/products",
+      CREATE: "/seller/:shopName/products/create",
+      UPDATE: "/seller/:shopName/products/:productId/update",
+    },
+    ORDER: {
+      LIST: "/seller/:shopName/orders",
+    },
+    VOUCHER: {
+      LIST: "/seller/:shopName/vouchers",
+    },
+  },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
     CATEGORIES: {

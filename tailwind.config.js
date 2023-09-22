@@ -12,6 +12,9 @@ export default {
       width: {
         "with-navbar": "calc(100% - 192px)",
       },
+      height: {
+        "without-header-24-rem": "calc(100vh - 96px)",
+      },
       padding: {},
     },
   },
