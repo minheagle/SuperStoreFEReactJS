@@ -10,7 +10,7 @@ const HomeSeller = () => {
     "https://img.freepik.com/premium-photo/portrait-beautiful-anime-girl-avatar-computer-graphic-background-2d-illustration_67092-2021.jpg?w=2000";
 
   return (
-    <div className="w-full flex flex-col justify-start items-center">
+    <div className="w-full flex flex-col justify-start items-center z-10">
       <HeaderOfShop
         shopBackgroundUrl={shopBackgroundUrl}
         shopAvatarUrl={shopAvatarUrl}

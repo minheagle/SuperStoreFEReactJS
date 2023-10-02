@@ -9,19 +9,12 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
   const [option, setOption] = useState({
     type: "",
     name: "",
-    percent: "",
   });
 
   const [errors, setErrors] = useState({
     type: "",
     name: "",
-    percent: "",
   });
-
-  // console.log("option");
-  // console.log(option);
-  // console.log("errors");
-  // console.log(errors);
 
   const validateField = async (fieldName, value) => {
     try {
@@ -45,20 +38,12 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
     for (const property in newOption) {
       await validateField(property, newOption[property]);
     }
-    if (
-      newOption.name &&
-      newOption.type &&
-      newOption.percent &&
-      !errors.name &&
-      !errors.type &&
-      !errors.percent
-    ) {
+    if (newOption.name && newOption.type && !errors.name && !errors.type) {
       handleGetNewOption(newOption);
       handleCloseModal();
       setOption({
         type: "",
         name: "",
-        percent: "",
       });
     }
   };
@@ -121,35 +106,6 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
             onChange={(e) => handleChange(e)}
             className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
               errors.name ? "outline outline-2 outline-red-500" : ""
-            }`}
-          />
-        </div>
-        <div className="w-full flex flex-col justify-start items-center gap-2">
-          <div className="w-full flex justify-between items-center">
-            <label
-              htmlFor="percent"
-              className="w-full flex justify-start items-center font-semibold"
-            >
-              Percent Price :
-            </label>
-            {errors.percent ? (
-              <div className="w-full flex justify-end items-center gap-2 text-primary">
-                <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                <span className="text-sm">{errors.percent}</span>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <input
-            type="text"
-            id="percent"
-            name="percent"
-            value={option.percent}
-            placeholder="Enter your percent"
-            onChange={(e) => handleChange(e)}
-            className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
-              errors.percent ? "outline outline-2 outline-red-500" : ""
             }`}
           />
         </div>

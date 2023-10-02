@@ -34,7 +34,7 @@ const createCategory = async (createCategory) => {
           "Content-Type": "multipart/form-data",
         },
         method: "post",
-        timeout: 15 * 1000,
+        timeout: 30 * 1000,
       }
     );
     return response.results;
@@ -65,7 +65,7 @@ const updateCategoryChangeImage = async (formData, categoryId) => {
           "Content-Type": "multipart/form-data",
         },
         method: "post",
-        timeout: 15 * 1000,
+        timeout: 30 * 1000,
       }
     );
     return response.results;

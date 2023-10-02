@@ -15,7 +15,7 @@ const CategoryImageUploader = ({
     const files = e.target.files;
     const image = URL.createObjectURL(files[0]);
     setImage(image);
-    if (state.categoryId) {
+    if (state?.categoryId) {
       handleOnChangeDisplayCancelButton(false);
     }
     form.setFieldValue(field.name, files[0]);
@@ -23,7 +23,7 @@ const CategoryImageUploader = ({
 
   const handleDeleteImage = () => {
     setImage(null);
-    if (state.categoryId) {
+    if (state?.categoryId) {
       handleOnChangeDisplayCancelButton(false);
     }
     form.setFieldValue(field.name, null);

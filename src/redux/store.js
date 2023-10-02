@@ -7,6 +7,10 @@ import userForAdminSlice from "./slice/admin/userForAdmin.slice";
 import productForAdminSlice from "./slice/admin/product.slice";
 import authSlice from "./slice/auth.slice";
 import categorySlice from "./slice/admin/category.slice";
+import userSlice from "./slice/user/user.slice";
+import provinceVietNamSlice from "./slice/63_province/63_provinces.slice";
+import categoryPublicSlice from "./slice/public/category.public.slice";
+import productSellerSlice from "./slice/seller/product.seller.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -15,6 +19,10 @@ const rootReducer = {
   ProductForAdmin: productForAdminSlice,
   Auth: authSlice,
   Category: categorySlice,
+  User: userSlice,
+  ProvinceVietNam: provinceVietNamSlice,
+  CategoryPublic: categoryPublicSlice,
+  ProductSeller: productSellerSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

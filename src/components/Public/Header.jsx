@@ -1,18 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate, generatePath } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { log_out } from "../../redux/slice/auth.slice";
 import ROUTES from "../../constants/ROUTES";
+import ROLES from "../../constants/ROLES";
 import handleRoles from "../../utils/handle/handleRoles.js";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { information, logout } = useSelector((state) => state.Auth);
 
-  const roles = information?.data?.roles;
+  const accessToken = localStorage.getItem("accessToken");
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
+  const shopData = JSON.parse(localStorage.getItem("shopData")) || {};
+
+  const handleShopName = () => {
+    const shopName = shopData.storeName.replaceAll(" ", "-");
+    return shopName;
+  };
 
   const handleLogout = () => {
     dispatch(
@@ -25,13 +32,14 @@ const Header = () => {
   };
 
   return (
-    <div className="sticky top-0 right-0 left-0 w-full grid grid-cols-12 bg-primary">
+    <div className="sticky top-0 right-0 left-0 w-full grid grid-cols-12 bg-primary z-40">
       <div className="col-span-1"></div>
       <div className="col-span-10">
         <div className="w-full h-24 grid grid-cols-6">
           <div className="col-span-6 h-6 flex justify-between items-center text-white">
             <div className="w-1/2 flex justify-start items-center gap-2">
-              {information.data ? (
+              {accessToken &&
+              !handleRoles.checkRole(ROLES.SELLER, userData?.roles) ? (
                 <>
                   <Link
                     to={ROUTES.USER.BECOME_SELLER}
@@ -60,12 +68,12 @@ const Header = () => {
               </button>
             </div>
             <div className="w-1/2 flex justify-end items-center gap-2">
-              {information.data ? (
+              {accessToken ? (
                 <>
                   <div className="w-6 h-6 flex justify-center items-center bg-slate-300 rounded-full">
-                    {information.data?.avatar ? (
+                    {userData?.avatar ? (
                       <img
-                        src={information.data?.avatar}
+                        src={userData?.avatar}
                         alt=""
                         className="object-cover w-6 h-6 rounded-full"
                       />
@@ -76,7 +84,7 @@ const Header = () => {
                       />
                     )}
                   </div>
-                  <span>{information.data?.userName}</span>
+                  <span>{userData?.userName}</span>
                 </>
               ) : (
                 ""
@@ -122,9 +130,9 @@ const Header = () => {
                     className="text-2xl"
                   />
                 </button>
-                <div className="absolute hidden top-6 w-32 bg-slate-50 border-2 border-primary p-2 rounded group-hover:block">
-                  {information?.data ? (
-                    handleRoles.checkRole("ROLE_ADMIN", roles) ? (
+                <div className="absolute hidden top-6 w-32 bg-slate-50 border-2 border-primary p-2 rounded z-50 group-hover:block">
+                  {accessToken ? (
+                    handleRoles.checkRole("ROLE_ADMIN", userData?.roles) ? (
                       <div className="flex flex-col justify-center items-start gap-2 rounded">
                         <Link
                           to={ROUTES.ADMIN.DASHBOARD}
@@ -153,6 +161,21 @@ const Header = () => {
                         >
                           Information
                         </Link>
+                        {handleRoles.checkRole(
+                          ROLES.SELLER,
+                          userData?.roles
+                        ) ? (
+                          <Link
+                            to={generatePath(ROUTES.SELLER.HOME_PAGE.PAGE, {
+                              shopName: handleShopName(),
+                            })}
+                            className="w-full text-slate-700 hover:text-white hover:bg-primary pl-2 rounded"
+                          >
+                            Seller Page
+                          </Link>
+                        ) : (
+                          ""
+                        )}
                         <button
                           onClick={() => handleLogout()}
                           className="w-full text-left text-slate-700 hover:text-white hover:bg-primary pl-2 rounded"

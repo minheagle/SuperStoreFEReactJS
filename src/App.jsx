@@ -19,12 +19,14 @@ import HomeShop from "./pages/Shop/home/HomeShop.jsx";
 // For User
 import User from "./layouts/User.jsx";
 import Profile from "./pages/User/Profile.jsx";
+import Address from "./pages/User/Address.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 
 // For Seller
 import Seller from "./layouts/Seller.jsx";
 import HomeSeller from "./pages/Seller/home/HomeSeller.jsx";
 import ProductForSeller from "./pages/Seller/product/Products.jsx";
+import CreateProductForSeller from "./pages/Seller/product/Create.jsx";
 
 // For Admin
 import Admin from "./layouts/Admin.jsx";
@@ -68,12 +70,17 @@ function App() {
         </Route>
         <Route element={<User />}>
           <Route path={ROUTES.USER.ACCOUNT_PROFILE} element={<Profile />} />
+          <Route path={ROUTES.USER.ACCOUNT_ADDRESS} element={<Address />} />
         </Route>
         <Route element={<Seller />}>
           <Route path={ROUTES.SELLER.HOME_PAGE.PAGE} element={<HomeSeller />} />
           <Route
             path={ROUTES.SELLER.PRODUCT.LIST}
             element={<ProductForSeller />}
+          />
+          <Route
+            path={ROUTES.SELLER.PRODUCT.CREATE}
+            element={<CreateProductForSeller />}
           />
         </Route>
         <Route element={<Admin />}>

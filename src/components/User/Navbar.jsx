@@ -135,7 +135,7 @@ const Navbar = () => {
         </div>
         <div className="flex flex-col justify-start content-start">
           <span className="font-semibold">
-            {data?.fullName ? data.fullName : "Undefined"}
+            {data?.userName ? data.userName : "Undefined"}
           </span>
           <div className="flex justify-start items-center gap-2">
             <FontAwesomeIcon

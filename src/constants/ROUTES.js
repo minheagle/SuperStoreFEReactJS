@@ -24,8 +24,8 @@ const ROUTES = {
   },
   SELLER: {
     HOME_PAGE: {
-      PAGE: "/seller",
-      EDIT_PAGE: "/seller/edit",
+      PAGE: "/seller/:shopName/home",
+      EDIT_PAGE: "/seller/:shopName/home/edit",
     },
     PRODUCT: {
       LIST: "/seller/:shopName/products",

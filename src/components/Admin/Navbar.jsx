@@ -25,7 +25,6 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(
       log_out({
-        data: information.data._id,
         callback: {
           goToLogin: () => navigate(ROUTES.PUBLIC.LOGIN),
         },

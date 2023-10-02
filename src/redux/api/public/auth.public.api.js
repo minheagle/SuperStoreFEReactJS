@@ -24,7 +24,6 @@ const login = async (formLogin) => {
       withCredentials: true,
       method: "post",
     });
-
     return response.results;
   } catch (error) {
     throw new Error(error.message);

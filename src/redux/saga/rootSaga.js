@@ -3,6 +3,10 @@ import userForAdminSaga from "./admin/user.admin.saga";
 import productForAdminSaga from "./admin/product.admin.saga";
 import authSaga from "./public/auth.public.saga";
 import categorySaga from "./admin/category.admin.saga";
+import userSaga from "./user/user.saga";
+import provinceVietNamSaga from "./63_province/63_province.saga";
+import categoryPublicSaga from "./public/category.public.saga";
+import productForSellerSaga from "./seller/product.seller.saga";
 
 function* rootSaga() {
   yield all([
@@ -10,6 +14,10 @@ function* rootSaga() {
     productForAdminSaga(),
     authSaga(),
     categorySaga(),
+    userSaga(),
+    provinceVietNamSaga(),
+    categoryPublicSaga(),
+    productForSellerSaga(),
   ]);
 }
 

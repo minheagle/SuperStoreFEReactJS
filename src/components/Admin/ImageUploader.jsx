@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ImageUploader = ({ field, form }) => {
+const ImageUploader = ({ field, form, resetImage, handleToggleResetImage }) => {
   const [images, setImages] = useState([]);
   const [imageErrors, setImageErrors] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    if (resetImage) {
+      setImages([]);
+      handleToggleResetImage(false);
+    }
+  }, [resetImage]);
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -79,7 +86,7 @@ const ImageUploader = ({ field, form }) => {
     <div className="w-full flex justify-start items-center flex-wrap gap-3 border-2 border-dashed p-4 rounded-lg text-center">
       <div className="w-full flex flex-col justify-center items-center">
         <div className="w-full flex justify-end items-center">
-          <div className="w-12 h-12 flex justify-center items-center border-2 border-dashed border-white rounded-lg text-center">
+          <div className="w-12 h-12 flex justify-center items-center border-2 border-dashed border-slate-300 rounded-lg text-center">
             <input
               type="file"
               multiple
@@ -93,7 +100,7 @@ const ImageUploader = ({ field, form }) => {
             >
               <div className="w-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-6 h-6 text-slate-300"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -114,22 +121,20 @@ const ImageUploader = ({ field, form }) => {
           {handleRenderListImage()}
         </div>
         {previewImage && (
-          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-            <img
-              className="max-h-screen max-w-full"
-              src={previewImage}
-              alt="Preview"
-            />
-            <button
-              type="button"
-              className="absolute w-10 h-10 top-4 right-4 text-white"
-              onClick={() => handleClosePreviewImage(previewImage)}
-            >
-              <FontAwesomeIcon
-                icon="fas fa-times-circle"
-                className="text-2xl bg-red-500 rounded-full"
-              />
-            </button>
+          <div className="fixed inset-0 w-full h-auto flex justify-center items-center bg-black bg-opacity-50 z-50">
+            <div className="relative w-1/2 flex justify-center items-center">
+              <img className="w-full h-full" src={previewImage} alt="Preview" />
+              <button
+                type="button"
+                className="absolute w-10 h-10 top-0 right-0 text-white"
+                onClick={() => handleClosePreviewImage(previewImage)}
+              >
+                <FontAwesomeIcon
+                  icon="fas fa-times-circle"
+                  className="text-2xl text-red-600"
+                />
+              </button>
+            </div>
           </div>
         )}
       </div>

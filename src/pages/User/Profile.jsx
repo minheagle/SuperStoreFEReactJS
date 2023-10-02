@@ -1,24 +1,36 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
+import DatePicker from "react-datepicker";
+import moment from "moment/moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "react-datepicker/dist/react-datepicker.css";
 
 import AvatarUploader from "../../components/User/AvatarUploader";
 
 import editProfileValidator from "../../utils/validate/User/edit.profile.validator.schema";
+import { updateUser } from "../../redux/slice/user/user.slice";
 
 const Profile = () => {
-  const { data } = useSelector((state) => state.Auth.information);
+  const dispatch = useDispatch();
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   const initialValues = {
-    fullName: data?.fullName ? data.fullName : "",
-    gender: data?.gender ? data.gender : "",
-    dateOfBirth: data?.dateOfBirth ? data.dateOfBirth : "",
-    avatar: data?.avatar ? data.avatar : "",
+    userName: userData?.userName ? userData.userName : "",
+    fullName: userData?.fullName ? userData.fullName : "",
+    email: userData?.email ? userData.email : "",
+    phone: userData?.phone ? userData.phone : "",
+    dateOfBirth: userData?.dateOfBirth ? userData.dateOfBirth : "",
   };
 
   const handleSubmitForm = (values) => {
-    console.log(values);
+    dispatch(
+      updateUser({
+        updateUserForm: values,
+        userId: userData.id,
+        callback: {},
+      })
+    );
   };
 
   return (
@@ -28,73 +40,199 @@ const Profile = () => {
           My Profile
         </h2>
         <hr />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={editProfileValidator}
-          onSubmit={(values) => handleSubmitForm(values)}
-          className=""
-        >
-          {({ errors, values }) => (
-            <Form>
-              <div className="w-full flex justify-center content-center">
-                <div className="w-3/4 flex flex-col justify-start items-center gap-4">
-                  <div className="w-full h-12 flex gap-4">
-                    <span className="w-1/5 flex justify-end items-center">
-                      User Name
-                    </span>
-                    <span className="w-4/5 flex justify-start items-center">
-                      {data?.fullName}
-                    </span>
-                  </div>
-                  <div className="w-full h-12 flex justify-start content-center gap-4">
-                    <span className="w-1/5 flex justify-end items-center">
-                      Full Name
-                    </span>
+        <div className="w-full flex justify-center content-center">
+          <div className="w-3/4">
+            <Formik
+              initialValues={initialValues}
+              validationSchema={editProfileValidator}
+              onSubmit={(values) => handleSubmitForm(values)}
+            >
+              {({ errors }) => (
+                <Form className="w-full flex flex-col justify-start items-center gap-2 p-12">
+                  {/* User Name */}
+                  <div className="w-full h-24 flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex justify-center items-center">
+                      <div className="w-1/2 flex justify-start items-center">
+                        <span className="">User Name :</span>
+                      </div>
+                      <div className="w-1/2 flex justify-end items-center">
+                        {errors.userName ? (
+                          <div className="w-full flex justify-end items-center gap-2 text-red-500">
+                            <FontAwesomeIcon
+                              icon="fas fa-info-circle"
+                              className=""
+                            />
+                            <span className="text-sm">{errors.userName}</span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                     <Field
                       type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={initialValues.fullName}
-                      className="w-4/5 text-left border-2 border-black rounded outline-none p-2"
+                      name="userName"
+                      className={`w-full h-12 text-left border-2 rounded outline-none px-2 ${
+                        errors.userName ? "border-primary" : "border-black"
+                      }`}
                     />
                   </div>
-                  <div className="w-full h-12 flex gap-4">
-                    <span className="w-1/5 flex justify-end items-center">
-                      Email
-                    </span>
-                    <span className="w-4/5 flex justify-start items-center">
-                      {data?.email}
-                    </span>
+                  {/* Full Name */}
+                  <div className="w-full h-24 flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex justify-center items-center">
+                      <div className="w-1/2 flex justify-start items-center">
+                        <span className="">Full Name :</span>
+                      </div>
+                      <div className="w-1/2 flex justify-end items-center">
+                        {errors.fullName ? (
+                          <div className="w-full flex justify-end items-center gap-2 text-red-500">
+                            <FontAwesomeIcon
+                              icon="fas fa-info-circle"
+                              className=""
+                            />
+                            <span className="text-sm">{errors.fullName}</span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <Field
+                      type="text"
+                      name="fullName"
+                      className={`w-full h-12 text-left border-2 rounded outline-none px-2 ${
+                        errors.fullName ? "border-primary" : "border-black"
+                      }`}
+                    />
                   </div>
-                  <div className="w-full h-12 flex gap-4">
-                    <span className="w-1/5 flex justify-end items-center">
-                      Phone Number
-                    </span>
-                    <span className="w-4/5 flex justify-start items-center">
-                      {data?.phone}
-                    </span>
+                  {/* Email */}
+                  <div className="w-full h-24 flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex justify-center items-center">
+                      <div className="w-1/2 flex justify-start items-center">
+                        <span className="">Email :</span>
+                      </div>
+                      <div className="w-1/2 flex justify-end items-center">
+                        {errors.email ? (
+                          <div className="w-full flex justify-end items-center gap-2 text-red-500">
+                            <FontAwesomeIcon
+                              icon="fas fa-info-circle"
+                              className=""
+                            />
+                            <span className="text-sm">{errors.email}</span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <Field
+                      type="text"
+                      name="email"
+                      className={`w-full h-12 text-left border-2 rounded outline-none px-2 ${
+                        errors.email ? "border-primary" : "border-black"
+                      }`}
+                    />
                   </div>
+                  {/* Phone Number */}
+                  <div className="w-full h-24 flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex justify-center items-center">
+                      <div className="w-1/2 flex justify-start items-center">
+                        <span className="">Phone Number :</span>
+                      </div>
+                      <div className="w-1/2 flex justify-end items-center">
+                        {errors.phone ? (
+                          <div className="w-full flex justify-end items-center gap-2 text-red-500">
+                            <FontAwesomeIcon
+                              icon="fas fa-info-circle"
+                              className=""
+                            />
+                            <span className="text-sm">{errors.phone}</span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <Field
+                      type="text"
+                      name="phone"
+                      className={`w-full h-12 text-left border-2 rounded outline-none px-2 ${
+                        errors.phone ? "border-primary" : "border-black"
+                      }`}
+                    />
+                  </div>
+                  {/* Date Of Birth */}
+                  <div className="w-full h-24 flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex justify-center items-center">
+                      <div className="w-1/2 flex justify-start items-center">
+                        <span className="">Date Of Birth :</span>
+                      </div>
+                      <div className="w-1/2 flex justify-end items-center">
+                        {errors.dateOfBirth ? (
+                          <div className="w-full flex justify-end items-center gap-2 text-red-500">
+                            <FontAwesomeIcon
+                              icon="fas fa-info-circle"
+                              className=""
+                            />
+                            <span className="text-sm">
+                              {errors.dateOfBirth}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <Field
+                      name="dateOfBirth"
+                      className={`w-full h-12 text-left border-2 rounded outline-none px-2 ${
+                        errors.dateOfBirth ? "border-primary" : "border-black"
+                      }`}
+                    >
+                      {({ field, form }) => {
+                        const { name } = field;
+                        const { setFieldValue } = form;
+                        const value = field.value ? moment(field.value) : null;
+                        {
+                          /* console.log(field.value); */
+                        }
+                        return (
+                          <DatePicker
+                            id={name}
+                            selected={value ? value.toDate() : null}
+                            dateFormat="MM/dd/yyyy"
+                            placeholderText="mm/dd/yyyy"
+                            onChange={(date) =>
+                              setFieldValue(name, moment(date))
+                            }
+                            className="w-full border border-black rounded"
+                          />
+                        );
+                      }}
+                    </Field>
+                  </div>
+                  {/* Submit */}
                   <button
                     type="submit"
                     className="px-4 py-2 bg-primary text-white rounded"
                   >
                     Save Change
                   </button>
-                </div>
-                <div className="w-1/4 flex justify-center items-center">
-                  <div className="w-full flex flex-col justify-start items-center gap-4">
-                    <Field
-                      id="avatar"
-                      name="avatar"
-                      component={AvatarUploader}
-                      errors={errors}
-                    />
-                  </div>
-                </div>
-              </div>
-            </Form>
-          )}
-        </Formik>
+                </Form>
+              )}
+            </Formik>
+          </div>
+          {/* Avatar */}
+          <div className="w-1/4 flex flex-col justify-start items-center pt-12">
+            <AvatarUploader
+              userId={userData?.id ? userData.id : null}
+              value={userData?.imageUrl ? userData.imageUrl : null}
+              imagePublicId={
+                userData?.imgPublicId ? userData.imgPublicId : null
+              }
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

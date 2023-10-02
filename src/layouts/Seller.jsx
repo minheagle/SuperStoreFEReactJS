@@ -14,7 +14,7 @@ const Seller = () => {
           <div className="col-span-1">
             <Navbar />
           </div>
-          <div className="col-span-4">
+          <div className="col-span-4 z-10">
             <Outlet />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../constants/ROUTES";
@@ -63,7 +63,10 @@ const Header = () => {
               <div className="w-full flex justify-center items-center p-2 bg-slate-500 rounded">
                 <ul className="w-full flex flex-col justify-center items-start">
                   <li className="w-full flex justify-start items-center pl-2 rounded hover:bg-slate-600">
+                    <Link to={ROUTES.USER.ACCOUNT_PROFILE}>
                     Info
+
+                    </Link>
                   </li>
                   <li
                     onClick={() => handleLogout()}

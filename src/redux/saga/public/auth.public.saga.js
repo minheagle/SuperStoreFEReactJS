@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 import {
   getUser,
   getUserSuccess,
@@ -32,10 +32,15 @@ function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
     const response = yield call(authApi.login, data);
+
     yield localStorage.setItem(
       "accessToken",
       JSON.stringify(response.accessToken)
     );
+    yield localStorage.setItem("userData", JSON.stringify(response.data));
+    if (response.shopData) {
+      yield localStorage.setItem("shopData", JSON.stringify(response.shopData));
+    }
     // yield Cookies.set("refreshToken", response.refreshToken);
     yield put(loginSuccess(response.data));
     if (roleHelper.checkRole("ROLE_ADMIN", response.data.roles)) {
@@ -53,6 +58,8 @@ function* logoutSaga(action) {
     const { callback } = action.payload;
     yield call(authApi.logout);
     yield localStorage.removeItem("accessToken");
+    yield localStorage.removeItem("userData");
+    yield localStorage.removeItem("shopData");
     yield put(logoutSuccess());
     yield callback.goToLogin();
   } catch (error) {
@@ -63,7 +70,8 @@ function* logoutSaga(action) {
 function* getUserInfoSaga(action) {
   try {
     const response = yield call(authApi.getUserInfo, action.payload);
-    yield put(getUserSuccess(response.data));
+    yield localStorage.setItem("userData", JSON.stringify(response));
+    yield put(getUserSuccess(response));
   } catch (error) {
     yield put(getUserFailure(error.message));
   }
@@ -73,7 +81,7 @@ function* authSaga() {
   yield takeLatest(register, registerSaga);
   yield takeLatest(login, loginSaga);
   yield takeLatest(log_out, logoutSaga);
-  yield takeLatest(getUser, getUserInfoSaga);
+  yield takeEvery(getUser, getUserInfoSaga);
 }
 
 export default authSaga;

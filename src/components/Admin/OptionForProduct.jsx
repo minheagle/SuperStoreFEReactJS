@@ -4,11 +4,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ModalForProduct from "./ModalForProduct";
 
-const OptionForProduct = ({ field, form, errors }) => {
+const OptionForProduct = ({
+  field,
+  form,
+  resetOptions,
+  handleToggleResetOptions,
+}) => {
   const [options, setOptions] = useState(field.value || []);
   const [openModal, setOpenModal] = useState(false);
 
-  // console.log(errors);
+  useEffect(() => {
+    if (resetOptions) {
+      setOptions([]);
+      handleToggleResetOptions(false);
+    }
+  }, [resetOptions]);
 
   const handleAddNewOption = () => {
     setOpenModal(true);
@@ -33,19 +43,23 @@ const OptionForProduct = ({ field, form, errors }) => {
     return options?.map((item, index) => {
       return (
         <div key={index} className="w-1/4 flex justify-center items-center p-2">
-          <div className="relative w-full flex flex-col justify-start items-start border-2 border-slate-500 rounded p-2">
-            <label htmlFor="">
-              <span>Type : </span>
-              <span>{item.type}</span>
-            </label>
-            <label htmlFor="">
-              <span>Name : </span>
-              <span>{item.name}</span>
-            </label>
-            <label htmlFor="">
-              <span>Percent : </span>
-              <span>{item.percent}</span>
-            </label>
+          <div className="relative w-full flex flex-col justify-start items-start">
+            <div className="w-full flex flex-col justify-start items-center border-2 border-slate-500 rounded pt-6">
+              <label
+                htmlFor=""
+                className="w-full flex justify-normal items-center gap-1"
+              >
+                <span className="font-semibold">Type : </span>
+                <span>{item.type}</span>
+              </label>
+              <label
+                htmlFor=""
+                className="w-full flex justify-normal items-center gap-1"
+              >
+                <span className="font-semibold">Name : </span>
+                <span>{item.name}</span>
+              </label>
+            </div>
             <button
               type="button"
               onClick={() => handleDeleteOption(index)}
