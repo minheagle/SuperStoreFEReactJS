@@ -14,9 +14,6 @@ const AvatarUploader = ({ userId, value, imagePublicId }) => {
   const [avatar, setAvatar] = useState(value);
   const errors = {};
 
-  console.log(avatar);
-  console.log(newAvatar);
-
   const handleOnChangeAvatar = (e) => {
     const files = e.target.files;
     const image = URL.createObjectURL(files[0]);

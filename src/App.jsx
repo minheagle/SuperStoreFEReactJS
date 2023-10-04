@@ -19,7 +19,10 @@ import HomeShop from "./pages/Shop/home/HomeShop.jsx";
 // For User
 import User from "./layouts/User.jsx";
 import Profile from "./pages/User/Profile.jsx";
-import Address from "./pages/User/Address.jsx";
+import Address from "./pages/User/address/Address.jsx";
+import CreateAddress from "./pages/User/address/Create.jsx";
+import UpdateAddress from "./pages/User/address/Update.jsx";
+import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 
 // For Seller
@@ -71,6 +74,18 @@ function App() {
         <Route element={<User />}>
           <Route path={ROUTES.USER.ACCOUNT_PROFILE} element={<Profile />} />
           <Route path={ROUTES.USER.ACCOUNT_ADDRESS} element={<Address />} />
+          <Route
+            path={ROUTES.USER.ACCOUNT_ADDRESS_CREATE}
+            element={<CreateAddress />}
+          />
+          <Route
+            path={ROUTES.USER.ACCOUNT_ADDRESS_UPDATE}
+            element={<UpdateAddress />}
+          />
+          <Route
+            path={ROUTES.USER.ACCOUNT_CHANGE_PASSWORD}
+            element={<ChangePassword />}
+          />
         </Route>
         <Route element={<Seller />}>
           <Route path={ROUTES.SELLER.HOME_PAGE.PAGE} element={<HomeSeller />} />

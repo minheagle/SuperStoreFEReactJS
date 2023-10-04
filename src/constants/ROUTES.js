@@ -12,6 +12,8 @@ const ROUTES = {
     ACCOUNT_PROFILE: "/customer/account/profile",
     ACCOUNT_PAYMENT: "/customer/account/payment",
     ACCOUNT_ADDRESS: "/customer/account/address",
+    ACCOUNT_ADDRESS_CREATE: "/customer/account/address/create",
+    ACCOUNT_ADDRESS_UPDATE: "/customer/account/address/:addressId/update",
     ACCOUNT_CHANGE_PASSWORD: "/customer/account/change-password",
     ACCOUNT_SETTING_NOTIFICATION: "/customer/setting/notification",
     PURCHASE: "/customer/account/purchase",

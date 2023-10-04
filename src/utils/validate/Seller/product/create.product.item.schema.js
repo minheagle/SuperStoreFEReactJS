@@ -20,7 +20,7 @@ const createProductItemValidatorSchema = (hasOption) => {
         .of(imageValidator)
         .required("Required")
         .min(1, "At least one image is required"),
-      options: yup
+      optionTypeRequestList: yup
         .array()
         .required("Required")
         .min(1, "At least one option is required"),

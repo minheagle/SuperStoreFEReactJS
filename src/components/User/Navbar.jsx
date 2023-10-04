@@ -124,8 +124,12 @@ const Navbar = () => {
     <div className="w-full flex flex-col justify-start items-center gap-4 p-4">
       <div className="w-full flex justify-between items-center">
         <div className="w-12 h-12 flex justify-center items-center border border-slate-300 rounded-full">
-          {data?.avatar ? (
-            <img src="" alt="" />
+          {data?.imageUrl ? (
+            <img
+              src={data.imageUrl}
+              alt=""
+              className="object-cover w-12 h-12 rounded-full"
+            />
           ) : (
             <FontAwesomeIcon
               icon="fas fa-user"

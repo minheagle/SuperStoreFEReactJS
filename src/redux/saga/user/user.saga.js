@@ -9,6 +9,12 @@ import {
   addAddress,
   addAddressSuccess,
   addAddressFailure,
+  updateAddress,
+  updateAddressSuccess,
+  updateAddressFailure,
+  changePassword,
+  changePasswordSuccess,
+  changePasswordFailure,
   becomeSeller,
   becomeSellerSuccess,
   becomeSellerFailure,
@@ -51,10 +57,39 @@ function* addAddressSaga(action) {
     yield put(addAddressSuccess(response.message));
     yield put(getUserSuccess(response.results));
     yield localStorage.setItem("userData", JSON.stringify(response.results));
-    yield callback.closeModal();
     yield callback.goToAddress();
   } catch (error) {
     yield put(addAddressFailure(error.message));
+  }
+}
+
+function* updateAddressSaga(action) {
+  try {
+    const { addressUpdate, addressId, callback } = action.payload;
+    const response = yield call(
+      userApi.updateAddress,
+      addressUpdate,
+      addressId
+    );
+    yield put(updateAddressSuccess(response.message));
+    yield callback.goToAddress();
+  } catch (error) {
+    yield put(updateAddressFailure(error.message));
+  }
+}
+
+function* changePasswordSaga(action) {
+  try {
+    const { changePasswordForm, userId, callback } = action.payload;
+    const response = yield call(
+      userApi.changePassword,
+      changePasswordForm,
+      userId
+    );
+    yield put(changePasswordSuccess(response.message));
+    yield callback.goToLogin();
+  } catch (error) {
+    yield put(changePasswordFailure(error.message));
   }
 }
 
@@ -75,6 +110,8 @@ function* userSaga() {
   yield takeLatest(updateUser, updateUserSaga);
   yield takeLatest(changeAvatar, changeAvatarSaga);
   yield takeLatest(addAddress, addAddressSaga);
+  yield takeLatest(updateAddress, updateAddressSaga);
+  yield takeLatest(changePassword, changePasswordSaga);
   yield takeLatest(becomeSeller, becomeSellerSaga);
 }
 

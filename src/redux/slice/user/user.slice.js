@@ -16,6 +16,16 @@ const initialState = {
     message: "",
     error: "",
   },
+  update_address: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  change_password: {
+    loading: false,
+    message: "",
+    error: "",
+  },
   become_seller: {
     data: "",
     loading: false,
@@ -66,6 +76,32 @@ const userSlice = createSlice({
       state.add_address.message = "";
       state.add_address.error = action.payload;
     },
+    updateAddress: (state) => {
+      state.update_address.loading = true;
+    },
+    updateAddressSuccess: (state, action) => {
+      state.update_address.loading = false;
+      state.update_address.error = "";
+      state.update_address.message = action.payload;
+    },
+    updateAddressFailure: (state, action) => {
+      state.update_address.loading = false;
+      state.update_address.message = "";
+      state.update_address.error = action.payload;
+    },
+    changePassword: (state) => {
+      state.change_password.loading = true;
+    },
+    changePasswordSuccess: (state, action) => {
+      state.change_password.loading = false;
+      state.change_password.error = "";
+      state.change_password.message = action.payload;
+    },
+    changePasswordFailure: (state, action) => {
+      state.change_password.loading = false;
+      state.change_password.message = "";
+      state.change_password.error = action.payload;
+    },
     becomeSeller: (state) => {
       state.become_seller.loading = true;
     },
@@ -92,6 +128,12 @@ export const {
   addAddress,
   addAddressSuccess,
   addAddressFailure,
+  updateAddress,
+  updateAddressSuccess,
+  updateAddressFailure,
+  changePassword,
+  changePasswordSuccess,
+  changePasswordFailure,
   becomeSeller,
   becomeSellerSuccess,
   becomeSellerFailure,

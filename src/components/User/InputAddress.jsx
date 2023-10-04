@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 const InputAddress = ({ address, handleOnChangeAddress, handleError }) => {
-  console.log(address);
   const [value, setValue] = useState(address ? address : null);
 
   useEffect(() => {
@@ -17,7 +16,6 @@ const InputAddress = ({ address, handleOnChangeAddress, handleError }) => {
       <input
         type="text"
         value={value}
-        defaultValue={value}
         onChange={(e) => handOnChangeValue(e)}
         className="border border-black outline-none rounded"
       />

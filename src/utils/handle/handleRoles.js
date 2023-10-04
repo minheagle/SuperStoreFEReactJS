@@ -1,6 +1,6 @@
 const checkRole = (role, roles) => {
   let isCheck = false;
-  Array.from(roles).forEach((element) => {
+  roles?.forEach((element) => {
     if (element?.name === role) {
       isCheck = true;
     }

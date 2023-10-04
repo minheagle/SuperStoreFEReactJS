@@ -50,14 +50,14 @@ const OptionForProduct = ({
                 className="w-full flex justify-normal items-center gap-1"
               >
                 <span className="font-semibold">Type : </span>
-                <span>{item.type}</span>
+                <span>{item.optionName}</span>
               </label>
               <label
                 htmlFor=""
                 className="w-full flex justify-normal items-center gap-1"
               >
                 <span className="font-semibold">Name : </span>
-                <span>{item.name}</span>
+                <span>{item.optionValueRequest}</span>
               </label>
             </div>
             <button

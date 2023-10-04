@@ -7,13 +7,13 @@ import optionProductValidator from "../../utils/validate/Product/option.product.
 
 const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
   const [option, setOption] = useState({
-    type: "",
-    name: "",
+    optionName: "",
+    optionValueRequest: "",
   });
 
   const [errors, setErrors] = useState({
-    type: "",
-    name: "",
+    optionName: "",
+    optionValueRequest: "",
   });
 
   const validateField = async (fieldName, value) => {
@@ -38,12 +38,17 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
     for (const property in newOption) {
       await validateField(property, newOption[property]);
     }
-    if (newOption.name && newOption.type && !errors.name && !errors.type) {
+    if (
+      newOption.optionValueRequest &&
+      newOption.optionName &&
+      !errors.optionValueRequest &&
+      !errors.optionName
+    ) {
       handleGetNewOption(newOption);
       handleCloseModal();
       setOption({
-        type: "",
-        name: "",
+        optionName: "",
+        optionValueRequest: "",
       });
     }
   };
@@ -59,10 +64,10 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
             >
               Type Option :
             </label>
-            {errors.type ? (
+            {errors.optionName ? (
               <div className="w-full flex justify-end items-center gap-2 text-red-500">
                 <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                <span className="text-sm">{errors.type}</span>
+                <span className="text-sm">{errors.optionName}</span>
               </div>
             ) : (
               ""
@@ -70,13 +75,13 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
           </div>
           <input
             type="text"
-            id="type"
-            name="type"
-            value={option.type}
+            id="optionName"
+            name="optionName"
+            value={option.optionName}
             placeholder="Enter your type"
             onChange={(e) => handleChange(e)}
             className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
-              errors.type ? "outline outline-2 outline-red-500" : ""
+              errors.optionName ? "outline outline-2 outline-red-500" : ""
             }`}
           />
         </div>
@@ -88,10 +93,10 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
             >
               Name Option :
             </label>
-            {errors.name ? (
+            {errors.optionValueRequest ? (
               <div className="w-full flex justify-end items-center gap-2 text-red-500">
                 <FontAwesomeIcon icon="fas fa-info-circle" className="" />
-                <span className="text-sm">{errors.name}</span>
+                <span className="text-sm">{errors.optionValueRequest}</span>
               </div>
             ) : (
               ""
@@ -99,13 +104,15 @@ const ModalForProduct = ({ isOpen, handleCloseModal, handleGetNewOption }) => {
           </div>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={option.name}
+            id="optionValueRequest"
+            name="optionValueRequest"
+            value={option.optionValueRequest}
             placeholder="Enter your name option"
             onChange={(e) => handleChange(e)}
             className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
-              errors.name ? "outline outline-2 outline-red-500" : ""
+              errors.optionValueRequest
+                ? "outline outline-2 outline-red-500"
+                : ""
             }`}
           />
         </div>

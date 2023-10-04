@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const SubmitCreate = ({ product, productItem }) => {
   const { data } = useSelector((state) => state.CategoryPublic.list);
-  console.log(productItem);
+  // console.log(productItem);
 
   const handleRenderImageForProductItem = (value) => {
     return value?.map((item, index) => {
@@ -24,13 +24,13 @@ const SubmitCreate = ({ product, productItem }) => {
       return (
         <div
           key={index}
-          className="w-1/2 flex justify-center items-center border border-slate-400 rounded"
+          className="w-1/2 flex justify-center items-center gap-2 border border-slate-400 rounded"
         >
           <span className="w-1/2 flex justify-end items-center pr-2 font-semibold">
-            {item.type} :
+            {item.optionName} :
           </span>
           <span className="w-1/2 flex justify-start items-center pl-2">
-            {item.name}
+            {item.optionValueRequest}
           </span>
         </div>
       );
@@ -68,10 +68,10 @@ const SubmitCreate = ({ product, productItem }) => {
             </div>
             <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
               <span className="w-full flex justify-start items-center font-semibold">
-                Images :
+                Options :
               </span>
               <div className="w-full flex flex-wrap">
-                {handleRenderOptionForProductItem(item.options)}
+                {handleRenderOptionForProductItem(item.optionTypeRequestList)}
               </div>
             </div>
           </div>

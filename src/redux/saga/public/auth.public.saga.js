@@ -70,8 +70,9 @@ function* logoutSaga(action) {
 function* getUserInfoSaga(action) {
   try {
     const response = yield call(authApi.getUserInfo, action.payload);
-    yield localStorage.setItem("userData", JSON.stringify(response));
-    yield put(getUserSuccess(response));
+    yield localStorage.setItem("userData", JSON.stringify(response.data));
+    yield localStorage.setItem("shopData", JSON.stringify(response.shopData));
+    yield put(getUserSuccess(response.data));
   } catch (error) {
     yield put(getUserFailure(error.message));
   }

@@ -42,7 +42,7 @@ const SelectWard = ({ district, ward, handleOnChangeWard, handleError }) => {
       <select
         name=""
         id=""
-        defaultValue={value}
+        value={value}
         onChange={(e) => handleOnChangeValue(e)}
       >
         {handleRenderOption()}

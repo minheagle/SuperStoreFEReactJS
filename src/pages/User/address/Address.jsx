@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, generatePath } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { getDetailAddress } from "../../redux/slice/63_province/63_provinces.slice";
+import ROUTES from "../../../constants/ROUTES";
 
-import ModalForCreateAddress from "../../components/User/ModalForCreateAddress";
-import ModalForUpdateAddress from "../../components/User/ModalForUpdateAddress";
+import ModalForCreateAddress from "../../../components/User/ModalForCreateAddress";
 
 const Address = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -64,12 +64,14 @@ const Address = () => {
         >
           <div>{item.addressName}</div>
           <div className="flex justify-end items-center gap-4">
-            <button
-              onClick={() => handleEditAddress(item.addressName)}
-              className="w-24 h-10 text-white bg-blue-600 rounded"
+            <Link
+              to={generatePath(ROUTES.USER.ACCOUNT_ADDRESS_UPDATE, {
+                addressId: item.id,
+              })}
+              className="w-24 h-10 flex justify-center items-center text-white bg-blue-600 rounded"
             >
               Edit
-            </button>
+            </Link>
             <button className="w-24 h-10 text-white bg-red-600 rounded">
               Delete
             </button>
@@ -82,14 +84,13 @@ const Address = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center bg-white rounded pt-4">
       <div className="w-full flex justify-end items-center pr-8">
-        <button
-          type="button"
-          onClick={() => handleCloseCreateModal(true)}
+        <Link
+          to={ROUTES.USER.ACCOUNT_ADDRESS_CREATE}
           className="flex justify-center items-center gap-2 px-4 py-2 text-white bg-primary rounded"
         >
           <FontAwesomeIcon icon="fas fa-plus" />
           <span>Add</span>
-        </button>
+        </Link>
       </div>
       {userData?.address?.length === 0 || !userData?.address ? (
         <div className="w-full flex flex-col justify-start items-center gap-4 pt-4">
@@ -104,20 +105,13 @@ const Address = () => {
           {handleRenderAddress()}
         </div>
       )}
-      <ModalForCreateAddress
+      {/* <ModalForCreateAddress
         isOpen={openModalCreate}
         isUpdate={isUpdate}
         checkedValue={checkedValue}
         handleCloseCreateModal={handleCloseCreateModal}
         handleToggleUpdateState={handleToggleUpdateState}
         handleChangeCheckedValue={handleChangeCheckedValue}
-      />
-      {/* <ModalForUpdateAddress
-        isOpen={openModalUpdate}
-        handleToggleUpdateModal={handleToggleUpdateModal}
-        handleChangeCheckedValue={handleChangeCheckedValue}
-        checkedValue={checkedValue}
-        addressChecked={addressChecked}
       /> */}
     </div>
   );

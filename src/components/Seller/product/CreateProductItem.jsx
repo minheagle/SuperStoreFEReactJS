@@ -35,7 +35,7 @@ const CreateProductItem = ({
     price: "",
     qtyInStock: "",
     imgProductFile: "",
-    options: "",
+    optionTypeRequestList: "",
   };
 
   const handleAddOptionView = (value) => {
@@ -94,10 +94,10 @@ const CreateProductItem = ({
                 className="w-1/2 flex justify-center items-center border border-slate-400 rounded"
               >
                 <span className="w-1/2 flex justify-end items-center pr-2 font-semibold">
-                  {item.type} :
+                  {item.optionName} :
                 </span>
                 <span className="w-1/2 flex justify-start items-center pl-2">
-                  {item.name}
+                  {item.optionValueRequest}
                 </span>
               </div>
             );
@@ -132,7 +132,7 @@ const CreateProductItem = ({
               {handleRenderImageForItem(item.imgProductFile)}
             </div>
             <div className="w-full">
-              {handleRenderOptionForItem(item.options)}
+              {handleRenderOptionForItem(item.optionTypeRequestList)}
             </div>
           </div>
         </div>
@@ -218,16 +218,17 @@ const CreateProductItem = ({
                   className="w-full border border-black shadow appearance-none rounded pl-2"
                 />
               </div>
+              {/* optionTypeRequestList */}
               {createOption ? (
                 <div className="w-full">
                   <div className="w-full flex justify-start items-center">
                     <div className="w-1/2 flex justify-start items-center">
                       <span className="font-semibold">Options :</span>
                     </div>
-                    {errors.options ? (
+                    {errors.optionTypeRequestList ? (
                       <div className="w-1/2 flex justify-end items-center">
                         <span className="text-sm text-primary">
-                          {errors.options}
+                          {errors.optionTypeRequestList}
                         </span>
                       </div>
                     ) : (
@@ -235,7 +236,7 @@ const CreateProductItem = ({
                     )}
                   </div>
                   <Field
-                    name="options"
+                    name="optionTypeRequestList"
                     component={OptionForProduct}
                     resetOptions={resetOptions}
                     handleToggleResetOptions={handleToggleResetOptions}

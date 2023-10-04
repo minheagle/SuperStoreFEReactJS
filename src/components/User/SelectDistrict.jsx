@@ -14,8 +14,6 @@ const SelectDistrict = ({
   const { data } = useSelector((state) => state.ProvinceVietNam.districts);
   const [value, setValue] = useState(district ? district : null);
 
-  console.log(district);
-
   useEffect(() => {
     dispatch(
       getDistrict({
@@ -50,7 +48,7 @@ const SelectDistrict = ({
       <select
         name=""
         id=""
-        defaultValue={value}
+        value={value}
         onChange={(e) => handleOnChangeValue(e)}
       >
         {handleRenderOption()}

@@ -39,6 +39,30 @@ const addAddress = async (address, userId) => {
   }
 };
 
+const updateAddress = async (updateAddress, id) => {
+  try {
+    const response = await axios.put(
+      `/users/update-address/${Number.parseInt(id)}`,
+      { address: updateAddress }
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const changePassword = async (changePasswordForm, userId) => {
+  try {
+    const response = await axios.put(
+      `/users/change-password/${userId}`,
+      changePasswordForm
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const registerSeller = async (registerSellerForm, userId) => {
   try {
     const response = await axios.post(
@@ -58,6 +82,13 @@ const registerSeller = async (registerSellerForm, userId) => {
   }
 };
 
-const userApi = { updateUser, changeAvatar, addAddress, registerSeller };
+const userApi = {
+  updateUser,
+  changeAvatar,
+  addAddress,
+  updateAddress,
+  changePassword,
+  registerSeller,
+};
 
 export default userApi;

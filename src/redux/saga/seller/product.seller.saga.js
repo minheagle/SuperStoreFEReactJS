@@ -4,10 +4,24 @@ import {
   createProductSuccess,
   createProductFailure,
 } from "../../slice/seller/product.seller.slice";
+import productForSellerApi from "../../api/seller/product/product.seller.api";
 
-function* createProductSaga() {
+function* createProductSaga(action) {
   try {
-  } catch (error) {}
+    const { product, productItem } = action.payload;
+    const responseCreateProduct = yield call(
+      productForSellerApi.createProduct,
+      product
+    );
+    const responseCreateProductItem = yield call(
+      productForSellerApi.createProductItem,
+      productItem,
+      responseCreateProduct.results.data.productId
+    );
+    yield put(createProductSuccess(""));
+  } catch (error) {
+    yield put(createProductFailure(error.message));
+  }
 }
 
 function* productForSellerSaga() {

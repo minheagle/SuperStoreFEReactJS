@@ -193,9 +193,6 @@ const Profile = () => {
                         const { name } = field;
                         const { setFieldValue } = form;
                         const value = field.value ? moment(field.value) : null;
-                        {
-                          /* console.log(field.value); */
-                        }
                         return (
                           <DatePicker
                             id={name}
@@ -205,7 +202,7 @@ const Profile = () => {
                             onChange={(date) =>
                               setFieldValue(name, moment(date))
                             }
-                            className="w-full border border-black rounded"
+                            style={{ width: "100%" }}
                           />
                         );
                       }}
