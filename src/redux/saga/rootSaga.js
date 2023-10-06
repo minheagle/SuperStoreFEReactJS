@@ -7,6 +7,8 @@ import userSaga from "./user/user.saga";
 import provinceVietNamSaga from "./63_province/63_province.saga";
 import categoryPublicSaga from "./public/category.public.saga";
 import productForSellerSaga from "./seller/product.seller.saga";
+import productPublicSaga from "./public/product.public.saga";
+import cartSaga from "./cart/cart.saga";
 
 function* rootSaga() {
   yield all([
@@ -18,6 +20,8 @@ function* rootSaga() {
     provinceVietNamSaga(),
     categoryPublicSaga(),
     productForSellerSaga(),
+    productPublicSaga(),
+    cartSaga(),
   ]);
 }
 

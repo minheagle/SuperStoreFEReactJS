@@ -1,22 +1,53 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, generatePath } from "react-router-dom";
 
 import ROUTES from "../../constants/ROUTES";
 
 const Navbar = () => {
+  const shopData = localStorage.getItem("shopData")
+    ? JSON.parse(localStorage.getItem("shopData"))
+    : null;
+
+  const shopName = shopData?.storeName?.replaceAll(" ", "-");
+
   const navbarList = [
-    { id: 1, title: "Home", icon: "", path: ROUTES.SELLER.HOME_PAGE.PAGE },
+    {
+      id: 1,
+      title: "Home",
+      icon: "",
+      path: generatePath(ROUTES.SELLER.HOME_PAGE.PAGE, {
+        shopName,
+      }),
+    },
     {
       id: 2,
       title: "Product",
       icon: "",
-      path: ROUTES.SELLER.PRODUCT.LIST,
+      path: generatePath(ROUTES.SELLER.PRODUCT.LIST, { shopName }),
       child: [
-        { id: 1, title: "List", path: ROUTES.SELLER.PRODUCT.LIST },
-        { id: 2, title: "Create", path: ROUTES.SELLER.PRODUCT.CREATE },
+        {
+          id: 1,
+          title: "List",
+          path: generatePath(ROUTES.SELLER.PRODUCT.LIST, { shopName }),
+        },
+        {
+          id: 2,
+          title: "Create",
+          path: generatePath(ROUTES.SELLER.PRODUCT.CREATE, { shopName }),
+        },
       ],
     },
-    { id: 3, title: "Order", icon: "", path: ROUTES.SELLER.ORDER.LIST },
-    { id: 4, title: "Voucher", icon: "", path: ROUTES.SELLER.VOUCHER.LIST },
+    {
+      id: 3,
+      title: "Order",
+      icon: "",
+      path: generatePath(ROUTES.SELLER.ORDER.LIST, { shopName }),
+    },
+    {
+      id: 4,
+      title: "Voucher",
+      icon: "",
+      path: generatePath(ROUTES.SELLER.VOUCHER.LIST, { shopName }),
+    },
   ];
 
   const styleActiveNavbar = "bg-primary text-white rounded";

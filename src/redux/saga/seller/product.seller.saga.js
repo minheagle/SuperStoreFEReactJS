@@ -3,8 +3,21 @@ import {
   createProduct,
   createProductSuccess,
   createProductFailure,
+  getAllList,
+  getAllListSuccess,
+  getAllListFailure,
 } from "../../slice/seller/product.seller.slice";
 import productForSellerApi from "../../api/seller/product/product.seller.api";
+
+function* getAllListSaga(action) {
+  try {
+    const { shopId } = action.payload;
+    const response = yield call(productForSellerApi.getAll, shopId);
+    yield put(getAllListSuccess(response.results.data));
+  } catch (error) {
+    yield put(getAllListFailure(error.message));
+  }
+}
 
 function* createProductSaga(action) {
   try {
@@ -26,6 +39,7 @@ function* createProductSaga(action) {
 
 function* productForSellerSaga() {
   yield takeLatest(createProduct, createProductSaga);
+  yield takeLatest(getAllList, getAllListSaga);
 }
 
 export default productForSellerSaga;

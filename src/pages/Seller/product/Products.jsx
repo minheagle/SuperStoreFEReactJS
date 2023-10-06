@@ -1,7 +1,28 @@
-import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { getAllList } from "../../../redux/slice/seller/product.seller.slice";
+
+import ListProduct from "../../../components/Seller/product/ListProduct";
 
 const Products = () => {
-  return <div>Products</div>;
+  const dispatch = useDispatch();
+
+  const shopData = localStorage.getItem("shopData")
+    ? JSON.parse(localStorage.getItem("shopData"))
+    : null;
+  useEffect(() => {
+    dispatch(
+      getAllList({
+        shopId: shopData.id,
+      })
+    );
+  }, []);
+  return (
+    <div className="w-full min-h-screen flex flex-col justify-start items-center">
+      <ListProduct />
+    </div>
+  );
 };
 
 export default Products;

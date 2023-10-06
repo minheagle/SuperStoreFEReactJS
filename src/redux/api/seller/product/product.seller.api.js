@@ -1,5 +1,14 @@
 import axios from "../../axiosInstance.js";
 
+const getAll = async (shopId) => {
+  try {
+    const response = await axios.get(`products/${shopId}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const createProduct = async (product) => {
   try {
     const response = await axios.post("/products/add-new/product", product);
@@ -62,6 +71,6 @@ const createProductItem = async (productItem, productId) => {
   }
 };
 
-const productForSellerApi = { createProduct, createProductItem };
+const productForSellerApi = { getAll, createProduct, createProductItem };
 
 export default productForSellerApi;

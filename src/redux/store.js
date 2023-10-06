@@ -11,6 +11,10 @@ import userSlice from "./slice/user/user.slice";
 import provinceVietNamSlice from "./slice/63_province/63_provinces.slice";
 import categoryPublicSlice from "./slice/public/category.public.slice";
 import productSellerSlice from "./slice/seller/product.seller.slice";
+import productPublicSlice from "./slice/public/product.public.slice";
+import shopPublicSlice from "./slice/public/shop.public.slice";
+import cartSlice from "./slice/cart/cart.slice";
+import searchFilterPagingSlice from "./slice/search_filter_paging/search.filter.paging.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -23,6 +27,10 @@ const rootReducer = {
   ProvinceVietNam: provinceVietNamSlice,
   CategoryPublic: categoryPublicSlice,
   ProductSeller: productSellerSlice,
+  ProductPublic: productPublicSlice,
+  ShopPublic: shopPublicSlice,
+  Cart: cartSlice,
+  Filter: searchFilterPagingSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

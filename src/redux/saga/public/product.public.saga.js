@@ -1,0 +1,41 @@
+import { takeLatest, call, put } from "redux-saga/effects";
+import {
+  getAllListProduct,
+  getAllListSuccess,
+  getAllListFailure,
+  getDetail,
+  getDetailSuccess,
+  getDetailFailure,
+} from "../../slice/public/product.public.slice";
+import { getShopDetailSuccess } from "../../slice/public/shop.public.slice";
+import productPublicApi from "../../api/public/product.public.api";
+import shopApi from "../../api/public/shop.public.api";
+
+function* getAllListSaga() {
+  try {
+    const response = yield call(productPublicApi.getAll);
+    yield put(getAllListSuccess(response.results.data));
+  } catch (error) {
+    yield put(getAllListFailure(error.message));
+  }
+}
+
+function* getDetailSaga(action) {
+  try {
+    const { productId } = action.payload;
+    const response = yield call(productPublicApi.getDetail, productId);
+    const data = response.results.data;
+    const shopResponse = yield call(shopApi.getDetailShop, data.sellerId);
+    yield put(getDetailSuccess(data));
+    yield put(getShopDetailSuccess(shopResponse.results.data));
+  } catch (error) {
+    yield put(getDetailFailure(error.message));
+  }
+}
+
+function* productPublicSaga() {
+  yield takeLatest(getAllListProduct, getAllListSaga);
+  yield takeLatest(getDetail, getDetailSaga);
+}
+
+export default productPublicSaga;

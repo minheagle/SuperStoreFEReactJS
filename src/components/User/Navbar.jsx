@@ -31,13 +31,20 @@ const Navbar = () => {
     },
     {
       id: 2,
+      title: "Cart",
+      icon: "fas fa-shopping-cart",
+      path: ROUTES.USER.CART,
+      child: [],
+    },
+    {
+      id: 3,
       title: "Order",
       icon: "fas fa-newspaper",
       path: ROUTES.USER.PURCHASE,
       child: [],
     },
     {
-      id: 3,
+      id: 4,
       title: "Notification",
       icon: "fas fa-bell",
       path: ROUTES.USER.NOTIFICATION,
@@ -48,7 +55,7 @@ const Navbar = () => {
       ],
     },
     {
-      id: 4,
+      id: 5,
       title: "Voucher",
       icon: "fas fa-gift",
       path: ROUTES.USER.VOUCHER_WALLET,

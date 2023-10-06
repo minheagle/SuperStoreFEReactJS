@@ -1,6 +1,7 @@
 const ROUTES = {
   PUBLIC: {
     HOME: "/",
+    PRODUCT_DETAIL: "/products/:productId",
     LOGIN: "/login",
     REGISTER: "/register",
   },
@@ -16,7 +17,8 @@ const ROUTES = {
     ACCOUNT_ADDRESS_UPDATE: "/customer/account/address/:addressId/update",
     ACCOUNT_CHANGE_PASSWORD: "/customer/account/change-password",
     ACCOUNT_SETTING_NOTIFICATION: "/customer/setting/notification",
-    PURCHASE: "/customer/account/purchase",
+    CART: "/customer/cart",
+    PURCHASE: "/customer/purchase",
     NOTIFICATION: "/customer/notification",
     NOTIFICATION_ORDER: "/customer/notification/order",
     NOTIFICATION_PROMOTION: "/customer/notification/promotion",

@@ -9,6 +9,7 @@ import { getUser } from "./redux/slice/auth.slice.js";
 // For Public
 import Public from "./layouts/Public.jsx";
 import Home from "./pages/Public/Home.jsx";
+import ProductDetail from "./pages/Public/product/ProductDetail.jsx";
 import LoginPage from "./pages/Public/auth/LoginPage.jsx";
 import Register from "./pages/Public/auth/Register.jsx";
 
@@ -24,6 +25,7 @@ import CreateAddress from "./pages/User/address/Create.jsx";
 import UpdateAddress from "./pages/User/address/Update.jsx";
 import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
+import Cart from "./pages/User/Cart.jsx";
 
 // For Seller
 import Seller from "./layouts/Seller.jsx";
@@ -54,7 +56,6 @@ function App() {
   useEffect(() => {
     if (accessToken) {
       const decodeJWT = jwtDecode(accessToken);
-      // console.log(decodeJWT.sub);
       dispatch(getUser(decodeJWT.sub));
     }
   }, [accessToken]);
@@ -64,6 +65,10 @@ function App() {
       <Routes>
         <Route element={<Public />}>
           <Route path={ROUTES.PUBLIC.HOME} element={<Home />} />
+          <Route
+            path={ROUTES.PUBLIC.PRODUCT_DETAIL}
+            element={<ProductDetail />}
+          />
           <Route path={ROUTES.PUBLIC.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.PUBLIC.REGISTER} element={<Register />} />
           <Route path={ROUTES.USER.BECOME_SELLER} element={<BecomeSeller />} />
@@ -86,6 +91,7 @@ function App() {
             path={ROUTES.USER.ACCOUNT_CHANGE_PASSWORD}
             element={<ChangePassword />}
           />
+          <Route path={ROUTES.USER.CART} element={<Cart />} />
         </Route>
         <Route element={<Seller />}>
           <Route path={ROUTES.SELLER.HOME_PAGE.PAGE} element={<HomeSeller />} />

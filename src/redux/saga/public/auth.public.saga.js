@@ -57,9 +57,7 @@ function* logoutSaga(action) {
   try {
     const { callback } = action.payload;
     yield call(authApi.logout);
-    yield localStorage.removeItem("accessToken");
-    yield localStorage.removeItem("userData");
-    yield localStorage.removeItem("shopData");
+    yield localStorage.clear();
     yield put(logoutSuccess());
     yield callback.goToLogin();
   } catch (error) {
