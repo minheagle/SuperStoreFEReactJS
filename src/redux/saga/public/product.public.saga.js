@@ -3,6 +3,9 @@ import {
   getAllListProduct,
   getAllListSuccess,
   getAllListFailure,
+  search,
+  searchSuccess,
+  searchFailure,
   getDetail,
   getDetailSuccess,
   getDetailFailure,
@@ -11,12 +14,23 @@ import { getShopDetailSuccess } from "../../slice/public/shop.public.slice";
 import productPublicApi from "../../api/public/product.public.api";
 import shopApi from "../../api/public/shop.public.api";
 
-function* getAllListSaga() {
+function* getAllListSaga(action) {
   try {
-    const response = yield call(productPublicApi.getAll);
+    const { params } = action.payload;
+    const response = yield call(productPublicApi.getAll, params);
     yield put(getAllListSuccess(response.results.data));
   } catch (error) {
     yield put(getAllListFailure(error.message));
+  }
+}
+
+function* searchSaga(action) {
+  try {
+    const { params } = action.payload;
+    const response = yield call(productPublicApi.search, params);
+    yield put(searchSuccess(response.results.data));
+  } catch (error) {
+    yield put(searchFailure(error.message));
   }
 }
 
@@ -35,6 +49,7 @@ function* getDetailSaga(action) {
 
 function* productPublicSaga() {
   yield takeLatest(getAllListProduct, getAllListSaga);
+  yield takeLatest(search, searchSaga);
   yield takeLatest(getDetail, getDetailSaga);
 }
 

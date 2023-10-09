@@ -15,6 +15,7 @@ import productPublicSlice from "./slice/public/product.public.slice";
 import shopPublicSlice from "./slice/public/shop.public.slice";
 import cartSlice from "./slice/cart/cart.slice";
 import searchFilterPagingSlice from "./slice/search_filter_paging/search.filter.paging.slice";
+import orderSellerSlice from "./slice/seller/order.seller.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -31,6 +32,7 @@ const rootReducer = {
   ShopPublic: shopPublicSlice,
   Cart: cartSlice,
   Filter: searchFilterPagingSlice,
+  OrderSeller: orderSellerSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

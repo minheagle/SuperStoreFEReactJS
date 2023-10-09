@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import Header from "../components/Public/Header.jsx";
 import Footer from "../components/Public/Footer.jsx";
+import Chat from "../components/common/Chat.jsx";
 import Navbar from "../components/User/Navbar.jsx";
 
 const User = () => {
@@ -22,6 +23,7 @@ const User = () => {
         <div className="col-span-1"></div>
       </div>
       <Footer />
+      <Chat />
     </div>
   );
 };

@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { getDetail } from "../../../redux/slice/public/product.public.slice";
 import { addToCart } from "../../../redux/slice/cart/cart.slice";
+import ROUTES from "../../../constants/ROUTES";
 
 import LoadingFull from "../../../components/common/LoadingFull";
 import SwiperForProductDetail from "../../../components/Public/product/SwiperForProductDetail";
 import ShopInProduct from "../../../components/Shop/ShopInProduct";
-import ROUTES from "../../../constants/ROUTES";
+import CommentAndRating from "../../../components/Public/product/CommentAndRating";
+import QuestionAndAnswer from "../../../components/Public/product/Q&A";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -227,9 +229,24 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
+          {/* Shop information */}
           <div className="w-full">
-            <ShopInProduct shopData={shop_detail.data} />
+            <ShopInProduct shopData={shop_detail?.data} />
           </div>
+          {/* Product description */}
+          <div className="w-full h-24 bg-slate-100 rounded">
+            <span>{data.description}</span>
+          </div>
+          {/* Comment and Rating */}
+          <div className="w-full bg-slate-100 rounded">
+            <CommentAndRating />
+          </div>
+          {/* Q&A */}
+          <div className="w-full bg-slate-100">
+            <QuestionAndAnswer />
+          </div>
+          {/* Product same from shop */}
+          {/* Product same */}
         </div>
       </div>
       <div className="col-span-1"></div>

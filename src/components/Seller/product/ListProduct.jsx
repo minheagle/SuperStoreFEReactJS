@@ -5,7 +5,7 @@ import { Link, generatePath } from "react-router-dom";
 import defaultProductImage from "../../../assets/default-product-image.png";
 import ROUTES from "../../../constants/ROUTES";
 
-const ListProduct = () => {
+const ListProduct = ({ shopName }) => {
   const { listProduct } = useSelector((state) => state.ProductSeller);
 
   const handleRenderProductList = () => {
@@ -43,17 +43,18 @@ const ListProduct = () => {
               </span>
             </div>
             <div className="w-full flex justify-between items-center px-2 py-4">
-              <button className="bg-primary rounded text-white px-2 py-1">
-                Add to cart
-              </button>
               <Link
-                to={generatePath(ROUTES.PUBLIC.PRODUCT_DETAIL, {
+                to={generatePath(ROUTES.SELLER.PRODUCT.UPDATE, {
+                  shopName: shopName,
                   productId: item.productId,
                 })}
-                className="bg-red-600 text-white px-2 py-1 rounded"
+                className="bg-primary rounded text-white px-2 py-1"
               >
-                View
+                Edit
               </Link>
+              <button className="bg-red-600 text-white px-2 py-1 rounded">
+                Delete
+              </button>
             </div>
           </div>
         </div>

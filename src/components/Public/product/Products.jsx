@@ -44,9 +44,9 @@ const Products = () => {
               </span>
             </div>
             <div className="w-full flex justify-between items-center px-2 py-4">
-              <button className="bg-primary rounded text-white px-2 py-1">
+              {/* <button className="bg-primary rounded text-white px-2 py-1">
                 Add to cart
-              </button>
+              </button> */}
               <Link
                 to={generatePath(ROUTES.PUBLIC.PRODUCT_DETAIL, {
                   productId: item.productId,

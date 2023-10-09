@@ -57,7 +57,7 @@ const SearchAndFilter = () => {
           />
         </div>
         <div className="w-3/4 flex justify-start items-center gap-2">
-          <div className="w-2/5 flex justify-start items-center gap-2">
+          <div className="w-1/2 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Min Price</span>
             <div className="flex-1">
               <input
@@ -68,7 +68,7 @@ const SearchAndFilter = () => {
               />
             </div>
           </div>
-          <div className="w-2/5 flex justify-start items-center gap-2">
+          <div className="w-1/2 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Max Price</span>
             <div className="flex-1">
               <input
@@ -79,7 +79,7 @@ const SearchAndFilter = () => {
               />
             </div>
           </div>
-          <div className="w-1/5 flex justify-start items-center gap-2">
+          {/* <div className="w-1/5 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Sort</span>
             <div className="flex-1">
               <Select
@@ -98,7 +98,7 @@ const SearchAndFilter = () => {
                 className="w-full"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="col-span-1"></div>

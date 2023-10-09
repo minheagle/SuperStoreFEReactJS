@@ -26,12 +26,16 @@ import UpdateAddress from "./pages/User/address/Update.jsx";
 import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 import Cart from "./pages/User/Cart.jsx";
+import OrdersForUser from "./pages/User/Orders.jsx";
 
 // For Seller
 import Seller from "./layouts/Seller.jsx";
 import HomeSeller from "./pages/Seller/home/HomeSeller.jsx";
 import ProductForSeller from "./pages/Seller/product/Products.jsx";
 import CreateProductForSeller from "./pages/Seller/product/Create.jsx";
+import EditPageForSeller from "./pages/Seller/product/Edit.jsx";
+import EditProduct from "./pages/Seller/product/EditProduct.jsx";
+import EditProductItem from "./pages/Seller/product/EditProductItem.jsx";
 
 // For Admin
 import Admin from "./layouts/Admin.jsx";
@@ -92,6 +96,7 @@ function App() {
             element={<ChangePassword />}
           />
           <Route path={ROUTES.USER.CART} element={<Cart />} />
+          <Route path={ROUTES.USER.PURCHASE} element={<OrdersForUser />} />
         </Route>
         <Route element={<Seller />}>
           <Route path={ROUTES.SELLER.HOME_PAGE.PAGE} element={<HomeSeller />} />
@@ -102,6 +107,18 @@ function App() {
           <Route
             path={ROUTES.SELLER.PRODUCT.CREATE}
             element={<CreateProductForSeller />}
+          />
+          <Route
+            path={ROUTES.SELLER.PRODUCT.UPDATE}
+            element={<EditPageForSeller />}
+          />
+          <Route
+            path={ROUTES.SELLER.PRODUCT.UPDATE_PRODUCT}
+            element={<EditProduct />}
+          />
+          <Route
+            path={ROUTES.SELLER.PRODUCT.UPDATE_PRODUCT_ITEMS}
+            element={<EditProductItem />}
           />
         </Route>
         <Route element={<Admin />}>

@@ -18,17 +18,20 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { cart_list } = useSelector((state) => state.Cart);
+  const { data } = useSelector((state) => state.Auth.information);
   const accessToken = localStorage.getItem("accessToken");
   const userData = JSON.parse(localStorage.getItem("userData")) || null;
   const shopData = JSON.parse(localStorage.getItem("shopData")) || null;
 
   useEffect(() => {
-    dispatch(
-      getCartList({
-        userId: userData.id,
-      })
-    );
-  }, []);
+    if (data) {
+      dispatch(
+        getCartList({
+          userId: userData.id,
+        })
+      );
+    }
+  }, [data]);
 
   const handleShopName = () => {
     const shopName = shopData.storeName.replaceAll(" ", "-");
@@ -55,6 +58,8 @@ const Header = () => {
       })
     );
   };
+
+  const handleSearch = () => {};
 
   return (
     <div className="sticky top-0 right-0 left-0 w-full grid grid-cols-12 bg-primary z-40">
@@ -138,7 +143,10 @@ const Header = () => {
                   onChange={(e) => handleOnChangeProductName(e)}
                   className="w-9/12 outline-none"
                 />
-                <button className="w-2/12 text-center text-white bg-primary rounded">
+                <button
+                  onClick={() => handleSearch()}
+                  className="w-2/12 text-center text-white bg-primary rounded"
+                >
                   Search
                 </button>
               </div>

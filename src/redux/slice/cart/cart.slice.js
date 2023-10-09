@@ -13,6 +13,22 @@ const initialState = {
     message: "",
     error: "",
   },
+  update_quantity: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  delete_cart_item: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  checkout: {
+    data: [],
+    loading: false,
+    message: "",
+    error: "",
+  },
 };
 
 const cartSlice = createSlice({
@@ -48,6 +64,44 @@ const cartSlice = createSlice({
       state.add_to_cart.message = "";
       state.add_to_cart.error = action.payload;
     },
+    updateQuantity: (state) => {
+      state.update_quantity.loading = true;
+    },
+    updateQuantitySuccess: (state, action) => {
+      state.update_quantity.loading = false;
+      state.update_quantity.error = "";
+      state.cart_list.data = action.payload;
+    },
+    updateQuantityFailure: (state, action) => {
+      state.update_quantity.loading = false;
+      state.update_quantity.error = action.payload;
+    },
+    deleteCartItem: (state) => {
+      state.delete_cart_item.loading = true;
+    },
+    deleteCartItemSuccess: (state, action) => {
+      state.delete_cart_item.loading = false;
+      state.delete_cart_item.error = "";
+      state.cart_list.data = action.payload;
+    },
+    deleteCartItemFailure: (state, action) => {
+      state.delete_cart_item.loading = false;
+      state.delete_cart_item.message = "";
+      state.delete_cart_item.error = action.payload;
+    },
+    checkout: (state) => {
+      state.checkout.loading = true;
+    },
+    checkoutSuccess: (state, action) => {
+      state.checkout.loading = false;
+      state.checkout.error = "";
+      state.checkout.data = action.payload;
+    },
+    checkoutFailure: (state, action) => {
+      state.checkout.loading = false;
+      state.checkout.data = [];
+      state.checkout.error = action.payload;
+    },
   },
 });
 
@@ -58,6 +112,15 @@ export const {
   addToCart,
   addToCartSuccess,
   addToCartFailure,
+  updateQuantity,
+  updateQuantitySuccess,
+  updateQuantityFailure,
+  deleteCartItem,
+  deleteCartItemSuccess,
+  deleteCartItemFailure,
+  checkout,
+  checkoutSuccess,
+  checkoutFailure,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -9,6 +9,26 @@ const getAll = async (shopId) => {
   }
 };
 
+const getDetailProduct = async (productId) => {
+  try {
+    const response = await axios.get(`products/product/${productId}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getDetailProductItem = async (productId, productItemId) => {
+  try {
+    const response = await axios.get(
+      `/products/product/${productId}/item/${productItemId}`
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const createProduct = async (product) => {
   try {
     const response = await axios.post("/products/add-new/product", product);
@@ -71,6 +91,25 @@ const createProductItem = async (productItem, productId) => {
   }
 };
 
-const productForSellerApi = { getAll, createProduct, createProductItem };
+const updateProduct = async (productId, updateProductForm) => {
+  try {
+    const response = await axios.put(
+      `/products/product/update/${productId}`,
+      updateProductForm
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const productForSellerApi = {
+  getAll,
+  getDetailProduct,
+  getDetailProductItem,
+  createProduct,
+  createProductItem,
+  updateProduct,
+};
 
 export default productForSellerApi;

@@ -6,6 +6,15 @@ import {
   addToCart,
   addToCartSuccess,
   addToCartFailure,
+  updateQuantity,
+  updateQuantitySuccess,
+  updateQuantityFailure,
+  deleteCartItem,
+  deleteCartItemSuccess,
+  deleteCartItemFailure,
+  checkout,
+  checkoutSuccess,
+  checkoutFailure,
 } from "../../slice/cart/cart.slice";
 import cartApi from "../../api/cart/cart.api";
 import handleCart from "../../../utils/handle/handleTotalCartItem";
@@ -49,9 +58,47 @@ function* addToCartSaga(action) {
   }
 }
 
+function* updateQuantitySaga(action) {
+  try {
+    const { cartId, quantity } = action.payload;
+    const response = yield call(cartApi.updateQuantity, cartId, quantity);
+    yield put(updateQuantitySuccess(response.results.data));
+  } catch (error) {
+    yield put(updateQuantityFailure(error.message));
+  }
+}
+
+function* deleteCartItemSaga(action) {
+  try {
+    const { cartId } = action.payload;
+    const response = yield call(cartApi.deleteCartItem, cartId);
+    yield put(deleteCartItemSuccess(response.results.data));
+    yield localStorage.setItem(
+      "cartList",
+      JSON.stringify(response.results.data)
+    );
+  } catch (error) {
+    yield put(deleteCartItemFailure(error.message));
+  }
+}
+
+function* checkoutSaga(action) {
+  try {
+    const { checkoutRequest, callback } = action.payload;
+    const response = yield call(cartApi.checkout, checkoutRequest);
+    yield put(checkoutSuccess(response.results.data));
+    yield callback.openModalViewCheckout();
+  } catch (error) {
+    yield put(checkoutFailure(error.message));
+  }
+}
+
 function* cartSaga() {
   yield takeLatest(getCartList, getCartListSaga);
   yield takeLatest(addToCart, addToCartSaga);
+  yield takeLatest(updateQuantity, updateQuantitySaga);
+  yield takeLatest(deleteCartItem, deleteCartItemSaga);
+  yield takeLatest(checkout, checkoutSaga);
 }
 
 export default cartSaga;

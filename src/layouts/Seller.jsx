@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import Header from "../components/Public/Header";
 import Footer from "../components/Public/Footer";
+import Chat from "../components/common/Chat";
 import Navbar from "../components/Seller/Navbar";
 
 const Seller = () => {
@@ -21,6 +22,7 @@ const Seller = () => {
         <div className="col-span-1"></div>
       </div>
       <Footer />
+      <Chat />
     </div>
   );
 };

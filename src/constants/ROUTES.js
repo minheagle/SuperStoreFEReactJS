@@ -6,7 +6,7 @@ const ROUTES = {
     REGISTER: "/register",
   },
   SHOP: {
-    HOME: "/shop",
+    HOME: "/shop/:shopName",
   },
   USER: {
     ACCOUNT: "/customer/account",
@@ -34,7 +34,10 @@ const ROUTES = {
     PRODUCT: {
       LIST: "/seller/:shopName/products",
       CREATE: "/seller/:shopName/products/create",
-      UPDATE: "/seller/:shopName/products/:productId/update",
+      UPDATE: "/seller/:shopName/products/:productId",
+      UPDATE_PRODUCT: "/seller/:shopName/products/:productId/update",
+      UPDATE_PRODUCT_ITEMS:
+        "/seller/:shopName/products/:productId/product-items/:productItemId/update",
     },
     ORDER: {
       LIST: "/seller/:shopName/orders",

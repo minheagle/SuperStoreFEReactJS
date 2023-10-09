@@ -32,6 +32,19 @@ const productPublicSlice = createSlice({
       state.list.data = [];
       state.list.error = action.payload;
     },
+    search: (state) => {
+      state.list.loading = true;
+    },
+    searchSuccess: (state, action) => {
+      state.list.loading = false;
+      state.list.error = "";
+      state.list.data = action.payload;
+    },
+    searchFailure: (state, action) => {
+      state.list.loading = false;
+      state.list.data = [];
+      state.list.error = action.payload;
+    },
     getDetail: (state) => {
       state.detail.loading = true;
     },
@@ -52,6 +65,9 @@ export const {
   getAllListProduct,
   getAllListSuccess,
   getAllListFailure,
+  search,
+  searchSuccess,
+  searchFailure,
   getDetail,
   getDetailSuccess,
   getDetailFailure,

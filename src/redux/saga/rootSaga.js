@@ -9,6 +9,8 @@ import categoryPublicSaga from "./public/category.public.saga";
 import productForSellerSaga from "./seller/product.seller.saga";
 import productPublicSaga from "./public/product.public.saga";
 import cartSaga from "./cart/cart.saga";
+import shopPublicSaga from "./public/shop.public.saga";
+import orderForSellerSaga from "./seller/order.seller.saga";
 
 function* rootSaga() {
   yield all([
@@ -22,6 +24,8 @@ function* rootSaga() {
     productForSellerSaga(),
     productPublicSaga(),
     cartSaga(),
+    shopPublicSaga(),
+    orderForSellerSaga(),
   ]);
 }
 

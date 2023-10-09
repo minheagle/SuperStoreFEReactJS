@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Public/Header";
 import Footer from "../components/Public/Footer";
+import Chat from "../components/common/Chat";
 
 const Public = () => {
   return (
@@ -8,6 +9,7 @@ const Public = () => {
       <Header />
       <Outlet />
       <Footer />
+      <Chat />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import SwiperForCart from "./SwiperForCart";
+import CartItemNested from "./CartItemNested";
 
 const CartItem = ({ item, handleChangeCheckedCartItemList }) => {
   const shopId = item?.seller?.id ?? null;
@@ -27,53 +27,11 @@ const CartItem = ({ item, handleChangeCheckedCartItemList }) => {
     return item?.lineItems?.map((lineItem) => {
       return (
         <div key={lineItem.cartId} className="w-full flex ">
-          <div className="w-1/2 flex justify-start items-center gap-2">
-            <input
-              type="checkbox"
-              onChange={() => handleCheckboxChange(lineItem.cartId)}
-              checked={checkedListItem.includes(lineItem.cartId)}
-            />
-            <div className="shrink-0 w-24 h-24">
-              <div className="w-full">
-                <SwiperForCart
-                  listImage={
-                    lineItem.product.productItemResponse.imageProductList
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex-1 h-24 flex justify-start items-center">
-              <p className="overflow-hidden text-ellipsis break-all">
-                {lineItem.product.productName}
-              </p>
-            </div>
-          </div>
-          <div className="w-1/2 flex justify-around items-center">
-            <div>
-              <span className="text-primary">
-                {lineItem.product.productItemResponse.price.toLocaleString() +
-                  " VNĐ"}
-              </span>
-            </div>
-            <div>
-              <span>{lineItem.quantity}</span>
-            </div>
-            <div>
-              <span className="text-primary">
-                {(
-                  lineItem.product.productItemResponse.price * lineItem.quantity
-                ).toLocaleString() + " VNĐ"}
-              </span>
-            </div>
-            <div className="flex justify-center items-center gap-4">
-              <button>
-                <FontAwesomeIcon icon="fas fa-edit" />
-              </button>
-              <button>
-                <FontAwesomeIcon icon="fas fa-trash" className="text-red-600" />
-              </button>
-            </div>
-          </div>
+          <CartItemNested
+            data={lineItem}
+            checkedListItem={checkedListItem}
+            handleCheckboxChange={handleCheckboxChange}
+          />
         </div>
       );
     });

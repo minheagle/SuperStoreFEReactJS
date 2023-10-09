@@ -13,7 +13,7 @@ const Shop = () => {
         <div className="col-span-12">
           <AboutShop />
         </div>
-        <div className="col-span-12 grid grid-cols-12">
+        <div className="col-span-12 grid grid-cols-12 bg-white">
           <div className="col-span-1"></div>
           <div className="col-span-10">
             <Outlet />

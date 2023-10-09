@@ -21,6 +21,33 @@ const add = async (productItem, userId) => {
   }
 };
 
-const cartApi = { getAll, add };
+const updateQuantity = async (cartId, quantity) => {
+  try {
+    const response = await axios.post(`/cart/update/${cartId}/${quantity}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const deleteCartItem = async (cartId) => {
+  try {
+    const response = await axios.post(`/cart/delete/${cartId}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const checkout = async (checkoutRequest) => {
+  try {
+    const response = await axios.post("/cart/check-out", checkoutRequest);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const cartApi = { getAll, add, checkout, updateQuantity, deleteCartItem };
 
 export default cartApi;

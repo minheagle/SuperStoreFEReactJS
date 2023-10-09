@@ -73,10 +73,10 @@ const Cart = () => {
       </div>
       <div className="w-full flex flex-col justify-center items-center gap-4">
         <div className="w-full h-12 flex justify-start items-center bg-slate-100 rounded">
-          <div className="w-1/2 pl-4">
+          <div className="w-2/5 pl-4">
             <span className="">Product</span>
           </div>
-          <div className="w-1/2 flex justify-around items-center">
+          <div className="w-3/5 flex justify-around items-center">
             <div>
               <span>Unit Price</span>
             </div>
