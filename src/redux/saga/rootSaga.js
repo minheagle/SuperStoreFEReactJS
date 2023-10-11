@@ -11,6 +11,8 @@ import productPublicSaga from "./public/product.public.saga";
 import cartSaga from "./cart/cart.saga";
 import shopPublicSaga from "./public/shop.public.saga";
 import orderForSellerSaga from "./seller/order.seller.saga";
+import orderForUserSaga from "./user/order.user.saga";
+import questionAndAnswerSaga from "./Q&A/question.and.answer.saga";
 
 function* rootSaga() {
   yield all([
@@ -26,6 +28,8 @@ function* rootSaga() {
     cartSaga(),
     shopPublicSaga(),
     orderForSellerSaga(),
+    orderForUserSaga(),
+    questionAndAnswerSaga(),
   ]);
 }
 

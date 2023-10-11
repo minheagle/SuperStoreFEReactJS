@@ -2,7 +2,7 @@ import axios from "../axiosInstance.js";
 
 const getAll = async (params) => {
   try {
-    const response = await axios.get("/public/products");
+    const response = await axios.get("/public/products/search", { params });
     return response;
   } catch (error) {
     throw new Error(error.message);

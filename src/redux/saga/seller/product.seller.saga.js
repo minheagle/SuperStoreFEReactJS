@@ -67,6 +67,10 @@ function* createProductSaga(action) {
       productItem,
       responseCreateProduct.results.data.productId
     );
+    yield call(
+      productForSellerApi.confirmCreate,
+      responseCreateProduct.results.data.productId
+    );
     yield put(createProductSuccess(""));
   } catch (error) {
     yield put(createProductFailure(error.message));

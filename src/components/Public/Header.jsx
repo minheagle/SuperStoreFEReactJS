@@ -8,6 +8,7 @@ import SearchAndFilter from "./SearchAndFilter";
 
 import { log_out } from "../../redux/slice/auth.slice";
 import { getCartList } from "../../redux/slice/cart/cart.slice";
+import { getAllListProduct } from "../../redux/slice/public/product.public.slice";
 import { changeProductName } from "../../redux/slice/search_filter_paging/search.filter.paging.slice";
 import ROUTES from "../../constants/ROUTES";
 import ROLES from "../../constants/ROLES";
@@ -19,9 +20,17 @@ const Header = () => {
 
   const { cart_list } = useSelector((state) => state.Cart);
   const { data } = useSelector((state) => state.Auth.information);
+  const { categoryId, minPrice, maxPrice, productName, page, size, sort } =
+    useSelector((state) => state.Filter);
   const accessToken = localStorage.getItem("accessToken");
-  const userData = JSON.parse(localStorage.getItem("userData")) || null;
-  const shopData = JSON.parse(localStorage.getItem("shopData")) || null;
+  const userData =
+    localStorage.getItem("userData") !== undefined
+      ? JSON.parse(localStorage.getItem("userData"))
+      : null;
+  const shopData =
+    localStorage.getItem("shopData") !== undefined
+      ? JSON.parse(localStorage.getItem("shopData"))
+      : null;
 
   useEffect(() => {
     if (data) {
@@ -59,7 +68,36 @@ const Header = () => {
     );
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    if (maxPrice === 0) {
+      dispatch(
+        getAllListProduct({
+          params: {
+            categoryId,
+            minPrice,
+            productName,
+            page,
+            size,
+            sort,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        getAllListProduct({
+          params: {
+            categoryId,
+            minPrice,
+            maxPrice,
+            productName,
+            page,
+            size,
+            sort,
+          },
+        })
+      );
+    }
+  };
 
   return (
     <div className="sticky top-0 right-0 left-0 w-full grid grid-cols-12 bg-primary z-40">

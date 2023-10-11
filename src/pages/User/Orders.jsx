@@ -1,19 +1,40 @@
-import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { getListOrder } from "../../redux/slice/user/order.user.slice";
+
+import LoadingFull from "../../components/common/LoadingFull";
 import OrderItem from "../../components/User/order/OrderItem";
 
 const Orders = () => {
-  const orderList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const dispatch = useDispatch();
+
+  const { data, loading } = useSelector((state) => state.OrderUser.list_order);
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
+
+  useEffect(() => {
+    dispatch(
+      getListOrder({
+        userId: userData.id,
+      })
+    );
+  }, [userData.id]);
 
   const handleRenderOrderList = () => {
-    return orderList?.map((order) => {
+    return data?.map((order) => {
       return (
-        <div key={order} className="w-full px-4">
-          <OrderItem />
+        <div key={order.id} className="w-full px-4">
+          <OrderItem data={order} />
         </div>
       );
     });
   };
+
+  if (loading) {
+    return <LoadingFull />;
+  }
 
   return (
     <div className="w-full flex flex-col justify-start items-center gap-4">

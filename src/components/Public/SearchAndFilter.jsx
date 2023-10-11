@@ -30,11 +30,17 @@ const SearchAndFilter = () => {
   };
 
   const handleOnChangeMinPrice = (e) => {
-    dispatch(changeMinPrice(Number.parseInt(e.target.value)));
+    const value = Number.parseInt(e.target.value);
+    if (!isNaN(value)) {
+      dispatch(changeMinPrice(value));
+    }
   };
 
   const handleOnChangeMaxPrice = (e) => {
-    dispatch(changeMaxPrice(Number.parseInt(e.target.value)));
+    const value = Number.parseInt(e.target.value);
+    if (!isNaN(value)) {
+      dispatch(changeMaxPrice(value));
+    }
   };
 
   const handleOnChangeSort = (value) => {
@@ -44,9 +50,9 @@ const SearchAndFilter = () => {
   return (
     <div className="col-span-7 h-12 grid grid-cols-7 gap-4">
       <div className="col-span-1"></div>
-      <div className="col-span-5 flex justify-start items-center gap-2">
+      <div className="col-span-5 w-full flex justify-start items-center gap-2">
         <div className="w-1/4 flex justify-start items-center gap-2">
-          <span className="text-white">Category</span>
+          <span className="shrink-0 text-white">Category</span>
           <TreeSelect
             notFoundContent={<div>No result</div>}
             treeData={convertData}
@@ -57,29 +63,31 @@ const SearchAndFilter = () => {
           />
         </div>
         <div className="w-3/4 flex justify-start items-center gap-2">
-          <div className="w-1/2 flex justify-start items-center gap-2">
+          <div className="w-2/5 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Min Price</span>
             <div className="flex-1">
               <input
-                type="text"
+                type="number"
                 value={minPrice}
+                min={0}
                 onChange={(e) => handleOnChangeMinPrice(e)}
                 className="w-full h-8 outline-none pl-2 rounded"
               />
             </div>
           </div>
-          <div className="w-1/2 flex justify-start items-center gap-2">
+          <div className="w-2/5 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Max Price</span>
             <div className="flex-1">
               <input
-                type="text"
+                type="number"
+                min={0}
                 value={maxPrice}
                 onChange={(e) => handleOnChangeMaxPrice(e)}
                 className="w-full h-8 outline-none pl-2 rounded"
               />
             </div>
           </div>
-          {/* <div className="w-1/5 flex justify-start items-center gap-2">
+          <div className="w-1/5 flex justify-start items-center gap-2">
             <span className="shrink-0 text-white">Sort</span>
             <div className="flex-1">
               <Select
@@ -98,7 +106,7 @@ const SearchAndFilter = () => {
                 className="w-full"
               />
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
       <div className="col-span-1"></div>

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 
 import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

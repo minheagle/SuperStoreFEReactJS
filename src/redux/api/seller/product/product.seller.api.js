@@ -91,6 +91,17 @@ const createProductItem = async (productItem, productId) => {
   }
 };
 
+const confirmCreate = async (productId) => {
+  try {
+    const response = await axios.get(
+      `/products/confirm-finish-create/${productId}`
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const updateProduct = async (productId, updateProductForm) => {
   try {
     const response = await axios.put(
@@ -109,6 +120,7 @@ const productForSellerApi = {
   getDetailProductItem,
   createProduct,
   createProductItem,
+  confirmCreate,
   updateProduct,
 };
 

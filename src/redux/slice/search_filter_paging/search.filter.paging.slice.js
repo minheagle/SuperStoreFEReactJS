@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  categoryId: " ",
+  categoryId: null,
   minPrice: 0,
   maxPrice: 0,
-  productName: " ",
+  productName: null,
   page: 1,
-  size: 25,
+  size: 24,
   sort: "ASC",
 };
 

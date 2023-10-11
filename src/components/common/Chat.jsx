@@ -2,10 +2,13 @@ import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import ChatWindow from "./chat/ChatWindow";
+import ChatList from "./chat/ChatList";
 import NotAuthentication from "./chat/NotAuthentication";
 
 const Chat = () => {
   const [openChat, setOpenChat] = useState(false);
+  const [openListChat, setOpenListChat] = useState(false);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
@@ -19,25 +22,43 @@ const Chat = () => {
     setOpenChat(value);
   };
 
+  const handleToggleListChat = (value) => {
+    setOpenListChat(value);
+  };
   return (
-    <div className="sticky bottom-0 right-0 z-40 w-full flex justify-end items-center pr-2">
+    <div className="sticky bottom-0 right-0 z-40 w-full flex justify-end items-center  pr-2">
       {openChat ? (
-        <div className="w-96 h-96 border border-slate-300 bg-white rounded">
-          <div className="w-full h-6 flex justify-between items-center border-b border-slate-300">
-            <span className="font-medium pl-2">Chat</span>
-            <div className="flex justify-center items-center gap-4">
-              <button>
-                <FontAwesomeIcon icon="fas fa-caret-square-right" />
-              </button>
-              <button
-                onClick={() => handleToggleViewChat(false)}
-                className="w-6 h-6 text-white bg-red-600"
-              >
-                <FontAwesomeIcon icon="fas fa-window-close" />
-              </button>
+        <div className="flex justify-center items-center border border-slate-300 rounded">
+          {openListChat ? (
+            <div className="w-48 h-96 bg-white">
+              <ChatList chatId={userData?.chatId} />
             </div>
+          ) : (
+            ""
+          )}
+          <div className="w-96 h-96 bg-white">
+            <div className="w-full h-6 flex justify-between items-center border-b border-slate-300">
+              <span className="font-medium pl-2">Chat</span>
+              <div className="flex justify-center items-center gap-4">
+                {userData ? (
+                  <button onClick={() => handleToggleListChat(!openListChat)}>
+                    <FontAwesomeIcon icon="fas fa-caret-square-right" />
+                  </button>
+                ) : (
+                  <button>
+                    <FontAwesomeIcon icon="fas fa-caret-square-right" />
+                  </button>
+                )}
+                <button
+                  onClick={() => handleToggleViewChat(false)}
+                  className="w-6 h-6 text-white bg-red-600"
+                >
+                  <FontAwesomeIcon icon="fas fa-window-close" />
+                </button>
+              </div>
+            </div>
+            {userData ? <ChatWindow /> : <NotAuthentication />}
           </div>
-          {userData ? "" : <NotAuthentication />}
         </div>
       ) : (
         <div

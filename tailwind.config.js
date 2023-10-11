@@ -6,6 +6,18 @@ export default {
   },
   theme: {
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            ".text-ellipsis-customs": {
+              display: "-webkit-box",
+              "-webkit-line-clamp": 3, // Số dòng tối đa trước khi hiển thị dấu "..."
+              "-webkit-box-orient": "vertical",
+              overflow: "hidden",
+            },
+          },
+        },
+      },
       spacing: {
         100: "25rem",
         128: "32rem",

@@ -9,6 +9,7 @@ import ROUTES from "../../../constants/ROUTES";
 
 import LoadingFull from "../../../components/common/LoadingFull";
 import SwiperForProductDetail from "../../../components/Public/product/SwiperForProductDetail";
+import ImageGallery from "../../../components/Public/product/ImageGallery";
 import ShopInProduct from "../../../components/Shop/ShopInProduct";
 import CommentAndRating from "../../../components/Public/product/CommentAndRating";
 import QuestionAndAnswer from "../../../components/Public/product/Q&A";
@@ -150,32 +151,30 @@ const ProductDetail = () => {
           <div className="w-full flex justify-start items-center p-2 bg-primary text-white rounded">
             <h2 className="text-xl font-normal">Bread cum</h2>
           </div>
-          <div className="w-full grid grid-cols-3 gap-4">
-            <div className="col-span-1">
-              <SwiperForProductDetail listImage={handleGetAllImage(data)} />
+          <div className="w-full grid grid-cols-2 gap-4">
+            <div className="col-span-1 w-full">
+              <ImageGallery listImage={handleGetAllImage(data)} />
             </div>
-            <div className="col-span-2 flex flex-col justify-start items-center gap-4">
-              <div className="w-full">
-                <span className="text-xl font-normal">{data.productName}</span>
+            <div className="col-span-1 flex flex-col justify-start items-center gap-8">
+              <div className="w-full flex justify-start items-center px-2">
+                <span className="text-xl font-medium">{data.productName}</span>
               </div>
-              <div className="w-full flex justify-start items-center gap-4">
-                <span className="w-1/4 flex justify-end items-center text-xl font-semibold">
-                  Price :
-                </span>
-                <span className="flex-1 text-xl font-normal text-primary">
+              <div className="w-full h-24 flex justify-start items-center gap-4 bg-slate-100 rounded">
+                <span className="w-1/4 flex justify-end items-center text-xl font-semibold"></span>
+                <span className="flex-1 text-2xl font-normal text-primary">
                   {checkedValue?.price.toLocaleString() + " VNĐ"}
                 </span>
               </div>
-              <div className="w-full flex justify-start items-center gap-4">
-                <div className="w-1/4 flex justify-end items-center text-xl font-semibold">
+              <div className="w-full flex justify-start items-center gap-4 pl-4">
+                <div className="w-1/4 flex justify-start items-center text-xl font-semibold">
                   Options :
                 </div>
                 <div className="flex-1 flex gap-4 pt-4">
                   {handleRenderOption()}
                 </div>
               </div>
-              <div className="w-full flex justify-start items-center gap-4">
-                <span className="w-1/4 flex justify-end items-center text-xl font-semibold">
+              <div className="w-full flex justify-start items-center gap-4 pl-4">
+                <span className="w-1/4 flex justify-start items-center text-xl font-semibold">
                   Quantity :
                 </span>
                 <input
@@ -190,7 +189,7 @@ const ProductDetail = () => {
                   {checkedValue?.qtyInStock + " item in stock"}
                 </span>
               </div>
-              <div className="w-full flex justify-center items-center gap-8">
+              <div className="w-full flex justify-start items-center gap-8 pl-4">
                 <button
                   onClick={() => handleAddToCart()}
                   className="flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded"
@@ -234,7 +233,7 @@ const ProductDetail = () => {
             <ShopInProduct shopData={shop_detail?.data} />
           </div>
           {/* Product description */}
-          <div className="w-full h-24 bg-slate-100 rounded">
+          <div className="w-full h-24 bg-slate-100 p-4 rounded">
             <span>{data.description}</span>
           </div>
           {/* Comment and Rating */}
@@ -242,8 +241,8 @@ const ProductDetail = () => {
             <CommentAndRating />
           </div>
           {/* Q&A */}
-          <div className="w-full bg-slate-100">
-            <QuestionAndAnswer />
+          <div className="w-full bg-slate-100 rounded">
+            <QuestionAndAnswer productId={productId} />
           </div>
           {/* Product same from shop */}
           {/* Product same */}

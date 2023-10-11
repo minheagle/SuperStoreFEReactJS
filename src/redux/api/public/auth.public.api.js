@@ -18,6 +18,17 @@ const register = async (formRegister) => {
   }
 };
 
+const addChatId = async (userId, chatId) => {
+  try {
+    const response = await axios.post(`/auth/add-chat-id/${userId}`, {
+      chatId,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const login = async (formLogin) => {
   try {
     const response = await axios.post("/auth/login", formLogin, {
@@ -51,6 +62,6 @@ const getUserInfo = async (userNameToken) => {
   }
 };
 
-const authApi = { login, logout, register, getUserInfo };
+const authApi = { login, logout, register, addChatId, getUserInfo };
 
 export default authApi;

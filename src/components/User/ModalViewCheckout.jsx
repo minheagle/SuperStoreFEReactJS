@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import cartHandle from "../../utils/handle/handleTotalCartItem";
+import ROUTES from "../../constants/ROUTES";
+import { saveOrder } from "../../redux/slice/cart/cart.slice";
 
 import CartItemCheckout from "./CartItemCheckout";
 
@@ -12,12 +15,30 @@ const ModalViewCheckout = ({
   shipAddress,
   handleToggleOpenModalView,
 }) => {
-  const [payment, setPayment] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [payment, setPayment] = useState(null);
   const { data } = useSelector((state) => state.Cart.checkout);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
+
+  const findAddress = () => {
+    const find = userData?.address?.find(
+      (item) => item.addressName === shipAddress
+    );
+    return find;
+  };
+
+  const handleCartForOrder = (data) => {
+    return data?.map((item) => {
+      const listCartId = item.cartResponse.lineItems.map((cart) => cart.cartId);
+      const shipMoney = item.shipMoney ? item.shipMoney : 0;
+      const sellerId = item.cartResponse.seller.id;
+      return { sellerId, cartId: listCartId, shipMoney };
+    });
+  };
 
   const totalItemAndPrice = cartHandle.handleTotalItemsAndTotalPrice(data);
 
@@ -40,7 +61,23 @@ const ModalViewCheckout = ({
   };
 
   const handleMakeOrder = () => {
-    console.log("Ahihi");
+    const getAddress = findAddress();
+    if (payment !== null) {
+      const paymentStatus = payment === "BANK_PAYMENT" ? true : false;
+      dispatch(
+        saveOrder({
+          orderRequest: {
+            addressId: getAddress.id,
+            userId: userData.id,
+            listOrderBelongToSeller: handleCartForOrder(data),
+            paymentStatus,
+          },
+          callback: {
+            goToOrder: () => navigate(ROUTES.USER.PURCHASE),
+          },
+        })
+      );
+    }
   };
 
   return openModalView ? (

@@ -29,6 +29,12 @@ const initialState = {
     message: "",
     error: "",
   },
+  save_order: {
+    data: [],
+    loading: false,
+    message: "",
+    error: "",
+  },
 };
 
 const cartSlice = createSlice({
@@ -102,6 +108,19 @@ const cartSlice = createSlice({
       state.checkout.data = [];
       state.checkout.error = action.payload;
     },
+    saveOrder: (state) => {
+      state.save_order.loading = true;
+    },
+    saveOrderSuccess: (state, action) => {
+      state.save_order.loading = false;
+      state.save_order.error = "";
+      state.save_order.data = action.payload;
+    },
+    saveOrderFailure: (state, action) => {
+      state.save_order.loading = false;
+      state.save_order.data = [];
+      state.save_order.error = action.payload;
+    },
   },
 });
 
@@ -121,6 +140,9 @@ export const {
   checkout,
   checkoutSuccess,
   checkoutFailure,
+  saveOrder,
+  saveOrderSuccess,
+  saveOrderFailure,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

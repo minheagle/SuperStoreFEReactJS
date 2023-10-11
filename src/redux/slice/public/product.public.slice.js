@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   list: {
     data: [],
+    total: 0,
     loading: false,
     message: "",
     error: "",
@@ -25,7 +26,8 @@ const productPublicSlice = createSlice({
     getAllListSuccess: (state, action) => {
       state.list.loading = false;
       state.list.error = "";
-      state.list.data = action.payload;
+      state.list.data = action.payload.data;
+      state.list.total = action.payload.total;
     },
     getAllListFailure: (state, action) => {
       state.list.loading = false;

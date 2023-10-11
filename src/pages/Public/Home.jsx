@@ -12,28 +12,44 @@ const Home = () => {
   const dispatch = useDispatch();
   const { categoryId, minPrice, maxPrice, productName, page, size } =
     useSelector((state) => state.Filter);
+  const { total } = useSelector((state) => state.ProductPublic.list);
 
   useEffect(() => {
     dispatch(getAllList());
     dispatch(
       getAllListProduct({
         params: {
-          categoryId: null,
           minPrice,
-          maxPrice,
-          productName: null,
-          page: page - 1,
+          page: page,
           size,
         },
       })
     );
-  }, []);
+  }, [dispatch]);
+
+  const handleChangePage = (page, pageSize) => {
+    dispatch(
+      getAllListProduct({
+        params: {
+          minPrice,
+          page: page,
+          size: pageSize,
+        },
+      })
+    );
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center">
       <Category />
       <Products />
-      <Pagination defaultCurrent={page} defaultPageSize={size} total={100} />
+      <Pagination
+        defaultCurrent={page}
+        defaultPageSize={size}
+        pageSizeOptions={[24, 48, 96]}
+        total={total}
+        onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+      />
     </div>
   );
 };

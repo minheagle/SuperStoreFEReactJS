@@ -18,7 +18,13 @@ function* getAllListSaga(action) {
   try {
     const { params } = action.payload;
     const response = yield call(productPublicApi.getAll, params);
-    yield put(getAllListSuccess(response.results.data));
+
+    yield put(
+      getAllListSuccess({
+        data: response.results.data,
+        total: response.pagination.totalElements,
+      })
+    );
   } catch (error) {
     yield put(getAllListFailure(error.message));
   }

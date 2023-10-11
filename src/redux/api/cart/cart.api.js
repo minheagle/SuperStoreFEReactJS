@@ -48,6 +48,22 @@ const checkout = async (checkoutRequest) => {
   }
 };
 
-const cartApi = { getAll, add, checkout, updateQuantity, deleteCartItem };
+const saveOrder = async (orderRequest) => {
+  try {
+    const response = await axios.post("/cart/save-order", orderRequest);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const cartApi = {
+  getAll,
+  add,
+  checkout,
+  updateQuantity,
+  deleteCartItem,
+  saveOrder,
+};
 
 export default cartApi;

@@ -15,6 +15,9 @@ import {
   checkout,
   checkoutSuccess,
   checkoutFailure,
+  saveOrder,
+  saveOrderSuccess,
+  saveOrderFailure,
 } from "../../slice/cart/cart.slice";
 import cartApi from "../../api/cart/cart.api";
 import handleCart from "../../../utils/handle/handleTotalCartItem";
@@ -93,12 +96,24 @@ function* checkoutSaga(action) {
   }
 }
 
+function* saveOrderSaga(action) {
+  try {
+    const { orderRequest, callback } = action.payload;
+    const response = yield call(cartApi.saveOrder, orderRequest);
+    yield put(saveOrderSuccess(response.results.data));
+    yield callback.goToOrder();
+  } catch (error) {
+    yield put(saveOrderFailure(error.message));
+  }
+}
+
 function* cartSaga() {
   yield takeLatest(getCartList, getCartListSaga);
   yield takeLatest(addToCart, addToCartSaga);
   yield takeLatest(updateQuantity, updateQuantitySaga);
   yield takeLatest(deleteCartItem, deleteCartItemSaga);
   yield takeLatest(checkout, checkoutSaga);
+  yield takeLatest(saveOrder, saveOrderSaga);
 }
 
 export default cartSaga;

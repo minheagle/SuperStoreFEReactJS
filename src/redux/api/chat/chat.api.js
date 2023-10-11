@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:5000/api",
   withCredentials: true,
   timeout: 10 * 1000,
   headers: {
@@ -10,21 +10,75 @@ const instance = axios.create({
   },
 });
 
-const createUser = async () => {
+const createUser = async (username) => {
   try {
-  } catch (error) {}
+    const response = await instance.post("/auth/register", { username });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-const receiveMessage = async () => {
+const getAllUserById = async (id) => {
   try {
-  } catch (error) {}
+    const response = await instance.get(`/auth/allusers/${id}`, {
+      params: {
+        id,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-const sendMessage = async () => {
+const changeUserName = async (id, username) => {
   try {
-  } catch (error) {}
+    const response = await instance.post(`/auth/set-user-name/${id}`, username);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-const chatApi = { createUser, receiveMessage, sendMessage };
+const changeAvatar = async (id, image) => {
+  try {
+    const response = await instance.post(`/auth/set-avatar/${id}`, image);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const receiveMessage = async (from, to) => {
+  try {
+    const response = await instance.post(`/messages/get-message`, { from, to });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const sendMessage = async (from, to, message) => {
+  try {
+    const response = await instance.post(`/messages/add-message`, {
+      from,
+      to,
+      message,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const chatApi = {
+  createUser,
+  getAllUserById,
+  changeUserName,
+  changeAvatar,
+  receiveMessage,
+  sendMessage,
+};
 
 export default chatApi;

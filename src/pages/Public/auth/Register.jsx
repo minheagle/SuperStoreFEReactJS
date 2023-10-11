@@ -35,14 +35,14 @@ const Register = () => {
 
   const handleErrorFromApi = (fieldName) => {
     if (error) {
-      const errorObject = error?.find((item) => item.field === fieldName);
+      const errorObject = error?.find((item) => item?.field === fieldName);
       return errorObject?.message;
     }
   };
 
   const handleErrorFieldFromApi = (fieldName) => {
     if (error) {
-      const errorObject = error?.find((item) => item.field === fieldName);
+      const errorObject = error?.find((item) => item?.field === fieldName);
       if (errorObject) {
         return true;
       }
