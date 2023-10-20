@@ -65,7 +65,7 @@ const Address = () => {
           <div>{item.addressName}</div>
           <div className="flex justify-end items-center gap-4">
             <Link
-              to={generatePath(ROUTES.USER.ACCOUNT_ADDRESS_UPDATE, {
+              to={generatePath(ROUTES.USER.ACCOUNT.ADDRESS_UPDATE, {
                 addressId: item.id,
               })}
               className="w-24 h-10 flex justify-center items-center text-white bg-blue-600 rounded"
@@ -85,7 +85,7 @@ const Address = () => {
     <div className="w-full flex flex-col justify-center items-center bg-white rounded pt-4">
       <div className="w-full flex justify-end items-center pr-8">
         <Link
-          to={ROUTES.USER.ACCOUNT_ADDRESS_CREATE}
+          to={ROUTES.USER.ACCOUNT.ADDRESS_CREATE}
           className="flex justify-center items-center gap-2 px-4 py-2 text-white bg-primary rounded"
         >
           <FontAwesomeIcon icon="fas fa-plus" />

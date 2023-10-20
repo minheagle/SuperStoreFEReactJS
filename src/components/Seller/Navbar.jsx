@@ -41,12 +41,31 @@ const Navbar = () => {
       title: "Order",
       icon: "",
       path: generatePath(ROUTES.SELLER.ORDER.LIST, { shopName }),
+      child: [
+        {
+          id: 1,
+          title: "List",
+          path: generatePath(ROUTES.SELLER.ORDER.LIST, { shopName }),
+        },
+      ],
     },
     {
       id: 4,
       title: "Voucher",
       icon: "",
       path: generatePath(ROUTES.SELLER.VOUCHER.LIST, { shopName }),
+      child: [
+        {
+          id: 1,
+          title: "List",
+          path: generatePath(ROUTES.SELLER.VOUCHER.LIST, { shopName }),
+        },
+        {
+          id: 2,
+          title: "Create",
+          path: generatePath(ROUTES.SELLER.VOUCHER.CREATE, { shopName }),
+        },
+      ],
     },
   ];
 
@@ -117,6 +136,7 @@ const Navbar = () => {
       );
     });
   };
+
   return (
     <div className="w-full">
       <div className="w-full flex flex-col justify-start items-center gap-2 pr-2">

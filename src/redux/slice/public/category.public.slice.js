@@ -6,6 +6,11 @@ const initialState = {
     loading: false,
     error: "",
   },
+  all_leaf: {
+    data: [],
+    loading: false,
+    error: "",
+  },
 };
 
 const categoryPublicSlice = createSlice({
@@ -25,10 +30,29 @@ const categoryPublicSlice = createSlice({
       state.list.data = "";
       state.list.error = action.payload;
     },
+    getAllLeaf: (state) => {
+      state.all_leaf.loading = true;
+    },
+    getAllLeafSuccess: (state, action) => {
+      state.all_leaf.loading = false;
+      state.all_leaf.error = "";
+      state.all_leaf.data = action.payload;
+    },
+    getAllLeafFailure: (state, action) => {
+      state.all_leaf.loading = false;
+      state.all_leaf.data = "";
+      state.all_leaf.error = action.payload;
+    },
   },
 });
 
-export const { getAllList, getAllListSuccess, getAllListFailure } =
-  categoryPublicSlice.actions;
+export const {
+  getAllList,
+  getAllListSuccess,
+  getAllListFailure,
+  getAllLeaf,
+  getAllLeafSuccess,
+  getAllLeafFailure,
+} = categoryPublicSlice.actions;
 
 export default categoryPublicSlice.reducer;

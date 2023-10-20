@@ -25,6 +25,7 @@ const Cart = () => {
         userId: userData.id,
       })
     );
+    window.scroll(0, 0);
   }, []);
 
   const handleChangeCheckedCartItemList = (value) => {
@@ -51,10 +52,10 @@ const Cart = () => {
   };
 
   const handleRenderCartItem = () => {
-    return cart_list?.data?.map((item) => {
+    return cart_list?.data?.map((item, index) => {
       return (
         <div
-          key={item}
+          key={index}
           className="w-full flex justify-start items-center gap-4 border border-slate-300 rounded"
         >
           <CartItem

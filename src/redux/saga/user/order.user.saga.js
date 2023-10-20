@@ -6,6 +6,9 @@ import {
   getLinkPayment,
   getLinkPaymentSuccess,
   getLinkPaymentFailure,
+  handlePayment,
+  handlePaymentSuccess,
+  handlePaymentFailure,
 } from "../../slice/user/order.user.slice";
 import orderUserApi from "../../api/user/order.user.api";
 
@@ -33,9 +36,25 @@ function* getLinkPaymentSaga(action) {
   }
 }
 
+function* handlePaymentSaga(action) {
+  try {
+    const { informationStatusPayment, callback } = action.payload;
+    const response = yield call(
+      orderUserApi.handlePayment,
+      informationStatusPayment
+    );
+    yield put(handlePaymentSuccess(response));
+    yield callback.getNewOrder();
+    yield callback.redirect();
+  } catch (error) {
+    yield put(handlePaymentFailure(error.message));
+  }
+}
+
 function* orderForUserSaga() {
   yield takeLatest(getListOrder, getListOrderSaga);
   yield takeLatest(getLinkPayment, getLinkPaymentSaga);
+  yield takeLatest(handlePayment, handlePaymentSaga);
 }
 
 export default orderForUserSaga;

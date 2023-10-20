@@ -89,6 +89,7 @@ const cartSlice = createSlice({
       state.delete_cart_item.loading = false;
       state.delete_cart_item.error = "";
       state.cart_list.data = action.payload;
+      state.cart_list.total = state.cart_list.total - 1;
     },
     deleteCartItemFailure: (state, action) => {
       state.delete_cart_item.loading = false;

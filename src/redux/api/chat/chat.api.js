@@ -19,6 +19,15 @@ const createUser = async (username) => {
   }
 };
 
+const getDetail = async (userId) => {
+  try {
+    const response = await instance.get(`/auth/get-detail/${userId}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const getAllUserById = async (id) => {
   try {
     const response = await instance.get(`/auth/allusers/${id}`, {
@@ -50,21 +59,60 @@ const changeAvatar = async (id, image) => {
   }
 };
 
-const receiveMessage = async (from, to) => {
+const receiveMessage = async (chatId) => {
   try {
-    const response = await instance.post(`/messages/get-message`, { from, to });
+    const response = await instance.get(`/messages/get-message/${chatId}`);
     return response;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const sendMessage = async (from, to, message) => {
+const sendMessage = async (chatId, senderId, text) => {
   try {
     const response = await instance.post(`/messages/add-message`, {
-      from,
-      to,
-      message,
+      chatId,
+      senderId,
+      text,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const createChat = async (senderId, receiverId) => {
+  try {
+    const response = await instance.post("/chats/create", {
+      senderId,
+      receiverId,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getAllChat = async (userId) => {
+  try {
+    const response = await instance.get(`/chats/${userId}`, {
+      params: {
+        userId,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const findChat = async (firstId, secondId) => {
+  try {
+    const response = await instance.get(`/chats/find/${firstId}/${secondId}`, {
+      params: {
+        firstId,
+        secondId,
+      },
     });
     return response;
   } catch (error) {
@@ -74,11 +122,15 @@ const sendMessage = async (from, to, message) => {
 
 const chatApi = {
   createUser,
+  getDetail,
   getAllUserById,
   changeUserName,
   changeAvatar,
   receiveMessage,
   sendMessage,
+  createChat,
+  getAllChat,
+  findChat,
 };
 
 export default chatApi;

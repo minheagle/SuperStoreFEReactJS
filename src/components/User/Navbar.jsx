@@ -12,20 +12,20 @@ const Navbar = () => {
       id: 1,
       title: "My Account",
       icon: "fas fa-user",
-      path: ROUTES.USER.ACCOUNT,
+      path: ROUTES.USER.ACCOUNT.PROFILE,
       child: [
-        { id: 1, title: "Profile", path: ROUTES.USER.ACCOUNT_PROFILE },
-        { id: 2, title: "Payment", path: ROUTES.USER.ACCOUNT_PAYMENT },
-        { id: 3, title: "Address", path: ROUTES.USER.ACCOUNT_ADDRESS },
+        { id: 1, title: "Profile", path: ROUTES.USER.ACCOUNT.PROFILE },
+        { id: 2, title: "Payment", path: ROUTES.USER.ACCOUNT.PAYMENT },
+        { id: 3, title: "Address", path: ROUTES.USER.ACCOUNT.ADDRESS },
         {
           id: 4,
           title: "Change password",
-          path: ROUTES.USER.ACCOUNT_CHANGE_PASSWORD,
+          path: ROUTES.USER.ACCOUNT.CHANGE_PASSWORD,
         },
         {
           id: 5,
           title: "Notification Setting",
-          path: ROUTES.USER.ACCOUNT_SETTING_NOTIFICATION,
+          path: ROUTES.USER.ACCOUNT.SETTING_NOTIFICATION,
         },
       ],
     },
@@ -58,8 +58,15 @@ const Navbar = () => {
       id: 5,
       title: "Voucher",
       icon: "fas fa-gift",
-      path: ROUTES.USER.VOUCHER_WALLET,
-      child: [],
+      path: ROUTES.USER.VOUCHER_WALLET.LIST,
+      child: [
+        { id: 1, title: "List", path: ROUTES.USER.VOUCHER_WALLET.LIST },
+        {
+          id: 2,
+          title: "Available",
+          path: ROUTES.USER.VOUCHER_WALLET.AVAILABLE,
+        },
+      ],
     },
   ];
 
@@ -88,8 +95,8 @@ const Navbar = () => {
     });
   };
 
-  const handleRenderNavbarList = () => {
-    return navbarList?.map((item) => {
+  const handleRenderNavbar = () => {
+    return navbarList.map((item) => {
       return (
         <div
           key={item.id}
@@ -105,12 +112,16 @@ const Navbar = () => {
                   isActive ? styleActiveNavbar : ""
                 }`}
               >
-                <FontAwesomeIcon
-                  icon={item.icon}
-                  className={`text-xl text-primary group-hover:text-white ${
-                    isActive ? "text-white" : ""
-                  }`}
-                />
+                {item.icon ? (
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={`text-xl text-primary group-hover:text-white ${
+                      isActive ? "text-white" : ""
+                    }`}
+                  />
+                ) : (
+                  ""
+                )}
                 <span>{item.title}</span>
               </div>
             )}
@@ -159,7 +170,7 @@ const Navbar = () => {
       </div>
       <div className="w-full flex justify-center items-center">
         <div className="w-full flex flex-col justify-start items-center">
-          {handleRenderNavbarList()}
+          {handleRenderNavbar()}
         </div>
       </div>
     </div>

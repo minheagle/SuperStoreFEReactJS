@@ -10,6 +10,9 @@ const initialState = {
     loading: false,
     error: "",
   },
+  payment: {
+    loading: false,
+  },
 };
 
 const orderForUserSlice = createSlice({
@@ -38,6 +41,17 @@ const orderForUserSlice = createSlice({
     getLinkPaymentFailure: (state, action) => {
       state.get_link_payment.loading = false;
     },
+    handlePayment: (state) => {
+      state.payment.loading = true;
+    },
+    handlePaymentSuccess: (state, action) => {
+      state.payment.loading = false;
+      // state.list_order.data = action.payload;
+    },
+    handlePaymentFailure: (state, action) => {
+      state.payment.loading = false;
+      // state.list_order.data = action.payload;
+    },
   },
 });
 
@@ -48,6 +62,9 @@ export const {
   getLinkPayment,
   getLinkPaymentSuccess,
   getLinkPaymentFailure,
+  handlePayment,
+  handlePaymentSuccess,
+  handlePaymentFailure,
 } = orderForUserSlice.actions;
 
 export default orderForUserSlice.reducer;

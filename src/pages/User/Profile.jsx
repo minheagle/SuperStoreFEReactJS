@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import DatePicker from "react-datepicker";
@@ -14,6 +14,10 @@ import { updateUser } from "../../redux/slice/user/user.slice";
 const Profile = () => {
   const dispatch = useDispatch();
   const userData = JSON.parse(localStorage.getItem("userData"));
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const initialValues = {
     userName: userData?.userName ? userData.userName : "",

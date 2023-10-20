@@ -42,9 +42,9 @@ const OptionForProduct = ({
   const handleRenderOptions = () => {
     return options?.map((item, index) => {
       return (
-        <div key={index} className="w-1/4 flex justify-center items-center p-2">
+        <div key={index} className="w-1/2 flex justify-center items-center p-2">
           <div className="relative w-full flex flex-col justify-start items-start">
-            <div className="w-full flex flex-col justify-start items-center border-2 border-slate-500 rounded pt-6">
+            <div className="w-full flex flex-col justify-start items-center border-2 border-slate-500 rounded pt-6 pl-4">
               <label
                 htmlFor=""
                 className="w-full flex justify-normal items-center gap-1"

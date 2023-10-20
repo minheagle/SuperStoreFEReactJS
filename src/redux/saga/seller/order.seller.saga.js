@@ -20,7 +20,7 @@ function* getAllOrderSaga(action) {
   try {
     const { sellerId } = action.payload;
     const response = yield call(orderForSellerApi.getAllOrder, sellerId);
-    yield put(getAllOrderSuccess(response));
+    yield put(getAllOrderSuccess(response.results.data));
   } catch (error) {
     yield put(getAllOrderFailure(error.message));
   }

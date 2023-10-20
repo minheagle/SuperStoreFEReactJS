@@ -11,16 +11,18 @@ const createUser = async (newUser) => {
 
 const getAllUser = async () => {
   try {
-    const response = await axios.get("/admin/users", { withCredentials: true });
-    return response.results;
+    const response = await axios.get("/admin/users/list-user", {
+      withCredentials: true,
+    });
+    return response;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const getUserDetail = async (userId) => {
+const getUserDetail = async (userName) => {
   try {
-    const response = await axios.get(`/admin/users/${userId}`);
+    const response = await axios.get(`/admin/users/${userName}`);
     return response.results;
   } catch (error) {
     throw new Error(error.message);

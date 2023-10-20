@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { takeLatest, takeEvery, call, put } from "redux-saga/effects";
 import {
   getUser,
@@ -23,6 +22,7 @@ function* registerSaga(action) {
     const { data, callback } = action.payload;
     const response = yield call(authApi.register, data);
     const responseChat = yield call(chatApi.createUser, response.userName);
+    console.log(responseChat);
     yield call(authApi.addChatId, response?.id, responseChat.user._id);
     yield put(registerSuccess());
     yield callback.goToLogin();

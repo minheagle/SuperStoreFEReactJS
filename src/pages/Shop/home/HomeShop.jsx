@@ -7,6 +7,7 @@ import defaultImageForProduct from "../../../assets/default-product-image.png";
 
 import { getProductOfShop } from "../../../redux/slice/public/shop.public.slice";
 import LoadingFull from "../../../components/common/LoadingFull";
+import VoucherOfShop from "../../../components/Shop/VoucherOfShop";
 
 const HomeShop = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const HomeShop = () => {
         shopId: state.shopId,
       })
     );
+    window.scroll(0, 0);
   }, []);
 
   if (loading) {
@@ -37,9 +39,9 @@ const HomeShop = () => {
         item.imageProductList.map((img) => img.imgProductUrl)
       );
       return (
-        <div key={item.productId} className="col-span-1 p-2">
-          <div className="w-full border border-slate-300 rounded">
-            <div className="w-full">
+        <div key={item.productId} className="col-span-1 w-full p-2">
+          <div className="w-full h-[350px] flex flex-col justify-start items-center border border-slate-300 rounded">
+            <div className="shrink-0 w-full">
               {imageList.length === 0 ? (
                 <img
                   src={defaultImageForProduct}
@@ -54,29 +56,37 @@ const HomeShop = () => {
                 />
               )}
             </div>
-            <div className="w-full px-2">
-              <span>{item.productName}</span>
-            </div>
-            <div className="w-full flex justify-between items-center text-xs text-primary px-2">
-              <span className="">
-                {item.minPrice.toLocaleString() + " vnđ"}
-              </span>
-              <span className="">
-                {item.maxPrice.toLocaleString() + " vnđ"}
-              </span>
-            </div>
-            <div className="w-full flex justify-between items-center px-2 py-4">
-              {/* <button className="bg-primary rounded text-white px-2 py-1">
-                Add to cart
-              </button> */}
-              <Link
-                to={generatePath(ROUTES.PUBLIC.PRODUCT_DETAIL, {
-                  productId: item.productId,
-                })}
-                className="bg-red-600 text-white px-2 py-1 rounded"
-              >
-                View
-              </Link>
+            <div className="flex-1 w-full flex flex-col justify-start items-center">
+              <div className="flex-1 w-full px-2">
+                <p className="line-clamp-3">{item.productName}</p>
+              </div>
+              <div className="shrink-0 w-full h-16 flex flex-col justify-start items-center">
+                <div className="w-full h-8 flex justify-between items-center text-xs text-primary px-2">
+                  {item.minPrice === item.maxPrice ? (
+                    <span className="text-base">
+                      {item.minPrice.toLocaleString() + " vnđ"}
+                    </span>
+                  ) : (
+                    <div className="w-full flex justify-between items-center gap-1 text-base">
+                      <span className="">{item.minPrice.toLocaleString()}</span>
+                      <span>...</span>
+                      <span className="">
+                        {item.maxPrice.toLocaleString() + " vnđ"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="w-full h-8 flex justify-between items-center px-2 py-4">
+                  <Link
+                    to={generatePath(ROUTES.PUBLIC.PRODUCT_DETAIL, {
+                      productId: item.productId,
+                    })}
+                    className="w-14 h-6 flex justify-center items-center bg-red-600 text-white rounded"
+                  >
+                    View
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -85,7 +95,12 @@ const HomeShop = () => {
   };
 
   return (
-    <div className="w-full grid grid-cols-6">{handleRenderProductList()}</div>
+    <div className="w-full flex flex-col justify-start items-center gap-4">
+      <div className="w-full">
+        <VoucherOfShop shopId={state.shopId} />
+      </div>
+      <div className="w-full grid grid-cols-6">{handleRenderProductList()}</div>
+    </div>
   );
 };
 

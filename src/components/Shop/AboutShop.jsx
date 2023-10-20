@@ -21,7 +21,7 @@ const AboutShop = () => {
     );
   }, []);
 
-  console.log(data);
+  // console.log(data);
   return (
     <div className="w-full h-64 bg-white grid grid-cols-12">
       <div className="col-span-1"></div>

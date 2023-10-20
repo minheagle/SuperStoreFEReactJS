@@ -30,6 +30,26 @@ const initialState = {
     message: "",
     error: "",
   },
+  update_product_item: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  update_image_product_item: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  delete_product: {
+    loading: false,
+    message: "",
+    error: "",
+  },
+  delete_product_item: {
+    loading: false,
+    message: "",
+    error: "",
+  },
 };
 
 const productForSellerSlice = createSlice({
@@ -94,14 +114,66 @@ const productForSellerSlice = createSlice({
       state.update_product.loading = true;
     },
     updateProductSuccess: (state, action) => {
-      state.update_product.loading = true;
+      state.update_product.loading = false;
       state.update_product.error = "";
       state.update_product.message = action.payload;
     },
     updateProductFailure: (state, action) => {
-      state.update_product.loading = true;
+      state.update_product.loading = false;
       state.update_product.message = "";
       state.update_product.error = action.payload;
+    },
+    updateProductItem: (state) => {
+      state.update_product_item.loading = true;
+    },
+    updateProductItemSuccess: (state, action) => {
+      state.update_product_item.loading = false;
+      state.update_product_item.error = "";
+      state.update_product_item.message = action.payload;
+    },
+    updateProductItemFailure: (state, action) => {
+      state.update_product_item.loading = false;
+      state.update_product_item.message = "";
+      state.update_product_item.error = action.payload;
+    },
+    updateImageProductItem: (state) => {
+      state.update_image_product_item.loading = true;
+    },
+    updateImageProductItemSuccess: (state, action) => {
+      state.update_image_product_item.loading = false;
+      state.update_image_product_item.error = "";
+      state.update_image_product_item.message = action.payload;
+    },
+    updateImageProductItemFailure: (state, action) => {
+      state.update_image_product_item.loading = false;
+      state.update_image_product_item.message = "";
+      state.update_image_product_item.error = action.payload;
+    },
+    deleteProduct: (state) => {
+      state.delete_product.loading = true;
+    },
+    deleteProductSuccess: (state, action) => {
+      state.delete_product.loading = false;
+      state.delete_product.error = "";
+      state.delete_product.message = action.payload;
+    },
+    deleteProductFailure: (state, action) => {
+      state.delete_product.loading = false;
+      state.delete_product.message = "";
+      state.delete_product.error = action.payload;
+    },
+    deleteProductItem: (state) => {
+      state.delete_product_item.loading = true;
+    },
+    deleteProductItemSuccess: (state, action) => {
+      state.delete_product_item.loading = false;
+      state.delete_product_item.error = "";
+      state.delete_product_item.message = action.payload;
+    },
+    deleteProductItemFailure: (state, action) => {
+      state.delete_product_item.loading = false;
+      state.delete_product_item.message = "";
+      state.delete_product_item.error = action.payload;
     },
   },
 });
@@ -122,6 +194,18 @@ export const {
   updateProduct,
   updateProductSuccess,
   updateProductFailure,
+  updateProductItem,
+  updateProductItemSuccess,
+  updateProductItemFailure,
+  updateImageProductItem,
+  updateImageProductItemSuccess,
+  updateImageProductItemFailure,
+  deleteProduct,
+  deleteProductSuccess,
+  deleteProductFailure,
+  deleteProductItem,
+  deleteProductItemSuccess,
+  deleteProductItemFailure,
 } = productForSellerSlice.actions;
 
 export default productForSellerSlice.reducer;

@@ -14,8 +14,16 @@ const DetailUser = () => {
     (state) => state.UserForAdmin.detail
   );
 
+  useEffect(() => {
+    dispatch(
+      getUserDetail({
+        userName: state.userName,
+      })
+    );
+  }, [state.userName]);
+
   const userInfo = {
-    id: data?._id ? data._id : "",
+    id: data?.id ? data.id : "",
     fullName: data?.fullName ? data.fullName : "",
     address: data?.address ? data.address : "",
     email: data?.email ? data.email : "",
@@ -29,9 +37,6 @@ const DetailUser = () => {
     isBanned: data?.isBanned ? data.isBanned : false,
   };
 
-  useEffect(() => {
-    dispatch(getUserDetail(state.userId));
-  }, [state.userId]);
   return (
     <div className="w-full flex justify-center items-center p-4">
       <div className="w-full bg-white p-8 rounded">
@@ -54,10 +59,10 @@ const DetailUser = () => {
                   <h3 className="w-1/3 font-medium">Full Name : </h3>
                   <span className="flex-1">{userInfo.fullName}</span>
                 </div>
-                <div className="w-full flex justify-start items-center gap-4">
+                {/* <div className="w-full flex justify-start items-center gap-4">
                   <h3 className="w-1/3 font-medium">Address : </h3>
                   <span className="flex-1">{userInfo.address}</span>
-                </div>
+                </div> */}
                 <div className="w-full flex justify-start items-center gap-4">
                   <h3 className="w-1/3 font-medium">Phone : </h3>
                   <span className="flex-1">{userInfo.phone}</span>
@@ -133,59 +138,6 @@ const DetailUser = () => {
         <div className="w-full flex justify-start content-start gap-4">
           <div className="w-1/3 flex flex-col justify-start items-center border-2 border-slate-500 rounded">
             <h3 className="text-xl font-semibold">Actions</h3>
-            {/* <div className="w-full flex flex-col justify-start items-center gap-4 p-4">
-              <div className="w-full flex justify-between items-center">
-                <div className="">
-                  <span className="">Blocked Account</span>
-                </div>
-                <button>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value={userInfo.isBlocked}
-                      checked={userInfo.isBlocked}
-                      className="sr-only peer"
-                      readOnly
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </button>
-              </div>
-              <div className="w-full flex justify-between items-center">
-                <div className="">
-                  <span className="">Active Account</span>
-                </div>
-                <button>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value={userInfo.isActive}
-                      checked={userInfo.isActive}
-                      className="sr-only peer"
-                      readOnly
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </button>
-              </div>
-              <div className="w-full flex justify-between items-center">
-                <div className="">
-                  <span className="">Banned Account</span>
-                </div>
-                <button>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value={userInfo.isBanned}
-                      checked={userInfo.isBanned}
-                      className="sr-only peer"
-                      readOnly
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </button>
-              </div>
-            </div> */}
           </div>
           <div className="w-1/3 flex flex-col justify-start items-center border-2 border-slate-500 rounded">
             <h3 className="text-xl font-semibold">Actions</h3>

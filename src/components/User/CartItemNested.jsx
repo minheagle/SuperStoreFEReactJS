@@ -76,9 +76,7 @@ const CartItemNested = ({ data, checkedListItem, handleCheckboxChange }) => {
           </div>
         </div>
         <div className="flex-1 h-24 flex justify-start items-center">
-          <p className="overflow-hidden text-ellipsis break-all">
-            {data?.product?.productName}
-          </p>
+          <p className="line-clamp-2">{data?.product?.productName}</p>
         </div>
       </div>
       <div className="w-3/5 flex justify-around items-center">

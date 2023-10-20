@@ -4,6 +4,7 @@ import { Link, generatePath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { getAllUser } from "../../../redux/slice/admin/userForAdmin.slice";
+import defaultAvatar from "../../../assets/default-avatar.jpg";
 
 import Table from "../../../components/common/Table";
 import Paging from "../../../components/common/Paging";
@@ -12,9 +13,13 @@ import ROUTES from "../../../constants/ROUTES";
 const Users = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, loading, error, totalCount } = useSelector(
+  const { data, loading, error, paging } = useSelector(
     (state) => state.UserForAdmin.list
   );
+
+  const total = paging?.totalElements
+    ? Number.parseInt(paging.totalElements)
+    : 0;
 
   useEffect(() => {
     dispatch(getAllUser());
@@ -22,9 +27,33 @@ const Users = () => {
 
   const columns = [
     {
-      key: "fullName",
-      title: "FullName",
-      layout: "3/12",
+      key: "userName",
+      title: "Username",
+      layout: "4/12",
+      render: (record) => {
+        return (
+          <div className="w-full flex justify-start items-center gap-2">
+            <div className="shrink-0 w-12 h-12 flex justify-center items-center">
+              {record?.imageUrl ? (
+                <img
+                  src={record.imageUrl}
+                  alt=""
+                  className="w-full object-cover aspect-square rounded-full"
+                />
+              ) : (
+                <img
+                  src={defaultAvatar}
+                  alt=""
+                  className="w-full object-cover aspect-square rounded-full"
+                />
+              )}
+            </div>
+            <div className="flex-1">
+              <span className="line-clamp-1">{record.userName}</span>
+            </div>
+          </div>
+        );
+      },
     },
     {
       key: "phone",
@@ -39,31 +68,44 @@ const Users = () => {
     {
       key: "role",
       title: "Role",
-      layout: "1/12",
+      layout: "2/12",
+      render: (record) => {
+        return (
+          <div className="w-full flex flex-col justify-start items-start">
+            <ul>
+              {record?.roles?.map((item) => {
+                return <li key={item.id}>{item.name}</li>;
+              })}
+            </ul>
+          </div>
+        );
+      },
     },
     {
       key: "actions",
       title: "Actions",
-      layout: "3/12",
+      layout: "1/12",
       render: (record) => {
         return (
           <div className="w-full flex justify-around items-center">
             <Link
-              to={record._id}
-              state={{ userId: record._id }}
-              className="w-1/4 text-center text-white bg-green-600 rounded"
+              to={generatePath(ROUTES.ADMIN.USERS.DETAIL, {
+                userName: record.userName,
+              })}
+              state={{ userName: record.userName }}
             >
-              View
+              <FontAwesomeIcon icon="fas fa-info-circle" className="" />
             </Link>
             <Link
-              to={generatePath(ROUTES.ADMIN.USERS.EDIT, { id: record._id })}
-              state={{ userId: record._id }}
-              className="w-1/4 text-center text-white bg-yellow-400 rounded"
+              to={generatePath(ROUTES.ADMIN.USERS.EDIT, {
+                userName: record.userName,
+              })}
+              state={{ userName: record.userName }}
             >
-              Edit
+              <FontAwesomeIcon icon="fas fa-edit" className="text-yellow-500" />
             </Link>
-            <button className="w-1/4 text-white bg-red-500 rounded">
-              Delete
+            <button>
+              <FontAwesomeIcon icon="fas fa-trash" className="text-red-600" />
             </button>
           </div>
         );
@@ -106,7 +148,7 @@ const Users = () => {
           styleCellBody="border border-slate-500 p-2"
           className="w-full border-collapse border border-slate-500"
         />
-        <Paging total={totalCount} />
+        <Paging total={total} />
       </div>
     </div>
   );

@@ -9,6 +9,10 @@ import NotAuthentication from "./chat/NotAuthentication";
 const Chat = () => {
   const [openChat, setOpenChat] = useState(false);
   const [openListChat, setOpenListChat] = useState(false);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [receiverId, setReceiverId] = useState(null);
+
+  console.log(receiverId);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
@@ -25,19 +29,33 @@ const Chat = () => {
   const handleToggleListChat = (value) => {
     setOpenListChat(value);
   };
+
+  const handleChangeCurrentChat = (value) => {
+    setCurrentChat(value);
+  };
+
+  const handleChangeReceiverId = (value) => {
+    setReceiverId(value);
+  };
+
   return (
     <div className="sticky bottom-0 right-0 z-40 w-full flex justify-end items-center  pr-2">
       {openChat ? (
         <div className="flex justify-center items-center border border-slate-300 rounded">
           {openListChat ? (
             <div className="w-48 h-96 bg-white">
-              <ChatList chatId={userData?.chatId} />
+              <ChatList
+                chatId={userData?.chatId}
+                currentChat={currentChat}
+                handleChangeCurrentChat={handleChangeCurrentChat}
+                handleChangeReceiverId={handleChangeReceiverId}
+              />
             </div>
           ) : (
             ""
           )}
           <div className="w-96 h-96 bg-white">
-            <div className="w-full h-6 flex justify-between items-center border-b border-slate-300">
+            <div className="w-full h-8 flex justify-between items-center border-b border-slate-300">
               <span className="font-medium pl-2">Chat</span>
               <div className="flex justify-center items-center gap-4">
                 {userData ? (
@@ -57,7 +75,18 @@ const Chat = () => {
                 </button>
               </div>
             </div>
-            {userData ? <ChatWindow /> : <NotAuthentication />}
+            <div className="w-full h-88">
+              {userData ? (
+                <ChatWindow
+                  currentChat={currentChat}
+                  receiverId={receiverId}
+                  handleChangeCurrentChat={handleChangeCurrentChat}
+                  handleChangeReceiverId={handleChangeReceiverId}
+                />
+              ) : (
+                <NotAuthentication />
+              )}
+            </div>
           </div>
         </div>
       ) : (

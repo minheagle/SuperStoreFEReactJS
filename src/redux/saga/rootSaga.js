@@ -13,6 +13,10 @@ import shopPublicSaga from "./public/shop.public.saga";
 import orderForSellerSaga from "./seller/order.seller.saga";
 import orderForUserSaga from "./user/order.user.saga";
 import questionAndAnswerSaga from "./Q&A/question.and.answer.saga";
+import chatSaga from "./chat/chat.saga";
+import voucherForSellerSaga from "./seller/voucher.seller.saga";
+import voucherPublicSaga from "./public/voucher.public.saga";
+import voucherUserSaga from "./user/voucher.user.saga";
 
 function* rootSaga() {
   yield all([
@@ -30,6 +34,10 @@ function* rootSaga() {
     orderForSellerSaga(),
     orderForUserSaga(),
     questionAndAnswerSaga(),
+    chatSaga(),
+    voucherForSellerSaga(),
+    voucherPublicSaga(),
+    voucherUserSaga(),
   ]);
 }
 

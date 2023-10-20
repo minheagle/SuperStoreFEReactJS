@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, generatePath } from "react-router-dom";
 
@@ -17,6 +17,7 @@ import handleRoles from "../../utils/handle/handleRoles.js";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showFilter, setShowFilter] = useState(false);
 
   const { cart_list } = useSelector((state) => state.Cart);
   const { data } = useSelector((state) => state.Auth.information);
@@ -41,6 +42,10 @@ const Header = () => {
       );
     }
   }, [data]);
+
+  const handleToggleShowFilter = (value) => {
+    setShowFilter(value);
+  };
 
   const handleShopName = () => {
     const shopName = shopData.storeName.replaceAll(" ", "-");
@@ -70,32 +75,61 @@ const Header = () => {
 
   const handleSearch = () => {
     if (maxPrice === 0) {
-      dispatch(
-        getAllListProduct({
-          params: {
-            categoryId,
-            minPrice,
-            productName,
-            page,
-            size,
-            sort,
-          },
-        })
-      );
+      if (categoryId) {
+        dispatch(
+          getAllListProduct({
+            params: {
+              categoryId,
+              minPrice,
+              productName,
+              page,
+              size,
+              sort,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          getAllListProduct({
+            params: {
+              minPrice,
+              productName,
+              page,
+              size,
+              sort,
+            },
+          })
+        );
+      }
     } else {
-      dispatch(
-        getAllListProduct({
-          params: {
-            categoryId,
-            minPrice,
-            maxPrice,
-            productName,
-            page,
-            size,
-            sort,
-          },
-        })
-      );
+      if (categoryId) {
+        dispatch(
+          getAllListProduct({
+            params: {
+              categoryId,
+              minPrice,
+              maxPrice,
+              productName,
+              page,
+              size,
+              sort,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          getAllListProduct({
+            params: {
+              minPrice,
+              maxPrice,
+              productName,
+              page,
+              size,
+              sort,
+            },
+          })
+        );
+      }
     }
   };
 
@@ -170,7 +204,7 @@ const Header = () => {
                 </Link>
               </div>
             </div>
-            <div className="col-span-3 flex justify-start items-center">
+            <div className="col-span-3 flex justify-start items-center gap-4">
               <div className="w-full flex justify-start items-center bg-white p-1 rounded">
                 <FontAwesomeIcon
                   icon="fas fa-search"
@@ -188,6 +222,23 @@ const Header = () => {
                   Search
                 </button>
               </div>
+              <button
+                onClick={() => handleToggleShowFilter(!showFilter)}
+                className="w-16 h-8 flex justify-center items-center text-white border border-white rounded"
+              >
+                <div className="w-6 h-6 flex justify-center items-center">
+                  <FontAwesomeIcon icon="fas fa-filter" />
+                </div>
+                {showFilter ? (
+                  <div className="w-6 h-6 flex justify-center items-center">
+                    <FontAwesomeIcon icon="fas fa-long-arrow-alt-up" />
+                  </div>
+                ) : (
+                  <div className="w-6 h-6 flex justify-center items-center">
+                    <FontAwesomeIcon icon="fas fa-long-arrow-alt-down" />
+                  </div>
+                )}
+              </button>
             </div>
             <div className="col-span-1 flex justify-end items-center text-white">
               <div className="relative h-12 flex justify-end items-center gap-8">
@@ -235,7 +286,7 @@ const Header = () => {
                             Dashboard
                           </Link>
                           <Link
-                            to={ROUTES.USER.ACCOUNT_PROFILE}
+                            to={ROUTES.USER.ACCOUNT.PROFILE}
                             className="w-full text-slate-700 hover:text-white hover:bg-primary pl-2 rounded"
                           >
                             Information
@@ -250,7 +301,7 @@ const Header = () => {
                       ) : (
                         <div className="flex flex-col justify-center items-start gap-2 rounded">
                           <Link
-                            to={ROUTES.USER.ACCOUNT_PROFILE}
+                            to={ROUTES.USER.ACCOUNT.PROFILE}
                             className="w-full text-slate-700 hover:text-white hover:bg-primary pl-2 rounded"
                           >
                             Information
@@ -299,9 +350,13 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-6 h-12 grid grid-cols-7">
-            <SearchAndFilter />
-          </div>
+          {showFilter ? (
+            <div className="col-span-6 h-12 grid grid-cols-7">
+              <SearchAndFilter />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="col-span-1"></div>

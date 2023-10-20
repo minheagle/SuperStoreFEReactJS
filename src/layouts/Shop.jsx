@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Public/Header";
 import Footer from "../components/Public/Footer";
 import AboutShop from "../components/Shop/AboutShop";
+import Chat from "../components/common/Chat";
 
 const Shop = () => {
   return (
@@ -22,6 +23,7 @@ const Shop = () => {
         </div>
       </div>
       <Footer />
+      <Chat />
     </div>
   );
 };

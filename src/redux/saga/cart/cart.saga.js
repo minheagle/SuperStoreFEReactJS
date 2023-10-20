@@ -43,7 +43,7 @@ function* getCartListSaga(action) {
 
 function* addToCartSaga(action) {
   try {
-    const { productItem, userId } = action.payload;
+    const { productItem, userId, callback } = action.payload;
     const response = yield call(cartApi.add, productItem, userId);
     yield put(
       addToCartSuccess({
@@ -56,6 +56,7 @@ function* addToCartSaga(action) {
       "cartList",
       JSON.stringify(response.results.data)
     );
+    yield callback.notification("Add to card success !");
   } catch (error) {
     yield put(addToCartFailure(error.message));
   }

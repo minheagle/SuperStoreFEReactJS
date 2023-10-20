@@ -18,6 +18,10 @@ import searchFilterPagingSlice from "./slice/search_filter_paging/search.filter.
 import orderSellerSlice from "./slice/seller/order.seller.slice";
 import orderUserSlice from "./slice/user/order.user.slice";
 import questionAndAnswerSlice from "./slice/Q&A/question.and.answer.slice";
+import chatSlice from "./slice/chat/chat.slice";
+import voucherSellerSlice from "./slice/seller/voucher.seller.slice";
+import voucherPublicSlice from "./slice/public/voucher.public.slice";
+import voucherUserSlice from "./slice/user/voucher.user.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -37,6 +41,10 @@ const rootReducer = {
   OrderSeller: orderSellerSlice,
   OrderUser: orderUserSlice,
   QA: questionAndAnswerSlice,
+  Chat: chatSlice,
+  VoucherSeller: voucherSellerSlice,
+  VoucherPublic: voucherPublicSlice,
+  VoucherUser: voucherUserSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

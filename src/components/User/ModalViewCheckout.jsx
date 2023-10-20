@@ -17,7 +17,7 @@ const ModalViewCheckout = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [payment, setPayment] = useState(null);
+  const [payment, setPayment] = useState("");
   const { data } = useSelector((state) => state.Cart.checkout);
 
   const userData = localStorage.getItem("userData")
@@ -48,10 +48,10 @@ const ModalViewCheckout = ({
   };
 
   const handleRenderCartItem = () => {
-    return data?.map((item) => {
+    return data?.map((item, index) => {
       return (
         <div
-          key={item}
+          key={index}
           className="w-full flex justify-start items-center gap-4 border border-slate-300 rounded"
         >
           <CartItemCheckout item={item} />

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   list: {
     data: [],
-    totalCount: null,
+    paging: null,
     loading: false,
     error: "",
   },
@@ -41,7 +41,7 @@ const userForAdminSlice = createSlice({
     getAllUserSuccess: (state, action) => {
       state.list.loading = false;
       state.list.data = action.payload.data;
-      state.list.totalCount = action.payload.totalCount;
+      state.list.paging = action.payload.paging;
     },
     getAllUserFailure: (state, action) => {
       state.list.loading = false;

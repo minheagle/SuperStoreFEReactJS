@@ -50,7 +50,6 @@ const Checkout = ({ data }) => {
     const cartList = cartHandle.handleCartCheckout(data);
     if (cartList?.length !== 0) {
       if (userData?.address?.length !== 0) {
-        console.log("Happy case");
         handleToggleOpenModal(true);
       } else {
         <Navigate to={ROUTES.USER.ACCOUNT_ADDRESS_CREATE} />;

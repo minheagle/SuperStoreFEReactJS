@@ -27,6 +27,8 @@ import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 import Cart from "./pages/User/Cart.jsx";
 import OrdersForUser from "./pages/User/Orders.jsx";
+import VoucherForUser from "./pages/User/Vouchers.jsx";
+import ClaimVoucher from "./pages/User/voucher/ClaimVoucher.jsx";
 
 // For Seller
 import Seller from "./layouts/Seller.jsx";
@@ -36,6 +38,9 @@ import CreateProductForSeller from "./pages/Seller/product/Create.jsx";
 import EditPageForSeller from "./pages/Seller/product/Edit.jsx";
 import EditProduct from "./pages/Seller/product/EditProduct.jsx";
 import EditProductItem from "./pages/Seller/product/EditProductItem.jsx";
+import OrdersForSeller from "./pages/Seller/order/Orders.jsx";
+import VouchersForSeller from "./pages/Seller/voucher/Vouchers.jsx";
+import CreateVoucher from "./pages/Seller/voucher/CreateVoucher.jsx";
 
 // For Admin
 import Admin from "./layouts/Admin.jsx";
@@ -81,22 +86,30 @@ function App() {
           <Route path={ROUTES.SHOP.HOME} element={<HomeShop />} />
         </Route>
         <Route element={<User />}>
-          <Route path={ROUTES.USER.ACCOUNT_PROFILE} element={<Profile />} />
-          <Route path={ROUTES.USER.ACCOUNT_ADDRESS} element={<Address />} />
+          <Route path={ROUTES.USER.ACCOUNT.PROFILE} element={<Profile />} />
+          <Route path={ROUTES.USER.ACCOUNT.ADDRESS} element={<Address />} />
           <Route
-            path={ROUTES.USER.ACCOUNT_ADDRESS_CREATE}
+            path={ROUTES.USER.ACCOUNT.ADDRESS_CREATE}
             element={<CreateAddress />}
           />
           <Route
-            path={ROUTES.USER.ACCOUNT_ADDRESS_UPDATE}
+            path={ROUTES.USER.ACCOUNT.ADDRESS_UPDATE}
             element={<UpdateAddress />}
           />
           <Route
-            path={ROUTES.USER.ACCOUNT_CHANGE_PASSWORD}
+            path={ROUTES.USER.ACCOUNT.CHANGE_PASSWORD}
             element={<ChangePassword />}
           />
           <Route path={ROUTES.USER.CART} element={<Cart />} />
           <Route path={ROUTES.USER.PURCHASE} element={<OrdersForUser />} />
+          <Route
+            path={ROUTES.USER.VOUCHER_WALLET.LIST}
+            element={<VoucherForUser />}
+          />
+          <Route
+            path={ROUTES.USER.VOUCHER_WALLET.AVAILABLE}
+            element={<ClaimVoucher />}
+          />
         </Route>
         <Route element={<Seller />}>
           <Route path={ROUTES.SELLER.HOME_PAGE.PAGE} element={<HomeSeller />} />
@@ -119,6 +132,18 @@ function App() {
           <Route
             path={ROUTES.SELLER.PRODUCT.UPDATE_PRODUCT_ITEMS}
             element={<EditProductItem />}
+          />
+          <Route
+            path={ROUTES.SELLER.ORDER.LIST}
+            element={<OrdersForSeller />}
+          />
+          <Route
+            path={ROUTES.SELLER.VOUCHER.LIST}
+            element={<VouchersForSeller />}
+          />
+          <Route
+            path={ROUTES.SELLER.VOUCHER.CREATE}
+            element={<CreateVoucher />}
           />
         </Route>
         <Route element={<Admin />}>

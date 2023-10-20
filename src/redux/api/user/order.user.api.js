@@ -18,6 +18,18 @@ const getLinkPayment = async (paymentServiceRequest) => {
   }
 };
 
-const orderUserApi = { getAll, getLinkPayment };
+const handlePayment = async (informationStatusPayment) => {
+  try {
+    const response = await axios.patch(
+      "/payment/status",
+      informationStatusPayment
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const orderUserApi = { getAll, getLinkPayment, handlePayment };
 
 export default orderUserApi;

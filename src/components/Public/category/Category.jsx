@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -10,6 +11,8 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import CategoryItem from "./CategoryItem";
 
+import { getAllLeaf } from "../../../redux/slice/public/category.public.slice";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -19,7 +22,11 @@ import "swiper/css/virtual";
 const Category = () => {
   const dispatch = useDispatch();
 
-  const { data } = useSelector((state) => state.CategoryPublic.list);
+  const { data } = useSelector((state) => state.CategoryPublic.all_leaf);
+
+  useEffect(() => {
+    dispatch(getAllLeaf());
+  }, []);
 
   const handleRenderCategoryList = () => {
     return data?.map((item, index) => {

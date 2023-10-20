@@ -60,7 +60,7 @@ const CreateProductItem = ({
         <span className="w-full flex justify-start items-center pl-2 font-semibold">
           Images :
         </span>
-        <div className="w-full">
+        <div className="w-full flex flex-wrap justify-start items-center">
           {value?.map((item, index) => {
             return (
               <div
@@ -114,11 +114,11 @@ const CreateProductItem = ({
       return (
         <div
           key={index}
-          className="w-1/2 flex justify-center content-stretch p-2"
+          className="col-span-1 w-full h-full flex justify-center content-stretch p-2"
           style={{ maxHeight: "100%" }}
         >
           <div className="w-full flex flex-col justify-start items-center border border-slate-500 rounded">
-            <div className="w-full flex justify-center items-center">
+            <div className="shrink-0 w-full flex justify-center items-center">
               <div className="w-1/2 flex justify-start items-center gap-2 pl-2">
                 <span className="font-semibold">Price :</span>
                 <span>{item.price}</span>
@@ -128,10 +128,10 @@ const CreateProductItem = ({
                 <span>{item.qtyInStock}</span>
               </div>
             </div>
-            <div className="w-full">
+            <div className="flex-1 w-full">
               {handleRenderImageForItem(item.imgProductFile)}
             </div>
-            <div className="w-full">
+            <div className="shrink-0 w-full">
               {handleRenderOptionForItem(item.optionTypeRequestList)}
             </div>
           </div>
@@ -219,33 +219,29 @@ const CreateProductItem = ({
                 />
               </div>
               {/* optionTypeRequestList */}
-              {createOption ? (
-                <div className="w-full">
-                  <div className="w-full flex justify-start items-center">
-                    <div className="w-1/2 flex justify-start items-center">
-                      <span className="font-semibold">Options :</span>
-                    </div>
-                    {errors.optionTypeRequestList ? (
-                      <div className="w-1/2 flex justify-end items-center">
-                        <span className="text-sm text-primary">
-                          {errors.optionTypeRequestList}
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+              <div className="w-full">
+                <div className="w-full flex justify-start items-center">
+                  <div className="w-1/2 flex justify-start items-center">
+                    <span className="font-semibold">Options :</span>
                   </div>
-                  <Field
-                    name="optionTypeRequestList"
-                    component={OptionForProduct}
-                    resetOptions={resetOptions}
-                    handleToggleResetOptions={handleToggleResetOptions}
-                    className="w-full border border-black shadow appearance-none rounded pl-2"
-                  />
+                  {errors.optionTypeRequestList ? (
+                    <div className="w-1/2 flex justify-end items-center">
+                      <span className="text-sm text-primary">
+                        {errors.optionTypeRequestList}
+                      </span>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              ) : (
-                ""
-              )}
+                <Field
+                  name="optionTypeRequestList"
+                  component={OptionForProduct}
+                  resetOptions={resetOptions}
+                  handleToggleResetOptions={handleToggleResetOptions}
+                  className="w-full border border-black shadow appearance-none rounded pl-2"
+                />
+              </div>
               {/* Submit */}
               <div className="w-full flex justify-start items-center">
                 {hasError ? (
@@ -275,26 +271,6 @@ const CreateProductItem = ({
                         </button>
                       </div>
                     </>
-                  ) : createOption ? (
-                    <>
-                      <div className="w-1/2 flex justify-start items-center">
-                        <button
-                          type="submit"
-                          className="w-24 h-10 text-white bg-primary rounded"
-                        >
-                          Add
-                        </button>
-                      </div>
-                      <div className="w-1/2 flex justify-end items-center">
-                        <button
-                          type="button"
-                          onClick={() => handleAddOptionView(false)}
-                          className="w-36 h-10 text-white bg-red-600 rounded"
-                        >
-                          Delete option ?
-                        </button>
-                      </div>
-                    </>
                   ) : (
                     <>
                       <div className="w-1/2 flex justify-start items-center">
@@ -305,15 +281,15 @@ const CreateProductItem = ({
                           Add
                         </button>
                       </div>
-                      <div className="w-1/2 flex justify-end items-center">
+                      {/* <div className="w-1/2 flex justify-end items-center">
                         <button
                           type="button"
-                          onClick={() => handleAddOptionView(true)}
-                          className="w-36 h-10 text-white bg-primary rounded"
+                          onClick={() => handleAddOptionView(false)}
+                          className="w-36 h-10 text-white bg-red-600 rounded"
                         >
-                          Add option ?
+                          Delete option ?
                         </button>
-                      </div>
+                      </div> */}
                     </>
                   )
                 ) : (
@@ -324,9 +300,7 @@ const CreateProductItem = ({
           </Form>
         )}
       </Formik>
-      <div className="w-full flex justify-start items-center flex-wrap">
-        {handleRenderItems()}
-      </div>
+      <div className="w-full grid grid-cols-2">{handleRenderItems()}</div>
     </div>
   );
 };

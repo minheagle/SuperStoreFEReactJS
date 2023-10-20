@@ -9,6 +9,15 @@ const getAll = async () => {
   }
 };
 
-const categoryPublicApi = { getAll };
+const getAllLeaf = async () => {
+  try {
+    const response = await axios.get("/public/categories/all-leaf");
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const categoryPublicApi = { getAll, getAllLeaf };
 
 export default categoryPublicApi;

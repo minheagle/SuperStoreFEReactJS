@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 const SubmitCreate = ({ product, productItem }) => {
   const { data } = useSelector((state) => state.CategoryPublic.list);
-  // console.log(productItem);
 
   const handleRenderImageForProductItem = (value) => {
     return value?.map((item, index) => {
@@ -20,6 +19,9 @@ const SubmitCreate = ({ product, productItem }) => {
   };
 
   const handleRenderOptionForProductItem = (value) => {
+    if (!value) {
+      return;
+    }
     return value?.map((item, index) => {
       return (
         <div
@@ -66,19 +68,24 @@ const SubmitCreate = ({ product, productItem }) => {
                 {handleRenderImageForProductItem(item.imgProductFile)}
               </div>
             </div>
-            <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
-              <span className="w-full flex justify-start items-center font-semibold">
-                Options :
-              </span>
-              <div className="w-full flex flex-wrap">
-                {handleRenderOptionForProductItem(item.optionTypeRequestList)}
+            {item.optionTypeRequestList ? (
+              <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
+                <span className="w-full flex justify-start items-center font-semibold">
+                  Options :
+                </span>
+                <div className="w-full flex flex-wrap">
+                  {handleRenderOptionForProductItem(item.optionTypeRequestList)}
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       );
     });
   };
+
   return (
     <div className="w-full flex flex-col justify-start items-center gap-4 p-4">
       <div className="w-full flex flex-col justify-start items-center gap-4 border border-slate-400 p-2 rounded">

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TreeSelect, Select } from "antd";
+import { Select } from "antd";
 
-import { getAllList } from "../../redux/slice/public/category.public.slice";
+import { getAllLeaf } from "../../redux/slice/public/category.public.slice";
 import {
   changeCategory,
   changeMaxPrice,
@@ -15,18 +15,20 @@ import convertToTree from "../../utils/handle/handleDataForTreeSelect";
 const SearchAndFilter = () => {
   const dispatch = useDispatch();
 
-  const { data, loading } = useSelector((state) => state.CategoryPublic.list);
+  const { data, loading } = useSelector(
+    (state) => state.CategoryPublic.all_leaf
+  );
   const { categoryId, minPrice, maxPrice, sort } = useSelector(
     (state) => state.Filter
   );
   const convertData = data.length === 0 ? [] : convertToTree(data);
 
   useEffect(() => {
-    dispatch(getAllList());
+    dispatch(getAllLeaf());
   }, []);
 
   const handleOnChangeCategory = (value) => {
-    dispatch(changeCategory(value));
+    dispatch(changeCategory(Number.parseInt(value)));
   };
 
   const handleOnChangeMinPrice = (e) => {
@@ -47,20 +49,33 @@ const SearchAndFilter = () => {
     dispatch(changeSort(value));
   };
 
+  const handleRenderCategory = () => {
+    const newData = [...data, { id: null, content: "None" }];
+    return newData?.map((item) => {
+      return (
+        <option key={item.id} value={item.id}>
+          {item.content}
+        </option>
+      );
+    });
+  };
+
   return (
     <div className="col-span-7 h-12 grid grid-cols-7 gap-4">
       <div className="col-span-1"></div>
       <div className="col-span-5 w-full flex justify-start items-center gap-2">
-        <div className="w-1/4 flex justify-start items-center gap-2">
-          <span className="shrink-0 text-white">Category</span>
-          <TreeSelect
-            notFoundContent={<div>No result</div>}
-            treeData={convertData}
-            value={categoryId}
-            placeholder="Select your category"
-            onChange={(value) => handleOnChangeCategory(value)}
-            className="flex-1 hover:border-slate-300"
-          />
+        <div className="w-1/4 flex justify-center items-center">
+          <div className="w-full flex justify-start items-center gap-2">
+            <span className="shrink-0 text-white">Category</span>
+            <div className="flex-1">
+              <select
+                onChange={(e) => handleOnChangeCategory(e.target.value)}
+                className="w-full h-8 outline-none rounded"
+              >
+                {handleRenderCategory()}
+              </select>
+            </div>
+          </div>
         </div>
         <div className="w-3/4 flex justify-start items-center gap-2">
           <div className="w-2/5 flex justify-start items-center gap-2">

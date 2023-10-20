@@ -1,30 +1,52 @@
 import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
 
-import chatApi from "../../../redux/api/chat/chat.api";
+import { getAllChat } from "../../../redux/slice/chat/chat.slice";
 
-const ChatList = ({ chatId }) => {
-  const [socket, setSocket] = useState(null);
-  const [listChat, setListChat] = useState([]);
+import ChatListItem from "./ChatListItem";
+
+const ChatList = ({
+  chatId,
+  currentChat,
+  handleChangeCurrentChat,
+  handleChangeReceiverId,
+}) => {
+  const dispatch = useDispatch();
+
+  const { get_all_chat } = useSelector((state) => state.Chat);
+
+  console.log(get_all_chat.data);
 
   useEffect(() => {
-    async function getData(chatId) {
-      try {
-        const response = await chatApi.getAllUserById(chatId);
-        setListChat(response.data);
-      } catch (error) {}
-    }
-    getData(chatId);
+    dispatch(getAllChat({ userId: chatId }));
   }, [chatId]);
+
+  const handleRenderListChat = () => {
+    return get_all_chat?.data?.map((item) => {
+      return (
+        <div key={item._id} className="w-full">
+          <ChatListItem
+            item={item}
+            currentId={chatId}
+            currentChat={currentChat}
+            handleChangeCurrentChat={handleChangeCurrentChat}
+            handleChangeReceiverId={handleChangeReceiverId}
+          />
+        </div>
+      );
+    });
+  };
 
   return (
     <div className="w-full h-full border-r border-slate-300">
-      {listChat.length === 0 ? (
+      {get_all_chat?.data?.length === 0 ? (
         <div className="w-full flex justify-center items-center">
           <span>List chat is empty</span>
         </div>
       ) : (
-        ""
+        <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
+          {handleRenderListChat()}
+        </div>
       )}
     </div>
   );

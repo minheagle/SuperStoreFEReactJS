@@ -60,9 +60,12 @@ const Edit = () => {
           key={option.opTypeId}
           className="col-span-1 w-full flex justify-center items-center gap-2 border border-slate-300 rounded"
         >
-          <span className="w-1/2 flex justify-end items-center font-medium">
-            {option.optionName} :
-          </span>
+          <div className="w-1/2 flex justify-start items-center font-medium pl-2">
+            <span className="flex-1 flex justify-start items-center">
+              {option.optionName}
+            </span>
+            <span className="shrink-0">:</span>
+          </div>
           <span className="w-1/2 flex justify-start items-center">
             {option.optionValue.valueName}
           </span>
@@ -73,54 +76,57 @@ const Edit = () => {
 
   const handleRenderProductItems = (data) => {
     return data?.map((productItem) => {
-      console.log(productItem);
       return (
         <div
           key={productItem.pitemId}
           className="col-span-1 border border-slate-300 rounded"
         >
-          <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
-            <div className="w-full flex justify-center items-center gap-2">
-              <span className="shrink-0 w-28 flex justify-start items-center font-medium">
-                Price
-              </span>
-              <span>:</span>
-              <span className="flex-1 flex justify-start items-center text-red-600">
-                {productItem.price.toLocaleString()} VNĐ
-              </span>
+          <div className="w-full h-full flex flex-col justify-start items-center gap-2 p-2">
+            <div className="shrink-0 w-full flex flex-col justify-start items-center gap-2">
+              <div className="w-full flex justify-center items-center gap-2">
+                <span className="shrink-0 w-28 flex justify-start items-center font-medium">
+                  Price
+                </span>
+                <span>:</span>
+                <span className="flex-1 flex justify-start items-center text-red-600">
+                  {productItem.price.toLocaleString()} VNĐ
+                </span>
+              </div>
+              <div className="w-full flex justify-center items-center gap-2">
+                <span className="shrink-0 w-28 flex justify-start items-center font-medium">
+                  Quantity Stock
+                </span>
+                <span>:</span>
+                <span className="flex-1 flex justify-start items-center">
+                  {productItem.qtyInStock}
+                </span>
+              </div>
             </div>
-            <div className="w-full flex justify-center items-center gap-2">
-              <span className="shrink-0 w-28 flex justify-start items-center font-medium">
-                Quantity Stock
-              </span>
-              <span>:</span>
-              <span className="flex-1 flex justify-start items-center">
-                {productItem.qtyInStock}
-              </span>
-            </div>
-            <div className="w-full flex flex-col justify-start items-center gap-2">
+            <div className="flex-1 w-full flex flex-col justify-start items-center gap-2">
               <span className="w-full font-medium">Images :</span>
               <div className="w-full grid grid-cols-2 gap-2">
                 {handleRenderImageForProductItem(productItem.imageProductList)}
               </div>
             </div>
-            <div className="w-full flex flex-col justify-start items-center gap-2">
-              <span className="w-full font-medium">Options :</span>
-              <div className="w-full grid grid-cols-2 gap-2">
-                {handleRenderOptionForProductItem(productItem.optionTypes)}
+            <div className="shrink-0 w-full flex flex-col justify-start items-center gap-2">
+              <div className="w-full flex flex-col justify-start items-center gap-2">
+                <span className="w-full font-medium">Options :</span>
+                <div className="w-full grid grid-cols-1 gap-2">
+                  {handleRenderOptionForProductItem(productItem.optionTypes)}
+                </div>
               </div>
-            </div>
-            <div className="w-full flex justify-start items-center">
-              <Link
-                to={generatePath(ROUTES.SELLER.PRODUCT.UPDATE_PRODUCT_ITEMS, {
-                  shopName,
-                  productId,
-                  productItemId: productItem.pitemId,
-                })}
-                className="bg-primary text-white rounded px-4 py-1"
-              >
-                Edit
-              </Link>
+              <div className="w-full flex justify-start items-center">
+                <Link
+                  to={generatePath(ROUTES.SELLER.PRODUCT.UPDATE_PRODUCT_ITEMS, {
+                    shopName,
+                    productId,
+                    productItemId: productItem.pitemId,
+                  })}
+                  className="bg-primary text-white rounded px-4 py-1"
+                >
+                  Edit
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -161,8 +167,8 @@ const Edit = () => {
                 Min Price
               </span>
               <span>:</span>
-              <span className="flex-1">
-                {data?.minPrice ? data.minPrice : 0} VNĐ
+              <span className="flex-1 text-primary">
+                {data?.minPrice ? data.minPrice.toLocaleString() : 0} VNĐ
               </span>
             </div>
             <div className="w-full flex justify-center items-center gap-4">
@@ -170,8 +176,8 @@ const Edit = () => {
                 Max Price
               </span>
               <span>:</span>
-              <span className="flex-1">
-                {data?.maxPrice ? data.maxPrice : 0} VNĐ
+              <span className="flex-1 text-primary">
+                {data?.maxPrice ? data.maxPrice.toLocaleString() : 0} VNĐ
               </span>
             </div>
             <div className="w-full flex justify-center items-center gap-4">

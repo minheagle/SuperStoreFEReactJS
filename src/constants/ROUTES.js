@@ -9,21 +9,25 @@ const ROUTES = {
     HOME: "/shop/:shopName",
   },
   USER: {
-    ACCOUNT: "/customer/account",
-    ACCOUNT_PROFILE: "/customer/account/profile",
-    ACCOUNT_PAYMENT: "/customer/account/payment",
-    ACCOUNT_ADDRESS: "/customer/account/address",
-    ACCOUNT_ADDRESS_CREATE: "/customer/account/address/create",
-    ACCOUNT_ADDRESS_UPDATE: "/customer/account/address/:addressId/update",
-    ACCOUNT_CHANGE_PASSWORD: "/customer/account/change-password",
-    ACCOUNT_SETTING_NOTIFICATION: "/customer/setting/notification",
+    ACCOUNT: {
+      PROFILE: "/customer/account",
+      PAYMENT: "/customer/account/payment",
+      ADDRESS: "/customer/account/address",
+      ADDRESS_CREATE: "/customer/account/address/create",
+      ADDRESS_UPDATE: "/customer/account/address/:addressId/update",
+      CHANGE_PASSWORD: "/customer/account/change-password",
+      SETTING_NOTIFICATION: "/customer/setting/notification",
+    },
     CART: "/customer/cart",
     PURCHASE: "/customer/purchase",
     NOTIFICATION: "/customer/notification",
     NOTIFICATION_ORDER: "/customer/notification/order",
     NOTIFICATION_PROMOTION: "/customer/notification/promotion",
     NOTIFICATION_WALLET: "/customer/notification/wallet",
-    VOUCHER_WALLET: "/customer/voucher-wallet",
+    VOUCHER_WALLET: {
+      LIST: "/customer/voucher-wallet",
+      AVAILABLE: "/customer/voucher-wallet/available",
+    },
     BECOME_SELLER: "/customer/become-seller",
   },
   SELLER: {
@@ -44,6 +48,7 @@ const ROUTES = {
     },
     VOUCHER: {
       LIST: "/seller/:shopName/vouchers",
+      CREATE: "/seller/:shopName/vouchers/create",
     },
   },
   ADMIN: {
@@ -63,8 +68,8 @@ const ROUTES = {
     USERS: {
       LIST: "/admin/users",
       CREATE: "/admin/users/create",
-      DETAIL: "/admin/users/:id",
-      EDIT: "/admin/users/:id/edit",
+      DETAIL: "/admin/users/:userName",
+      EDIT: "/admin/users/:userName/edit",
     },
   },
 };

@@ -15,6 +15,18 @@ import {
   updateProduct,
   updateProductSuccess,
   updateProductFailure,
+  updateProductItem,
+  updateProductItemSuccess,
+  updateProductItemFailure,
+  updateImageProductItem,
+  updateImageProductItemSuccess,
+  updateImageProductItemFailure,
+  deleteProduct,
+  deleteProductSuccess,
+  deleteProductFailure,
+  deleteProductItem,
+  deleteProductItemSuccess,
+  deleteProductItemFailure,
 } from "../../slice/seller/product.seller.slice";
 import productForSellerApi from "../../api/seller/product/product.seller.api";
 
@@ -57,7 +69,7 @@ function* getProductItemDetailSaga(action) {
 
 function* createProductSaga(action) {
   try {
-    const { product, productItem } = action.payload;
+    const { product, productItem, callback } = action.payload;
     const responseCreateProduct = yield call(
       productForSellerApi.createProduct,
       product
@@ -72,6 +84,7 @@ function* createProductSaga(action) {
       responseCreateProduct.results.data.productId
     );
     yield put(createProductSuccess(""));
+    yield callback.goToListProduct();
   } catch (error) {
     yield put(createProductFailure(error.message));
   }
@@ -92,12 +105,69 @@ function* updateProductSaga(action) {
   }
 }
 
+function* updateProductItemSaga(action) {
+  try {
+    const { productItemId, itemRequestEdit, callback } = action.payload;
+    const response = yield call(
+      productForSellerApi.updateProductItem,
+      productItemId,
+      itemRequestEdit
+    );
+    yield put(updateProductItemSuccess(response));
+    yield callback.reload();
+  } catch (error) {
+    yield put(updateProductItemFailure(error.message));
+  }
+}
+
+function* updateImageProductItemSaga(action) {
+  try {
+    const { changeImageProductItem, callback } = action.payload;
+    const response = yield call(
+      productForSellerApi.changeImageForProductItem,
+      changeImageProductItem
+    );
+    yield put(updateImageProductItemSuccess(response));
+    yield callback.reload();
+  } catch (error) {
+    yield put(updateImageProductItemFailure(error.message));
+  }
+}
+
+function* deleteProductSaga(action) {
+  try {
+    const { productId } = action.payload;
+    const response = yield call(productForSellerApi.deleteProduct, productId);
+    yield put(deleteProductSuccess(response));
+  } catch (error) {
+    yield put(deleteProductFailure(error.message));
+  }
+}
+
+function* deleteProductItemSaga(action) {
+  try {
+    const { productId, productItemId } = action.payload;
+    const response = yield call(
+      productForSellerApi.deleteProductItem,
+      productId,
+      productItemId
+    );
+    yield put(deleteProductItemSuccess(response));
+  } catch (error) {
+    yield put(deleteProductItemFailure(error.message));
+  }
+}
+
 function* productForSellerSaga() {
   yield takeLatest(createProduct, createProductSaga);
   yield takeLatest(getAllList, getAllListSaga);
   yield takeLatest(getDetail, getDetailSaga);
   yield takeLatest(getProductItemDetail, getProductItemDetailSaga);
   yield takeLatest(updateProduct, updateProductSaga);
+  yield takeLatest(updateProductItem, updateProductItemSaga);
+  yield takeLatest(updateImageProductItem, updateImageProductItemSaga);
+  yield takeLatest(deleteProduct, deleteProductSaga);
+  yield takeLatest(deleteProductItem, deleteProductItemSaga);
 }
 
 export default productForSellerSaga;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate, generatePath } from "react-router-dom";
 
 import { Steps } from "antd";
 
@@ -9,9 +10,12 @@ import SubmitCreate from "../../../components/Seller/product/SubmitCreate";
 
 import handleErrorProduct from "../../../utils/handle/seller/handleErrorProduct";
 import { createProduct } from "../../../redux/slice/seller/product.seller.slice";
+import ROUTES from "../../../constants/ROUTES";
 
 const Create = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { shopName } = useParams();
   const { loading } = useSelector((state) => state.ProductSeller.createProduct);
   const shopData = localStorage.getItem("shopData")
     ? JSON.parse(localStorage.getItem("shopData"))
@@ -112,6 +116,10 @@ const Create = () => {
       createProduct({
         product: product,
         productItem: productItem,
+        callback: {
+          goToListProduct: () =>
+            navigate(generatePath(ROUTES.SELLER.PRODUCT.LIST, { shopName })),
+        },
       })
     );
   };
@@ -145,7 +153,7 @@ const Create = () => {
           <button
             type="button"
             onClick={() => handleDone()}
-            className="w-24 h-10 text-white bg-primary rounded"
+            className="w-24 h-10 flex justify-center items-center gap-2 text-white bg-primary rounded"
           >
             {loading ? (
               <div>

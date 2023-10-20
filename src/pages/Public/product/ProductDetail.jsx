@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { getDetail } from "../../../redux/slice/public/product.public.slice";
@@ -8,7 +9,7 @@ import { addToCart } from "../../../redux/slice/cart/cart.slice";
 import ROUTES from "../../../constants/ROUTES";
 
 import LoadingFull from "../../../components/common/LoadingFull";
-import SwiperForProductDetail from "../../../components/Public/product/SwiperForProductDetail";
+import BreadcrumbForProduct from "../../../components/Public/product/BreadcrumbForProduct";
 import ImageGallery from "../../../components/Public/product/ImageGallery";
 import ShopInProduct from "../../../components/Shop/ShopInProduct";
 import CommentAndRating from "../../../components/Public/product/CommentAndRating";
@@ -18,6 +19,7 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const notify = (message) => toast(message);
 
   const { data, loading } = useSelector((state) => state.ProductPublic.detail);
   const { shop_detail } = useSelector((state) => state.ShopPublic);
@@ -33,7 +35,8 @@ const ProductDetail = () => {
         productId,
       })
     );
-  }, []);
+    window.scroll(0, 0);
+  }, [productId]);
 
   const handleGetAllImage = (data) => {
     return data?.productItemResponseList?.flatMap((item) =>
@@ -89,27 +92,28 @@ const ProductDetail = () => {
   const handleRenderOption = () => {
     return productItemList?.map((item, index) => {
       return (
-        <div
-          key={index}
-          onClick={() => handleChangeCheckedValue(item.pitemId)}
-          className={`w-1/4 cursor-pointer ${
-            item?.pitemId === checkedValue?.pitemId
-              ? "bg-primary text-white rounded"
-              : "border border-slate-300 rounded"
-          }`}
-        >
-          {item?.options?.map((option, index) => {
-            return (
-              <div key={index} className="w-full flex gap-2">
-                <span className="w-1/2 flex justify-end items-center">
-                  {option.optionName + " :"}
-                </span>
-                <span className="w-1/2 flex justify-start items-center">
-                  {option.optionValue}
-                </span>
-              </div>
-            );
-          })}
+        <div key={index} className="w-1/2 p-1">
+          <div
+            onClick={() => handleChangeCheckedValue(item.pitemId)}
+            className={`w-full cursor-pointer ${
+              item?.pitemId === checkedValue?.pitemId
+                ? "bg-primary text-white rounded"
+                : "border border-slate-300 rounded"
+            }`}
+          >
+            {item?.options?.map((option, index) => {
+              return (
+                <div key={index} className="w-full flex gap-2">
+                  <span className="w-1/2 flex justify-end items-center">
+                    {option.optionName + " :"}
+                  </span>
+                  <span className="w-1/2 flex justify-start items-center">
+                    {option.optionValue}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       );
     });
@@ -123,16 +127,21 @@ const ProductDetail = () => {
     if (!userData) {
       return navigate(ROUTES.PUBLIC.LOGIN);
     }
-    const item = {
-      productItemId: checkedValue.pitemId,
-      quantity: Number.parseInt(quantity),
-    };
-    dispatch(
-      addToCart({
-        productItem: item,
-        userId: userData.id,
-      })
-    );
+    if (quantity && Number.parseInt(quantity) > 0) {
+      const item = {
+        productItemId: checkedValue.pitemId,
+        quantity: Number.parseInt(quantity),
+      };
+      dispatch(
+        addToCart({
+          productItem: item,
+          userId: userData.id,
+          callback: {
+            notification: (message) => notify(message),
+          },
+        })
+      );
+    }
   };
 
   if (loading) {
@@ -149,13 +158,16 @@ const ProductDetail = () => {
       <div className="col-span-10 py-4">
         <div className="w-full flex flex-col justify-start items-center gap-4">
           <div className="w-full flex justify-start items-center p-2 bg-primary text-white rounded">
-            <h2 className="text-xl font-normal">Bread cum</h2>
+            <BreadcrumbForProduct
+              categoryId={data?.categoryId}
+              productName={data?.productName}
+            />
           </div>
           <div className="w-full grid grid-cols-2 gap-4">
             <div className="col-span-1 w-full">
               <ImageGallery listImage={handleGetAllImage(data)} />
             </div>
-            <div className="col-span-1 flex flex-col justify-start items-center gap-8">
+            <div className="col-span-1 w-full flex flex-col justify-start items-center gap-8">
               <div className="w-full flex justify-start items-center px-2">
                 <span className="text-xl font-medium">{data.productName}</span>
               </div>
@@ -166,10 +178,10 @@ const ProductDetail = () => {
                 </span>
               </div>
               <div className="w-full flex justify-start items-center gap-4 pl-4">
-                <div className="w-1/4 flex justify-start items-center text-xl font-semibold">
+                <div className="shrink-0 w-1/4 flex justify-start items-center text-xl font-semibold">
                   Options :
                 </div>
-                <div className="flex-1 flex gap-4 pt-4">
+                <div className="w-3/4 flex justify-start items-center flex-wrap">
                   {handleRenderOption()}
                 </div>
               </div>
@@ -247,6 +259,7 @@ const ProductDetail = () => {
           {/* Product same from shop */}
           {/* Product same */}
         </div>
+        <ToastContainer />
       </div>
       <div className="col-span-1"></div>
     </div>

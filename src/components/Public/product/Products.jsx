@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, generatePath } from "react-router-dom";
+import Star from "react-rating-star-with-type";
 
 import ROUTES from "../../../constants/ROUTES";
 
 import defaultImageForProduct from "../../../assets/default-product-image.png";
+import noResult from "../../../assets/no-result.jpg";
 
 const Products = () => {
   const { list } = useSelector((state) => state.ProductPublic);
@@ -61,6 +63,14 @@ const Products = () => {
                   >
                     View
                   </Link>
+                  <Star
+                    count={5}
+                    value={item?.voteStar}
+                    size={16}
+                    color1="gray"
+                    color2="orange"
+                    edit={false}
+                  />
                 </div>
               </div>
             </div>
@@ -77,7 +87,15 @@ const Products = () => {
           <h2 className="font-normal text-xl text-white pl-4">Products :</h2>
         </div>
         <div className="w-full grid grid-cols-6">
-          {handleRenderProductList()}
+          {list?.data?.length !== 0 ? (
+            handleRenderProductList()
+          ) : (
+            <div className="col-span-6 w-full flex justify-center items-center">
+              <div className="w-1/2 flex justify-center items-center">
+                <img src={noResult} alt="" className="w-full object-cover" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="col-span-1"></div>

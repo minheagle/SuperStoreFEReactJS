@@ -23,8 +23,13 @@ function* createUserForAdminSaga(action) {
 
 function* getAllUserForAdminSaga() {
   try {
-    const listUser = yield call(ApiUserForAdmin.getAllUser);
-    yield put(getAllUserSuccess(listUser));
+    const response = yield call(ApiUserForAdmin.getAllUser);
+    yield put(
+      getAllUserSuccess({
+        data: response.results.data,
+        paging: response.pagination,
+      })
+    );
   } catch (error) {
     yield put(getAllUserFailure(error.message));
   }
@@ -32,10 +37,8 @@ function* getAllUserForAdminSaga() {
 
 function* getUserDetailForAdminSaga(action) {
   try {
-    const userDetail = yield call(
-      ApiUserForAdmin.getUserDetail,
-      action.payload
-    );
+    const { userName } = action.payload;
+    const userDetail = yield call(ApiUserForAdmin.getUserDetail, userName);
     yield put(getUserDetailSuccess(userDetail));
   } catch (error) {
     yield put(getUserDetailFailure(error.message));

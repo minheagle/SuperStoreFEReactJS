@@ -1,18 +1,56 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-import { getListOrder } from "../../redux/slice/user/order.user.slice";
+import {
+  getListOrder,
+  handlePayment,
+} from "../../redux/slice/user/order.user.slice";
+import handleOrder from "../../utils/handle/handleOrder";
+import ROUTES from "../../constants/ROUTES";
 
 import LoadingFull from "../../components/common/LoadingFull";
-import OrderItem from "../../components/User/order/OrderItem";
+import OrderSameNumber from "../../components/User/order/OrderSameNumber";
 
 const Orders = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data, loading } = useSelector((state) => state.OrderUser.list_order);
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
+
+  const handleCallback = () => {
+    dispatch(
+      getListOrder({
+        userId: userData.id,
+      })
+    );
+    window.scroll(0, 0);
+  };
+
+  useEffect(() => {
+    if (searchParams.size > 0) {
+      dispatch(
+        handlePayment({
+          informationStatusPayment: {
+            code: searchParams.get("code"),
+            id: searchParams.get("id"),
+            cancel: searchParams.get("cancel"),
+            status: searchParams.get("status"),
+            orderCode: searchParams.get("orderCode"),
+          },
+          callback: {
+            getNewOrder: () => handleCallback(),
+            redirect: () => navigate(ROUTES.USER.PURCHASE),
+          },
+        })
+      );
+    }
+  }, [searchParams.size]);
 
   useEffect(() => {
     dispatch(
@@ -23,10 +61,11 @@ const Orders = () => {
   }, [userData.id]);
 
   const handleRenderOrderList = () => {
-    return data?.map((order) => {
+    const newData = handleOrder(data);
+    return newData?.map((item) => {
       return (
-        <div key={order.id} className="w-full px-4">
-          <OrderItem data={order} />
+        <div key={item.orderNumber} className="w-full">
+          <OrderSameNumber data={item} />
         </div>
       );
     });
