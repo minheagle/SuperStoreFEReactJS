@@ -9,7 +9,7 @@ const ProductItem = ({ data }) => {
         return (
           <div
             key={index}
-            className="w-full flex justify-start items-center gap-1"
+            className="w-full flex justify-start items-center gap-2"
           >
             <span className="shrink-0 w-24 font-medium">
               {item?.optionName}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +18,8 @@ const ModalViewCheckout = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [payment, setPayment] = useState("");
+  const [total, setTotal] = useState([]);
+  const [listOrder, setListOrder] = useState([]);
   const { data } = useSelector((state) => state.Cart.checkout);
 
   const userData = localStorage.getItem("userData")
@@ -31,14 +33,32 @@ const ModalViewCheckout = ({
     return find;
   };
 
-  const handleCartForOrder = (data) => {
-    return data?.map((item) => {
-      const listCartId = item.cartResponse.lineItems.map((cart) => cart.cartId);
-      const shipMoney = item.shipMoney ? item.shipMoney : 0;
-      const sellerId = item.cartResponse.seller.id;
-      return { sellerId, cartId: listCartId, shipMoney };
+  // console.log(data);
+
+  const addTotal = () => {
+    const newTotalList = data?.map((item) => {
+      return {
+        sellerId: item?.cartResponse?.seller?.id,
+        total: item?.total,
+      };
     });
+
+    setTotal(newTotalList);
   };
+
+  const calculationTotal = (data = []) => {
+    let totalPrice = 0;
+    data.forEach((item) => {
+      totalPrice += item?.total;
+    });
+    return totalPrice;
+  };
+
+  useEffect(() => {
+    if (data?.length !== 0) {
+      addTotal();
+    }
+  }, [data?.length]);
 
   const totalItemAndPrice = cartHandle.handleTotalItemsAndTotalPrice(data);
 
@@ -47,6 +67,44 @@ const ModalViewCheckout = ({
     setPayment(value);
   };
 
+  const handleOnChangeTotalForItem = (value) => {
+    const newList = total.filter((item) => item?.sellerId !== value?.sellerId);
+    setTotal([...newList, value]);
+  };
+
+  const handleOnChangeOrder = (value) => {
+    if (listOrder.length === 0) {
+      setListOrder([...listOrder, value]);
+    } else {
+      const find = listOrder.find((item) => item?.sellerId === value?.sellerId);
+      if (find) {
+        const newList = listOrder.filter(
+          (item) => item?.sellerId !== value?.sellerId
+        );
+        setListOrder([...newList, value]);
+      } else {
+        setListOrder([...listOrder, value]);
+      }
+    }
+  };
+
+  const addListOrder = async () => {
+    const list = await data?.map((item) => {
+      return {
+        sellerId: item?.cartResponse?.seller?.id,
+        cartId: item?.cartResponse?.lineItems?.map((item) => item.cartId),
+        shipMoney: item?.shipMoney,
+        amount: item?.amount,
+        promotionName: null,
+      };
+    });
+    setListOrder(list);
+  };
+
+  useEffect(() => {
+    addListOrder();
+  }, [data.length]);
+
   const handleRenderCartItem = () => {
     return data?.map((item, index) => {
       return (
@@ -54,7 +112,11 @@ const ModalViewCheckout = ({
           key={index}
           className="w-full flex justify-start items-center gap-4 border border-slate-300 rounded"
         >
-          <CartItemCheckout item={item} />
+          <CartItemCheckout
+            item={item}
+            handleOnChangeTotalForItem={handleOnChangeTotalForItem}
+            handleOnChangeOrder={handleOnChangeOrder}
+          />
         </div>
       );
     });
@@ -62,6 +124,15 @@ const ModalViewCheckout = ({
 
   const handleMakeOrder = () => {
     const getAddress = findAddress();
+    // const paymentStatus = payment === "BANK_PAYMENT" ? true : false;
+    // const orderRequest = {
+    //   addressId: getAddress.id,
+    //   userId: userData.id,
+    //   listOrderBelongToSeller: listOrder,
+    //   paymentStatus,
+    // };
+
+    // console.log(orderRequest);
     if (payment !== null) {
       const paymentStatus = payment === "BANK_PAYMENT" ? true : false;
       dispatch(
@@ -69,7 +140,7 @@ const ModalViewCheckout = ({
           orderRequest: {
             addressId: getAddress.id,
             userId: userData.id,
-            listOrderBelongToSeller: handleCartForOrder(data),
+            listOrderBelongToSeller: listOrder,
             paymentStatus,
           },
           callback: {
@@ -94,17 +165,17 @@ const ModalViewCheckout = ({
         <div className="w-full flex flex-col justify-center items-center gap-4 px-8">
           <div className="w-full h-12 flex justify-start items-center bg-slate-100 rounded">
             <div className="w-1/2 pl-4">
-              <span className="">Product</span>
+              <span className="font-medium">Product</span>
             </div>
             <div className="w-1/2 flex justify-around items-center">
               <div>
-                <span>Unit Price</span>
+                <span className="font-medium">Unit Price</span>
               </div>
               <div>
-                <span>Quantity</span>
+                <span className="font-medium">Quantity</span>
               </div>
               <div>
-                <span>Total Price</span>
+                <span className="font-medium">Total Price</span>
               </div>
             </div>
           </div>
@@ -113,7 +184,7 @@ const ModalViewCheckout = ({
           </div>
           <div className="w-full flex flex-col justify-start items-center gap-4 p-4 bg-slate-100 rounded">
             <div className="w-full flex justify-start items-center">
-              <span className="shrink-0">Ship Address : </span>
+              <span className="shrink-0 font-medium">Ship Address : </span>
             </div>
             <div className="w-full flex justify-start items-center">
               <span className="flex-1">{shipAddress}</span>
@@ -121,7 +192,7 @@ const ModalViewCheckout = ({
           </div>
           <div className="w-full flex flex-col justify-start items-center gap-4 p-4 bg-slate-100 rounded">
             <div className="w-full flex justify-start items-center">
-              <span className="">Payment : </span>
+              <span className="font-medium">Payment : </span>
             </div>
             <div className="w-full flex justify-start items-center">
               <select
@@ -145,7 +216,9 @@ const ModalViewCheckout = ({
               </div>
               <div>
                 <span>Total price: </span>
-                <span>{totalItemAndPrice.totalPrice.toLocaleString()} VNĐ</span>
+                <span className="text-red-600">
+                  {calculationTotal(total)?.toLocaleString()} VNĐ
+                </span>
               </div>
             </div>
             <div className="w-full h-12 flex justify-end items-center">

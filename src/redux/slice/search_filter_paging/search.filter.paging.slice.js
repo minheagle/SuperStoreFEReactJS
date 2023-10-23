@@ -7,7 +7,7 @@ const initialState = {
   productName: null,
   page: 1,
   size: 24,
-  sort: "ASC",
+  sort: null,
 };
 
 const searchFilterPagingSlice = createSlice({

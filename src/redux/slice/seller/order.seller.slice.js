@@ -61,7 +61,7 @@ const orderForSellerSlice = createSlice({
     confirmOrderSuccess: (state, action) => {
       state.confirm_order.loading = false;
       state.confirm_order.error = "";
-      state.confirm_order.message = action.payload;
+      state.all_order.data = action.payload;
     },
     confirmOrderFailure: (state, action) => {
       state.confirm_order.loading = false;
@@ -74,7 +74,7 @@ const orderForSellerSlice = createSlice({
     rejectionOrderSuccess: (state, action) => {
       state.rejection_order.loading = false;
       state.rejection_order.error = "";
-      state.rejection_order.message = action.payload;
+      state.all_order.data = action.payload;
     },
     rejectionOrderFailure: (state, action) => {
       state.rejection_order.loading = false;

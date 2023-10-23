@@ -33,13 +33,14 @@ function* getAllOrderConfirmSaga(action) {
 
 function* confirmOrderSaga(action) {
   try {
-    const { sellerId, orderId } = action.payload;
+    const { sellerId, orderId, callback } = action.payload;
     const response = yield call(
       orderForSellerApi.confirmOrder,
       sellerId,
       orderId
     );
-    yield put(confirmOrderSuccess(response));
+    yield put(confirmOrderSuccess(response.body.results.data));
+    yield callback.notification("Confirm order success");
   } catch (error) {
     yield put(confirmOrderFailure(error.message));
   }
@@ -47,13 +48,14 @@ function* confirmOrderSaga(action) {
 
 function* rejectionOrderSaga(action) {
   try {
-    const { sellerId, orderId } = action.payload;
+    const { sellerId, orderId, callback } = action.payload;
     const response = yield call(
       orderForSellerApi.rejectionOrder,
       sellerId,
       orderId
     );
-    yield put(rejectionOrderSuccess(response));
+    yield put(rejectionOrderSuccess(response.results.data));
+    yield callback.notification("Rejection order success");
   } catch (error) {
     yield put(rejectionOrderFailure(error.message));
   }
