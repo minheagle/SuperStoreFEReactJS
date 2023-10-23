@@ -29,7 +29,6 @@ const Orders = () => {
         userId: userData.id,
       })
     );
-    window.scroll(0, 0);
   };
 
   useEffect(() => {
@@ -58,6 +57,7 @@ const Orders = () => {
         userId: userData.id,
       })
     );
+    window.scroll(0, 0);
   }, [userData.id]);
 
   const handleRenderOrderList = () => {

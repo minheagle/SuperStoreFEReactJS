@@ -25,6 +25,7 @@ const Home = () => {
         },
       })
     );
+    window.scroll(0, 0);
   }, [dispatch]);
 
   const handleChangePage = (page, pageSize) => {

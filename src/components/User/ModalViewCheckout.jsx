@@ -33,8 +33,6 @@ const ModalViewCheckout = ({
     return find;
   };
 
-  // console.log(data);
-
   const addTotal = () => {
     const newTotalList = data?.map((item) => {
       return {
@@ -58,7 +56,7 @@ const ModalViewCheckout = ({
     if (data?.length !== 0) {
       addTotal();
     }
-  }, [data?.length]);
+  }, [data]);
 
   const totalItemAndPrice = cartHandle.handleTotalItemsAndTotalPrice(data);
 
@@ -95,7 +93,7 @@ const ModalViewCheckout = ({
         cartId: item?.cartResponse?.lineItems?.map((item) => item.cartId),
         shipMoney: item?.shipMoney,
         amount: item?.amount,
-        promotionName: null,
+        promotionId: null,
       };
     });
     setListOrder(list);
@@ -124,15 +122,6 @@ const ModalViewCheckout = ({
 
   const handleMakeOrder = () => {
     const getAddress = findAddress();
-    // const paymentStatus = payment === "BANK_PAYMENT" ? true : false;
-    // const orderRequest = {
-    //   addressId: getAddress.id,
-    //   userId: userData.id,
-    //   listOrderBelongToSeller: listOrder,
-    //   paymentStatus,
-    // };
-
-    // console.log(orderRequest);
     if (payment !== null) {
       const paymentStatus = payment === "BANK_PAYMENT" ? true : false;
       dispatch(
@@ -143,6 +132,7 @@ const ModalViewCheckout = ({
             listOrderBelongToSeller: listOrder,
             paymentStatus,
           },
+          userId: userData.id,
           callback: {
             goToOrder: () => navigate(ROUTES.USER.PURCHASE),
           },

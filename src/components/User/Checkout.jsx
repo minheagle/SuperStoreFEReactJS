@@ -52,7 +52,7 @@ const Checkout = ({ data }) => {
       if (userData?.address?.length !== 0) {
         handleToggleOpenModal(true);
       } else {
-        <Navigate to={ROUTES.USER.ACCOUNT_ADDRESS_CREATE} />;
+        <Navigate to={ROUTES.USER.ACCOUNT.ADDRESS_CREATE} />;
       }
     }
   };

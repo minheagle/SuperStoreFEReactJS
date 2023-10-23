@@ -1,38 +1,13 @@
-import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import React from "react";
 
-import {
-  toggleStatus,
-  getAllListOfSeller,
-} from "../../../redux/slice/seller/voucher.seller.slice";
-
-const VoucherItem = ({ data, sellerId }) => {
-  const dispatch = useDispatch();
-  const notify = (message) => toast(message);
-
-  const handleCallback = () => {
-    dispatch(
-      getAllListOfSeller({
-        sellerId,
-      })
-    );
-  };
-
-  const handleToggleStatus = () => {
-    dispatch(
-      toggleStatus({
-        isActive: !data?.isActive,
-        promotionId: data?.promotionId,
-        callback: {
-          loadPage: () => handleCallback(),
-          notification: (message) => notify(message),
-        },
-      })
-    );
-  };
-
+const VoucherExpired = ({ data }) => {
   return (
-    <div className="col-span-1 w-full flex justify-center items-center border border-slate-300 p-2 rounded">
+    <div className="relative col-span-1 w-full flex justify-center items-center border border-slate-300 bg-slate-500 bg-opacity-30 p-2 rounded">
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full flex justify-center items-center z-30">
+        <div className="w-24 h-24 flex justify-center items-center border border-red-600 bg-white rounded-full">
+          <h2 className="text-xl text-red-600">Expired</h2>
+        </div>
+      </div>
       <div className="w-full flex flex-col justify-start items-center gap-2">
         <div className="w-full flex justify-start items-center gap-2">
           <span className="shrink-0 font-medium">Name</span>
@@ -74,18 +49,9 @@ const VoucherItem = ({ data, sellerId }) => {
           <span className="shrink-0 font-medium">:</span>
           <span className="flex-1">{data?.usageLimitPerUser}</span>
         </div>
-        <div className="w-full flex justify-start items-center">
-          <button
-            onClick={() => handleToggleStatus()}
-            className="px-2 py-1 bg-primary text-white rounded"
-          >
-            {data?.isActive ? "Hidden" : "Show"}
-          </button>
-        </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
 
-export default VoucherItem;
+export default VoucherExpired;

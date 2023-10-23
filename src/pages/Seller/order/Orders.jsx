@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAllOrder } from "../../../redux/slice/seller/order.seller.slice";
@@ -7,6 +7,8 @@ import OrderItem from "../../../components/Seller/order/OrderItem";
 
 const Orders = () => {
   const dispatch = useDispatch();
+
+  const [filter, setFilter] = useState(null);
 
   const { data, loading } = useSelector((state) => state.OrderSeller.all_order);
 
@@ -39,6 +41,9 @@ const Orders = () => {
     <div className="w-full flex flex-col justify-start items-center gap-4">
       <div className="w-full flex justify-center items-center">
         <h2 className="font-medium text-xl">List Order</h2>
+        <select name="" id="">
+          <option value=""></option>
+        </select>
       </div>
       <div className="w-full flex flex-col justify-start items-center gap-4">
         {handleRenderListOrder()}

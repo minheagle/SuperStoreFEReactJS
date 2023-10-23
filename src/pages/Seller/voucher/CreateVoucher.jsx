@@ -36,7 +36,9 @@ const CreateVoucher = () => {
   };
 
   const handleOnSubmit = (values) => {
-    // console.log(values);
+    let endDate = moment(values.endDate._d);
+    endDate.add(1, "day");
+    values = { ...values, endDate: endDate._d };
     dispatch(
       createVoucher({
         promotionRequestCreate: values,

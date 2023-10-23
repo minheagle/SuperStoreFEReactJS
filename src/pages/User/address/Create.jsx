@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Steps } from "antd";
+import { ToastContainer, toast } from "react-toastify";
 
 import { addAddress } from "../../../redux/slice/user/user.slice";
 import ROUTES from "../../../constants/ROUTES";
@@ -14,9 +15,11 @@ import InputAddress from "../../../components/User/InputAddress";
 const Create = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, loading } = useSelector(
-    (state) => state.ProvinceVietNam.address_detail
-  );
+  const notify = (message) => toast(message);
+
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
 
   const [current, setCurrent] = useState(0);
   const [province, setProvince] = useState(null);
@@ -136,19 +139,35 @@ const Create = () => {
     setCurrent(current - 1);
   };
 
+  const checkExistsAddress = (address) => {
+    let check = false;
+    userData?.address?.forEach((item) => {
+      if (item?.addressName === address) {
+        check = true;
+      }
+    });
+    return check;
+  };
+
   const handleDone = () => {
     const userAddress = `${address}, ${JSON.parse(ward).name}, ${
       JSON.parse(district).name
     }, ${JSON.parse(province).name}`;
-    dispatch(
-      addAddress({
-        addressString: userAddress,
-        userId: userData.id,
-        callback: {
-          goToAddress: () => navigate(ROUTES.USER.ACCOUNT_ADDRESS),
-        },
-      })
-    );
+    if (checkExistsAddress(userAddress)) {
+      notify("Address is exists !");
+      navigate(ROUTES.USER.ACCOUNT.ADDRESS);
+    } else {
+      dispatch(
+        addAddress({
+          addressString: userAddress,
+          userId: userData.id,
+          callback: {
+            goToAddress: () => navigate(ROUTES.USER.ACCOUNT.ADDRESS),
+            notification: (message) => notify(message),
+          },
+        })
+      );
+    }
   };
 
   return (
@@ -195,6 +214,7 @@ const Create = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

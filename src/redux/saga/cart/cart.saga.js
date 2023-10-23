@@ -99,9 +99,16 @@ function* checkoutSaga(action) {
 
 function* saveOrderSaga(action) {
   try {
-    const { orderRequest, callback } = action.payload;
+    const { orderRequest, callback, userId } = action.payload;
     const response = yield call(cartApi.saveOrder, orderRequest);
     yield put(saveOrderSuccess(response.results.data));
+    const cartResponse = yield call(cartApi.getAll, userId);
+    yield put(
+      getCartListSuccess({
+        data: cartResponse.results.data,
+        total: handleCart.getTotalCartItem(cartResponse.results.data),
+      })
+    );
     yield callback.goToOrder();
   } catch (error) {
     yield put(saveOrderFailure(error.message));

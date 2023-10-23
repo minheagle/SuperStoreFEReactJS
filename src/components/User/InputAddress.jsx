@@ -17,7 +17,7 @@ const InputAddress = ({ address, handleOnChangeAddress, handleError }) => {
         type="text"
         value={value}
         onChange={(e) => handOnChangeValue(e)}
-        className="border border-black outline-none rounded"
+        className="border border-black outline-none pl-2 rounded"
       />
     </div>
   );

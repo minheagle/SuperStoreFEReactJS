@@ -21,7 +21,14 @@ const SelectProvince = ({ province, handleOnChangeProvince, handleError }) => {
   const newProvinceList = [{ id: 0, name: "Select your province" }, ...data];
 
   const handleRenderOption = () => {
-    return newProvinceList?.map((item) => {
+    return newProvinceList?.map((item, index) => {
+      if (index === 0) {
+        return (
+          <option key={item.id} value={JSON.stringify(item)} defaultChecked>
+            {item.name}
+          </option>
+        );
+      }
       return (
         <option key={item.id} value={JSON.stringify(item)}>
           {item.name}

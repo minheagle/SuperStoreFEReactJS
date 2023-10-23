@@ -24,12 +24,20 @@ const SelectWard = ({ district, ward, handleOnChangeWard, handleError }) => {
   const newWardList = [{ id: 0, name: "Select your ward" }, ...data];
 
   const handleRenderOption = () => {
-    return newWardList?.map((item) => {
-      return (
-        <option key={item.id} value={JSON.stringify(item)}>
-          {item.name}
-        </option>
-      );
+    return newWardList?.map((item, index) => {
+      if (index === 0) {
+        return (
+          <option key={item.id} value={JSON.stringify(item)} defaultChecked>
+            {item.name}
+          </option>
+        );
+      } else {
+        return (
+          <option key={item.id} value={JSON.stringify(item)}>
+            {item.name}
+          </option>
+        );
+      }
     });
   };
 

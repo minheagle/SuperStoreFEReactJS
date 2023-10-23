@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Steps } from "antd";
+import { Steps, message } from "antd";
+import { toast } from "react-toastify";
 
 import { getDetailAddress } from "../../../redux/slice/63_province/63_provinces.slice";
 import { updateAddress } from "../../../redux/slice/user/user.slice";
@@ -15,6 +16,8 @@ import InputAddress from "../../../components/User/InputAddress";
 const Update = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const notify = (message) => toast(message);
+
   let { addressId } = useParams();
   const { data, loading } = useSelector(
     (state) => state.ProvinceVietNam.address_detail
@@ -171,19 +174,33 @@ const Update = () => {
     setCurrent(current - 1);
   };
 
+  const checkExistsAddress = (address, addressId) => {
+    let check = false;
+    const find = userData?.address?.find((item) => item?.id === addressId);
+    if (find && find?.addressName === address) {
+      check = true;
+    }
+    return check;
+  };
+
   const handleDone = () => {
     const userAddress = `${address}, ${JSON.parse(ward).name}, ${
       JSON.parse(district).name
     }, ${JSON.parse(province).name}`;
-    dispatch(
-      updateAddress({
-        addressUpdate: userAddress,
-        addressId: addressId,
-        callback: {
-          goToAddress: () => navigate(ROUTES.USER.ACCOUNT_ADDRESS),
-        },
-      })
-    );
+    if (checkExistsAddress(userAddress, addressId)) {
+      notify("Address isn't change !");
+      navigate(ROUTES.USER.ACCOUNT.ADDRESS);
+    } else {
+      dispatch(
+        updateAddress({
+          addressUpdate: userAddress,
+          addressId: addressId,
+          callback: {
+            goToAddress: () => navigate(ROUTES.USER.ACCOUNT.ADDRESS),
+          },
+        })
+      );
+    }
   };
 
   return (

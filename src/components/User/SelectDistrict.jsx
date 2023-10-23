@@ -29,12 +29,20 @@ const SelectDistrict = ({
   const newDistrictList = [{ id: 0, name: "Select your district" }, ...data];
 
   const handleRenderOption = () => {
-    return newDistrictList?.map((item) => {
-      return (
-        <option key={item.id} value={JSON.stringify(item)}>
-          {item.name}
-        </option>
-      );
+    return newDistrictList?.map((item, index) => {
+      if (index === 0) {
+        return (
+          <option key={item.id} value={JSON.stringify(item)} defaultChecked>
+            {item.name}
+          </option>
+        );
+      } else {
+        return (
+          <option key={item.id} value={JSON.stringify(item)}>
+            {item.name}
+          </option>
+        );
+      }
     });
   };
 

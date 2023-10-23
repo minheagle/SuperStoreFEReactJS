@@ -5,24 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ROUTES from "../../../constants/ROUTES";
 
-import ModalForCreateAddress from "../../../components/User/ModalForCreateAddress";
-
 const Address = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const dispatch = useDispatch();
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [checkedValue, setCheckedValue] = useState(null);
-  const [addressChecked, setAddressChecked] = useState(null);
 
   const handleCloseCreateModal = (value) => {
     setOpenModalCreate(value);
-  };
-
-  const handleToggleUpdateModal = (value) => {
-    setOpenModalUpdate(value);
   };
 
   const handleChangeCheckedValue = (value) => {
@@ -48,13 +35,6 @@ const Address = () => {
     handleChangeAddressChecked(arrayAddress[0]);
   };
 
-  const handleEditAddress = (addressName) => {
-    handleChangeCheckedValue(addressName);
-    handleAddressName(addressName);
-    handleToggleUpdateState(true);
-    handleCloseCreateModal(true);
-  };
-
   const handleRenderAddress = () => {
     return userData?.address?.map((item) => {
       return (
@@ -72,9 +52,9 @@ const Address = () => {
             >
               Edit
             </Link>
-            <button className="w-24 h-10 text-white bg-red-600 rounded">
+            {/* <button className="w-24 h-10 text-white bg-red-600 rounded">
               Delete
-            </button>
+            </button> */}
           </div>
         </div>
       );
@@ -105,14 +85,6 @@ const Address = () => {
           {handleRenderAddress()}
         </div>
       )}
-      {/* <ModalForCreateAddress
-        isOpen={openModalCreate}
-        isUpdate={isUpdate}
-        checkedValue={checkedValue}
-        handleCloseCreateModal={handleCloseCreateModal}
-        handleToggleUpdateState={handleToggleUpdateState}
-        handleChangeCheckedValue={handleChangeCheckedValue}
-      /> */}
     </div>
   );
 };

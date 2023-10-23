@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import Header from "../components/Public/Header.jsx";
 import Footer from "../components/Public/Footer.jsx";
@@ -24,6 +25,7 @@ const User = () => {
       </div>
       <Footer />
       <Chat />
+      <ToastContainer />
     </div>
   );
 };

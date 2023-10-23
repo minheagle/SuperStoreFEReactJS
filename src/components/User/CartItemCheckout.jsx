@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
 
-import { getAllAvailable } from "../../redux/slice/user/voucher.user.slice";
+import { getAllVoucherOfUser } from "../../redux/slice/user/voucher.user.slice";
 
 import SwiperForCart from "./SwiperForCart";
 
@@ -12,8 +13,9 @@ const CartItemCheckout = ({
   handleOnChangeOrder,
 }) => {
   const dispatch = useDispatch();
+  const today = moment().toDate();
 
-  const { get_all_available } = useSelector((state) => state.VoucherUser);
+  const { get_all_of_user } = useSelector((state) => state.VoucherUser);
 
   const [voucher, setVoucher] = useState(null);
 
@@ -23,11 +25,11 @@ const CartItemCheckout = ({
 
   useEffect(() => {
     dispatch(
-      getAllAvailable({
+      getAllVoucherOfUser({
         userId: userData.id,
       })
     );
-  }, []);
+  }, [userData.id]);
 
   const handleRenderItemForShop = () => {
     return item?.cartResponse?.lineItems?.map((lineItem) => {
@@ -70,9 +72,39 @@ const CartItemCheckout = ({
     });
   };
 
-  const newList = get_all_available?.data?.filter(
-    (voucher) => voucher.seller.id === item?.cartResponse?.seller?.id
-  );
+  const handleTotalPrice = () => {
+    let total = item?.total;
+    let shipMoney = item?.shipMoney;
+    let amount = item?.amount;
+    if (voucher && voucher?.name) {
+      switch (voucher?.discountType) {
+        case "DISCOUNT_PERCENT":
+          amount = amount - amount * voucher?.discountValue;
+          total = amount + shipMoney;
+          break;
+        case "FIXED_AMOUNT":
+          amount = amount - voucher?.discountValue;
+          amount = amount > 0 ? amount : 0;
+          total = amount + shipMoney;
+          break;
+        default:
+          shipMoney = shipMoney - voucher?.discountValue;
+          shipMoney = shipMoney > 0 ? shipMoney : 0;
+          total = amount + shipMoney;
+          break;
+      }
+    }
+    return { total, amount, shipMoney };
+  };
+
+  const newList = get_all_of_user?.data?.filter((voucher) => {
+    return (
+      voucher?.seller?.id === item?.cartResponse?.seller?.id &&
+      moment(voucher?.endDate).toDate() >= today &&
+      voucher?.usageAvailable > 0 &&
+      voucher?.minPurchaseAmount <= handleTotalPrice().total
+    );
+  });
 
   const handleRenderVoucher = () => {
     newList.unshift({
@@ -101,31 +133,6 @@ const CartItemCheckout = ({
     });
   };
 
-  const handleTotalPrice = () => {
-    let total = item?.total;
-    let shipMoney = item?.shipMoney;
-    let amount = item?.amount;
-    if (voucher && voucher?.name) {
-      switch (voucher?.discountType) {
-        case "DISCOUNT_PERCENT":
-          amount = amount - amount * voucher?.discountValue;
-          total = amount + shipMoney;
-          break;
-        case "FIXED_AMOUNT":
-          amount = amount - voucher?.discountValue;
-          amount = amount > 0 ? amount : 0;
-          total = amount + shipMoney;
-          break;
-        default:
-          shipMoney = shipMoney - voucher?.discountValue;
-          shipMoney = shipMoney > 0 ? shipMoney : 0;
-          total = amount + shipMoney;
-          break;
-      }
-    }
-    return { total, amount, shipMoney };
-  };
-
   const handleOnChangeVoucher = (e) => {
     const value = JSON.parse(e.target.value);
     setVoucher(value);
@@ -141,7 +148,7 @@ const CartItemCheckout = ({
       cartId: item?.cartResponse?.lineItems?.map((item) => item.cartId),
       shipMoney: item?.shipMoney,
       amount: item?.amount,
-      promotionName: voucher?.name,
+      promotionId: voucher?.promotionId,
     });
   }, [voucher]);
 

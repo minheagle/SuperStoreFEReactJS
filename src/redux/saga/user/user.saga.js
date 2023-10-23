@@ -57,6 +57,7 @@ function* addAddressSaga(action) {
     yield put(addAddressSuccess(response.message));
     yield put(getUserSuccess(response.results));
     yield localStorage.setItem("userData", JSON.stringify(response.results));
+    yield callback.notification("Add address success !");
     yield callback.goToAddress();
   } catch (error) {
     yield put(addAddressFailure(error.message));
