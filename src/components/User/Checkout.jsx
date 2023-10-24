@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import ROUTES from "../../constants/ROUTES";
 import cartHandle from "../../utils/handle/handleTotalCartItem";
@@ -11,6 +11,8 @@ import ModalViewCheckout from "./ModalViewCheckout";
 
 const Checkout = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [error, setError] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openModalView, setOpenModalView] = useState(false);
@@ -52,7 +54,7 @@ const Checkout = ({ data }) => {
       if (userData?.address?.length !== 0) {
         handleToggleOpenModal(true);
       } else {
-        <Navigate to={ROUTES.USER.ACCOUNT.ADDRESS_CREATE} />;
+        navigate(ROUTES.USER.ACCOUNT.ADDRESS_CREATE);
       }
     }
   };
@@ -75,14 +77,6 @@ const Checkout = ({ data }) => {
   return (
     <div className="w-full h-24 flex justify-end items-center bg-slate-100 p-4 rounded">
       <div className="flex justify-center items-center gap-4">
-        {/* <div className="flex justify-center items-center gap-4">
-          <span>Total Items :</span>
-          <span className="">0 item</span>
-        </div>
-        <div className="flex justify-center items-center gap-4">
-          <span>Total Price :</span>
-          <span className="text-primary">0 VNĐ</span>
-        </div> */}
         {error ? <span className="text-primary">{error}</span> : ""}
         {error ? (
           <button className="text-primary bg-white px-4 py-2 rounded">

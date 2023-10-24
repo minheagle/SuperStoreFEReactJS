@@ -15,10 +15,6 @@ const Cart = () => {
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
 
-  const cartList = localStorage.getItem("cartList")
-    ? JSON.parse(localStorage.getItem("cartList"))
-    : null;
-
   useEffect(() => {
     dispatch(
       getCartList({

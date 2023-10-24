@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, generatePath } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -7,33 +5,6 @@ import ROUTES from "../../../constants/ROUTES";
 
 const Address = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-
-  const handleCloseCreateModal = (value) => {
-    setOpenModalCreate(value);
-  };
-
-  const handleChangeCheckedValue = (value) => {
-    setCheckedValue(value);
-  };
-
-  const handleChangeAddressChecked = (value) => {
-    setAddressChecked(value);
-  };
-
-  const handleToggleUpdateState = (value) => {
-    setIsUpdate(value);
-  };
-
-  const handleAddressName = (addressName) => {
-    const arrayAddress = addressName.split(", ");
-    const addressObject = {
-      wardName: arrayAddress[1],
-      districtName: arrayAddress[2],
-      provinceName: arrayAddress[3],
-    };
-    handleChangeCheckedValue(addressObject);
-    handleChangeAddressChecked(arrayAddress[0]);
-  };
 
   const handleRenderAddress = () => {
     return userData?.address?.map((item) => {

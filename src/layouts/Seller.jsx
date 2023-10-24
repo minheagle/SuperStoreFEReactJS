@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import Header from "../components/Public/Header";
 import Footer from "../components/Public/Footer";
@@ -23,6 +24,7 @@ const Seller = () => {
       </div>
       <Footer />
       <Chat />
+      <ToastContainer />
     </div>
   );
 };

@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { changeAvatar } from "../../redux/slice/user/user.slice";
 
-import ROUTES from "../../constants/ROUTES";
-
 const AvatarUploader = ({ userId, value, imagePublicId }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const notify = (message) => toast(message);
+
   const [newAvatar, setNewAvatar] = useState(null);
   const [avatar, setAvatar] = useState(value);
   const errors = {};
@@ -40,6 +39,7 @@ const AvatarUploader = ({ userId, value, imagePublicId }) => {
         userId: userId,
         changeAvatar: handleChangeAvatarForm(),
         callback: {
+          notification: (message) => notify(message),
           refresh: () => window.location.reload(),
         },
       })

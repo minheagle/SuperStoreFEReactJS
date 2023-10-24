@@ -32,6 +32,10 @@ const Orders = () => {
   };
 
   useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (searchParams.size > 0) {
       dispatch(
         handlePayment({
@@ -57,12 +61,12 @@ const Orders = () => {
         userId: userData.id,
       })
     );
-    window.scroll(0, 0);
   }, [userData.id]);
 
   const handleRenderOrderList = () => {
     const newData = handleOrder(data);
     return newData?.map((item) => {
+      console.log(item);
       return (
         <div key={item.orderNumber} className="w-full">
           <OrderSameNumber data={item} />

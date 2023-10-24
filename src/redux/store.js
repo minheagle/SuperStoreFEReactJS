@@ -22,6 +22,7 @@ import chatSlice from "./slice/chat/chat.slice";
 import voucherSellerSlice from "./slice/seller/voucher.seller.slice";
 import voucherPublicSlice from "./slice/public/voucher.public.slice";
 import voucherUserSlice from "./slice/user/voucher.user.slice";
+import informationSellerSlice from "./slice/seller/information.seller.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -45,6 +46,7 @@ const rootReducer = {
   VoucherSeller: voucherSellerSlice,
   VoucherPublic: voucherPublicSlice,
   VoucherUser: voucherUserSlice,
+  InformationSeller: informationSellerSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

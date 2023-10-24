@@ -192,7 +192,9 @@ const ModalViewCheckout = ({
                 value={payment}
                 className="w-1/2 h-8 border border-slate-300 outline-none rounded"
               >
-                <option value="SHIP_COD">SHIP_COD</option>
+                <option value="SHIP_COD" defaultChecked>
+                  SHIP_COD
+                </option>
                 <option value="BANK_PAYMENT">BANK_PAYMENT</option>
               </select>
             </div>

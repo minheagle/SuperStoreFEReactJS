@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Steps, message } from "antd";
-import { toast } from "react-toastify";
+import { Steps } from "antd";
+import { toast, ToastContainer } from "react-toastify";
 
 import { getDetailAddress } from "../../../redux/slice/63_province/63_provinces.slice";
 import { updateAddress } from "../../../redux/slice/user/user.slice";
@@ -22,7 +22,10 @@ const Update = () => {
   const { data, loading } = useSelector(
     (state) => state.ProvinceVietNam.address_detail
   );
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
+
   let addressChecked = userData?.address?.find(
     (item) => item.id === Number.parseInt(addressId)
   );
@@ -176,7 +179,9 @@ const Update = () => {
 
   const checkExistsAddress = (address, addressId) => {
     let check = false;
-    const find = userData?.address?.find((item) => item?.id === addressId);
+    const find = userData?.address?.find(
+      (item) => item?.id === Number.parseInt(addressId)
+    );
     if (find && find?.addressName === address) {
       check = true;
     }
@@ -247,6 +252,7 @@ const Update = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

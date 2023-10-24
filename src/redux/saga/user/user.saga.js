@@ -26,10 +26,9 @@ function* updateUserSaga(action) {
   try {
     const { updateUserForm, userId, callback } = action.payload;
     const response = yield call(userApi.updateUser, updateUserForm, userId);
-    console.log("response saga");
-    console.log(response);
     yield put(updateUserSuccess());
     yield localStorage.setItem("userData", JSON.stringify(response));
+    yield callback.notification("Update information success !");
   } catch (error) {
     yield put(updateUserFailure(error));
   }
@@ -44,6 +43,7 @@ function* changeAvatarSaga(action) {
       "userData",
       JSON.stringify(response.results.data)
     );
+    yield callback.notification("Update avatar success !");
     yield callback.refresh();
   } catch (error) {
     yield put(changeAvatarFailure(error.message));

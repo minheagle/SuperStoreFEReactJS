@@ -7,7 +7,7 @@ import ROUTES from "../../constants/ROUTES";
 import LoadingFull from "../common/LoadingFull";
 
 const ShopInProduct = ({ shopData }) => {
-  console.log(shopData);
+  // console.log(shopData);
 
   const shopName = shopData?.storeName?.replaceAll(" ", "-") ?? null;
 
@@ -20,8 +20,8 @@ const ShopInProduct = ({ shopData }) => {
   }
 
   return (
-    <div className="w-full grid grid-cols-5 bg-slate-100 p-4 rounded">
-      <div className="col-span-2 flex justify-start items-center gap-8 border-r border-slate-300 p-2">
+    <div className="w-full grid grid-cols-5 border border-slate-300 p-2 rounded">
+      <div className="col-span-2 flex justify-start items-center gap-8 bg-slate-100 rounded p-2">
         <div className="w-32 h-32">
           {shopData?.storeAvatarUrl ? (
             <img
@@ -39,7 +39,7 @@ const ShopInProduct = ({ shopData }) => {
         </div>
         <div className="flex-1 flex flex-col justify-start items-center gap-4">
           <div className="w-full flex justify-start items-center">
-            <span>{shopData?.storeName}</span>
+            <span className="font-medium">{shopData?.storeName}</span>
           </div>
           <div className="w-full flex justify-around items-center gap-4">
             <button className="bg-primary text-white p-2 rounded">
@@ -58,7 +58,12 @@ const ShopInProduct = ({ shopData }) => {
           </div>
         </div>
       </div>
-      <div className="col-span-3">Shop Information</div>
+      <div className="col-span-3 w-full flex flex-col justify-start items-center gap-2 px-4">
+        <div className="w-full flex gap-2">
+          <span className="font-medium">Store Address : </span>
+          <span>{shopData?.storeAddress}</span>
+        </div>
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import DatePicker from "react-datepicker";
 import moment from "moment/moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
 
 import AvatarUploader from "../../components/User/AvatarUploader";
 
@@ -13,7 +13,10 @@ import { updateUser } from "../../redux/slice/user/user.slice";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const notify = (message) => toast(message);
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -32,7 +35,9 @@ const Profile = () => {
       updateUser({
         updateUserForm: values,
         userId: userData.id,
-        callback: {},
+        callback: {
+          notification: (message) => notify(message),
+        },
       })
     );
   };
@@ -198,16 +203,19 @@ const Profile = () => {
                         const { setFieldValue } = form;
                         const value = field.value ? moment(field.value) : null;
                         return (
-                          <DatePicker
-                            id={name}
-                            selected={value ? value.toDate() : null}
-                            dateFormat="MM/dd/yyyy"
-                            placeholderText="mm/dd/yyyy"
-                            onChange={(date) =>
-                              setFieldValue(name, moment(date))
-                            }
-                            style={{ width: "100%" }}
-                          />
+                          <div className="w-full">
+                            <DatePicker
+                              id={name}
+                              selected={value ? value.toDate() : null}
+                              dateFormat="MM/dd/yyyy"
+                              placeholderText="mm/dd/yyyy"
+                              onChange={(date) =>
+                                setFieldValue(name, moment(date))
+                              }
+                              style={{ width: "100%" }}
+                              className="h-12 border-2 border-black pl-2 rounded"
+                            />
+                          </div>
                         );
                       }}
                     </Field>

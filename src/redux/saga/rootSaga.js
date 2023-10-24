@@ -17,6 +17,7 @@ import chatSaga from "./chat/chat.saga";
 import voucherForSellerSaga from "./seller/voucher.seller.saga";
 import voucherPublicSaga from "./public/voucher.public.saga";
 import voucherUserSaga from "./user/voucher.user.saga";
+import informationForSellerSaga from "./seller/information.seller.saga";
 
 function* rootSaga() {
   yield all([
@@ -38,6 +39,7 @@ function* rootSaga() {
     voucherForSellerSaga(),
     voucherPublicSaga(),
     voucherUserSaga(),
+    informationForSellerSaga(),
   ]);
 }
 

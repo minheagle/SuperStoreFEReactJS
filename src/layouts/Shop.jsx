@@ -8,9 +8,9 @@ import Chat from "../components/common/Chat";
 
 const Shop = () => {
   return (
-    <div className="relative w-full flex flex-col justify-start items-center bg-slate-50">
+    <div className="relative w-full flex flex-col justify-start items-center bg-white">
       <Header />
-      <div className="w-full grid grid-cols-12">
+      <div className="w-full grid grid-cols-12 gap-4 bg-white">
         <div className="col-span-12">
           <AboutShop />
         </div>
