@@ -1,4 +1,4 @@
-export default {
+const eslintConfig = {
   env: { browser: true, es2020: true },
   extends: [
     "eslint:recommended",
@@ -13,3 +13,5 @@ export default {
     "react-refresh/only-export-components": "warn",
   },
 };
+
+export default eslintConfig;

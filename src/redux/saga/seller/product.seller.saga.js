@@ -135,12 +135,18 @@ function* updateImageProductItemSaga(action) {
 }
 
 function* deleteProductSaga(action) {
+  const { productId, callback, shopId } = action.payload;
   try {
-    const { productId } = action.payload;
     const response = yield call(productForSellerApi.deleteProduct, productId);
     yield put(deleteProductSuccess(response));
+    const response2 = yield call(productForSellerApi.getAll, shopId);
+    yield put(getAllListSuccess(response2.results.data));
+    yield callback.notification("Delete product success !");
   } catch (error) {
     yield put(deleteProductFailure(error.message));
+    yield callback.notification("Delete product failure !");
+  } finally {
+    yield callback.finish();
   }
 }
 
