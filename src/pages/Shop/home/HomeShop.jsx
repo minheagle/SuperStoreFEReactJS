@@ -1,29 +1,45 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, Link, generatePath } from "react-router-dom";
+import { useLocation, Link, generatePath, useParams } from "react-router-dom";
 
 import ROUTES from "../../../constants/ROUTES";
 import defaultImageForProduct from "../../../assets/default-product-image.png";
 
-import { getProductOfShop } from "../../../redux/slice/public/shop.public.slice";
+import {
+  getProductOfShop,
+  getProductOfShopByName,
+} from "../../../redux/slice/public/shop.public.slice";
 import LoadingFull from "../../../components/common/LoadingFull";
 import VoucherOfShop from "../../../components/Shop/VoucherOfShop";
 
 const HomeShop = () => {
   const dispatch = useDispatch();
   const { state } = useLocation();
+  const { shopName } = useParams();
   const { data, loading } = useSelector(
     (state) => state.ShopPublic.product_of_shop
   );
 
   useEffect(() => {
-    dispatch(
-      getProductOfShop({
-        shopId: state.shopId,
-      })
-    );
     window.scroll(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (state?.shopId) {
+      dispatch(
+        getProductOfShop({
+          shopId: state.shopId,
+        })
+      );
+    } else {
+      const storeName = shopName?.replaceAll("-", " ");
+      dispatch(
+        getProductOfShopByName({
+          storeName,
+        })
+      );
+    }
+  }, [shopName]);
 
   if (loading) {
     return (
@@ -167,7 +183,7 @@ const HomeShop = () => {
   return (
     <div className="w-full flex flex-col justify-start items-center gap-4">
       <div className="w-full">
-        <VoucherOfShop shopId={state.shopId} />
+        <VoucherOfShop shopId={state?.shopId} />
       </div>
       <div className="w-full flex justify-normal items-center bg-primary text-white rounded pl-4 py-1">
         <h2>List Product : </h2>

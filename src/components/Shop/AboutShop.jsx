@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import defaultAvatar from "../../assets/default-avatar.jpg";
-import { getShopDetail } from "../../redux/slice/public/shop.public.slice";
+import {
+  getShopDetail,
+  getShopDetailByName,
+} from "../../redux/slice/public/shop.public.slice";
 
 const AboutShop = () => {
   const dispatch = useDispatch();
   const { state } = useLocation();
+  const { shopName } = useParams();
   const { data, loading } = useSelector(
     (state) => state.ShopPublic.shop_detail
   );
@@ -21,12 +25,21 @@ const AboutShop = () => {
   );
 
   useEffect(() => {
-    dispatch(
-      getShopDetail({
-        sellerId: state.shopId,
-      })
-    );
-  }, []);
+    if (state?.shopId) {
+      dispatch(
+        getShopDetail({
+          sellerId: state.shopId,
+        })
+      );
+    } else {
+      const storeName = shopName?.replaceAll("-", " ");
+      dispatch(
+        getShopDetailByName({
+          storeName,
+        })
+      );
+    }
+  }, [shopName]);
 
   useEffect(() => {
     if (data) {

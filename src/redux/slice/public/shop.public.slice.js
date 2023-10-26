@@ -7,6 +7,12 @@ const initialState = {
     message: "",
     error: "",
   },
+  shop_detail_by_name: {
+    data: "",
+    loading: false,
+    message: "",
+    error: "",
+  },
   product_of_shop: {
     data: [],
     loading: false,
@@ -31,7 +37,23 @@ const shopPublicSlice = createSlice({
       state.shop_detail.data = "";
       state.shop_detail.error = action.payload;
     },
+    getShopDetailByName: (state) => {
+      state.shop_detail.loading = true;
+    },
+    getShopDetailByNameSuccess: (state, action) => {
+      state.shop_detail.loading = false;
+      state.shop_detail.error = "";
+      state.shop_detail.data = action.payload;
+    },
+    getShopDetailByNameFailure: (state, action) => {
+      state.shop_detail.loading = false;
+      state.shop_detail.data = "";
+      state.shop_detail.error = action.payload;
+    },
     getProductOfShop: (state) => {
+      state.product_of_shop.loading = true;
+    },
+    getProductOfShopByName: (state) => {
       state.product_of_shop.loading = true;
     },
     getProductOfShopSuccess: (state, action) => {
@@ -51,7 +73,11 @@ export const {
   getShopDetail,
   getShopDetailSuccess,
   getShopDetailFailure,
+  getShopDetailByName,
+  getShopDetailByNameSuccess,
+  getShopDetailByNameFailure,
   getProductOfShop,
+  getProductOfShopByName,
   getProductOfShopSuccess,
   getProductOfShopFailure,
 } = shopPublicSlice.actions;

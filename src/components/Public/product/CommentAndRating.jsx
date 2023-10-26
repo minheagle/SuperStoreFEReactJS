@@ -1,13 +1,25 @@
-import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Star from "react-rating-star-with-type";
+
+import { getAllByProduct } from "../../../redux/slice/public/rating.public.slice";
 
 import defaultAvatar from "../../../assets/default-avatar.jpg";
 
-const CommentAndRating = () => {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const CommentAndRating = ({ productId }) => {
+  const dispatch = useDispatch();
 
+  const { all_by_product } = useSelector((state) => state.RatingPublic);
+
+  useEffect(() => {
+    dispatch(
+      getAllByProduct({
+        productId,
+      })
+    );
+  }, []);
   const handleRenderListComment = () => {
-    return array?.map((item) => {
+    return all_by_product?.data?.map((item) => {
       return (
         <div
           key={item}
@@ -44,11 +56,17 @@ const CommentAndRating = () => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-start items-center gap-4 p-4">
-      <div className="w-full">Product Rating</div>
-      <div className="w-full flex flex-col justify-start items-center gap-2">
-        {handleRenderListComment()}
-      </div>
+    <div className="w-full flex flex-col justify-start items-center gap-4 p-2 pl-6">
+      <div className="w-full font-semibold">Product Rating</div>
+      {all_by_product?.data?.length === 0 ? (
+        <div>
+          <span>No rating available</span>
+        </div>
+      ) : (
+        <div className="w-full flex flex-col justify-start items-center gap-2">
+          {handleRenderListComment()}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, generatePath } from "react-router-dom";
+import { Link, generatePath, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import defaultAvatar from "../../assets/default-avatar.jpg";
@@ -7,8 +7,6 @@ import ROUTES from "../../constants/ROUTES";
 import LoadingFull from "../common/LoadingFull";
 
 const ShopInProduct = ({ shopData }) => {
-  // console.log(shopData);
-
   const shopName = shopData?.storeName?.replaceAll(" ", "-") ?? null;
 
   if (!shopData) {

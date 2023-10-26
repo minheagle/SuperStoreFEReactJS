@@ -9,6 +9,15 @@ const getDetailShop = async (sellerId) => {
   }
 };
 
-const shopApi = { getDetailShop };
+const getDetailShopByName = async (storeName) => {
+  try {
+    const response = await axios.get(`/public/sellers/detail/${storeName}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const shopApi = { getDetailShop, getDetailShopByName };
 
 export default shopApi;

@@ -6,6 +6,10 @@ const initialState = {
     loading: false,
     error: "",
   },
+  get_all_voucher_from_shop_by_name: {
+    loading: false,
+  },
+
   get_voucher: {
     data: null,
     loading: false,
@@ -18,6 +22,9 @@ const voucherPublicSlice = createSlice({
   initialState: initialState,
   reducers: {
     getAllVoucherFromShop: (state) => {
+      state.get_all_voucher_from_shop.loading = true;
+    },
+    getAllVoucherFromShopByName: (state) => {
       state.get_all_voucher_from_shop.loading = true;
     },
     getAllVoucherFromShopSuccess: (state, action) => {
@@ -48,6 +55,7 @@ const voucherPublicSlice = createSlice({
 
 export const {
   getAllVoucherFromShop,
+  getAllVoucherFromShopByName,
   getAllVoucherFromShopSuccess,
   getAllVoucherFromShopFailure,
   getVoucher,

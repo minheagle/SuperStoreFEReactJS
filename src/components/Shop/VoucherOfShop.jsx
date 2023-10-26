@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 import {
   getAllVoucherFromShop,
+  getAllVoucherFromShopByName,
   getVoucher,
 } from "../../redux/slice/public/voucher.public.slice";
 import ROUTES from "../../constants/ROUTES";
@@ -12,6 +13,7 @@ import ROUTES from "../../constants/ROUTES";
 const VoucherOfShop = ({ shopId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { shopName } = useParams();
   const notify = (message) => toast(message);
 
   const { data, loading } = useSelector(
@@ -23,8 +25,17 @@ const VoucherOfShop = ({ shopId }) => {
     : null;
 
   useEffect(() => {
-    dispatch(getAllVoucherFromShop({ shopId }));
-  }, [shopId]);
+    if (shopId) {
+      dispatch(getAllVoucherFromShop({ shopId }));
+    } else {
+      const storeName = shopName?.replaceAll("-", " ");
+      dispatch(
+        getAllVoucherFromShopByName({
+          storeName,
+        })
+      );
+    }
+  }, [shopName]);
 
   const handleGetVoucher = (promotionId) => {
     if (userData) {

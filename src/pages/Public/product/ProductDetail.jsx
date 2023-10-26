@@ -250,7 +250,7 @@ const ProductDetail = () => {
           </div>
           {/* Comment and Rating */}
           <div className="w-full bg-slate-100 rounded">
-            <CommentAndRating />
+            <CommentAndRating productId={productId} />
           </div>
           {/* Q&A */}
           <div className="w-full bg-slate-100 rounded">
