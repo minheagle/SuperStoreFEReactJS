@@ -7,8 +7,20 @@ import {
 import productReviewForUserApi from "../../api/user/rating.user.api";
 
 function* createRatingSaga(action) {
+  const { productReviewRequest, callback } = action.payload;
   try {
-  } catch (error) {}
+    const response = yield call(
+      productReviewForUserApi.createRating,
+      productReviewRequest
+    );
+    yield put(createRatingSuccess(response));
+    yield callback.notification("Create rating success !");
+  } catch (error) {
+    yield put(createRatingFailure(error.message));
+    yield callback.notification("Create rating failure !");
+  } finally {
+    yield callback.closeModal();
+  }
 }
 
 function* productReviewForUserSaga() {

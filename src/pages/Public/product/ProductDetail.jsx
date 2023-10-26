@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Star from "react-rating-star-with-type";
 
 import { getDetail } from "../../../redux/slice/public/product.public.slice";
 import { addToCart } from "../../../redux/slice/cart/cart.slice";
+import { getAllByProduct } from "../../../redux/slice/public/rating.public.slice";
 import ROUTES from "../../../constants/ROUTES";
 
 import LoadingFull from "../../../components/common/LoadingFull";
@@ -25,6 +27,8 @@ const ProductDetail = () => {
   const { shop_detail } = useSelector((state) => state.ShopPublic);
   const { add_to_cart } = useSelector((state) => state.Cart);
 
+  console.log(data);
+
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
@@ -32,6 +36,11 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(
       getDetail({
+        productId,
+      })
+    );
+    dispatch(
+      getAllByProduct({
         productId,
       })
     );
@@ -170,6 +179,10 @@ const ProductDetail = () => {
             <div className="col-span-1 w-full flex flex-col justify-start items-center gap-8">
               <div className="w-full flex justify-start items-center px-2">
                 <span className="text-xl font-medium">{data.productName}</span>
+              </div>
+              <div className="w-full flex justify-start items-center gap-4 px-2">
+                <span className="font-medium">Rating : </span>
+                <Star count={5} value={data?.voteStar} size={24} />
               </div>
               <div className="w-full h-24 flex justify-start items-center gap-4 bg-slate-100 rounded">
                 <span className="w-1/4 flex justify-end items-center text-xl font-semibold"></span>

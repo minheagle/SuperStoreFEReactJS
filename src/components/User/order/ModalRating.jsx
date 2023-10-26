@@ -2,13 +2,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import ReactStar from "react-rating-star-with-type";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import createRatingValidator from "../../../utils/validate/User/create.rating.validator.schema";
+import { createRating } from "../../../redux/slice/user/rating.user.slice";
 
 import ImageUploader from "../../Admin/ImageUploader";
 
-const ModalRating = ({ isOpen, setIsOpenModal, data }) => {
+const ModalRating = ({ isOpen, setIsOpenModal, data, orderId }) => {
+  const dispatch = useDispatch();
+  const notify = (message) => toast(message);
+
   const [resetImage, setResetImage] = useState(false);
 
   const handleToggleResetImage = (value) => {
@@ -20,16 +25,41 @@ const ModalRating = ({ isOpen, setIsOpenModal, data }) => {
     : null;
 
   const initialValues = {
-    orderId: "",
-    userId: userData.id,
-    productId: "",
+    orderId: orderId,
+    userId: userData?.id,
+    productId: data?.product?.productId,
     voteStar: 5,
     comment: "",
     imageProductReviewFile: null,
   };
 
-  const HandleOnSubmit = (values) => {
-    console.log(values);
+  const handleFormData = (values) => {
+    const formData = new FormData();
+    formData.append("orderId", values?.orderId);
+    formData.append("userId", values?.userId);
+    formData.append("productId", values?.productId);
+    formData.append("voteStar", values?.voteStar);
+    formData.append("comment", values?.comment);
+    values?.imageProductReviewFile?.forEach((file, index) => {
+      formData.append(`imageProductReviewFile[${index}]`, file);
+    });
+
+    return formData;
+  };
+
+  const handleOnSubmit = (values) => {
+    if (values.orderId && values.userId && values.productId) {
+      // console.log(values);
+      dispatch(
+        createRating({
+          productReviewRequest: handleFormData(values),
+          callback: {
+            notification: (message) => notify(message),
+            closeModal: () => setIsOpenModal(false),
+          },
+        })
+      );
+    }
   };
 
   return isOpen ? (
@@ -47,7 +77,7 @@ const ModalRating = ({ isOpen, setIsOpenModal, data }) => {
           <Formik
             initialValues={initialValues}
             validationSchema={createRatingValidator}
-            onSubmit={(values) => HandleOnSubmit(values)}
+            onSubmit={(values) => handleOnSubmit(values)}
           >
             {({ errors }) => (
               <Form className="w-2/3 flex flex-col justify-start items-center gap-2 p-4">

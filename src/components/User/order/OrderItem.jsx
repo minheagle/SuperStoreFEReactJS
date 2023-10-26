@@ -9,14 +9,13 @@ import {
   cancelOrder,
 } from "../../../redux/slice/user/order.user.slice";
 
-import ModalRating from "./ModalRating";
+import ProductInOrder from "./ProductInOrder";
 
 const OrderItem = ({ data }) => {
   const dispatch = useDispatch();
   const notify = (message) => toast(message);
 
   const [loading, setLoading] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
@@ -31,31 +30,12 @@ const OrderItem = ({ data }) => {
   const handleRenderOrderDetailList = () => {
     return data?.orderDetailList?.map((item) => {
       return (
-        <div
-          key={item.id}
-          className="w-full flex flex-col justify-start items-center border border-slate-300 rounded"
-        >
-          <div className="w-full flex justify-start items-center gap-2 px-4 py-1">
-            <span className="shrink-0 w-36 font-medium">Product Name</span>
-            <span className="font-medium">:</span>
-            <span className="flex-1 line-clamp-1">
-              {item?.product?.productName}
-            </span>
-          </div>
-          <div className="w-full flex justify-start items-center gap-2 px-4 py-1">
-            <span className="shrink-0 w-36 font-medium">Price</span>
-            <span className="font-medium">:</span>
-            <span className="text-red-600">
-              {item?.unitPrice?.toLocaleString()}
-            </span>
-            <span className="text-red-600">VNĐ</span>
-          </div>
-          <div className="w-full flex justify-start items-center gap-2 px-4 py-1">
-            <span className="shrink-0 w-36 font-medium">Quantity</span>
-            <span className="font-medium">:</span>
-            <span className="flex-1 line-clamp-1">{item?.quantity}</span>
-          </div>
-        </div>
+        <ProductInOrder
+          key={item?.id}
+          orderId={data?.id}
+          item={item}
+          status={data?.status}
+        />
       );
     });
   };
@@ -141,9 +121,6 @@ const OrderItem = ({ data }) => {
           <div className="px-2 py-1 bg-yellow-400 text-white rounded">
             <span>Processing</span>
           </div>
-          <div>
-            <button onClick={() => setIsOpenModal(true)}>Open</button>
-          </div>
         </div>
       );
     }
@@ -200,6 +177,15 @@ const OrderItem = ({ data }) => {
         </div>
       );
     }
+    if (data?.status === "Completed") {
+      return (
+        <div className="w-full flex justify-end items-center gap-2">
+          <div className="px-2 py-1 bg-green-600 text-white rounded">
+            <span>Completed</span>
+          </div>
+        </div>
+      );
+    }
   };
 
   return (
@@ -246,11 +232,6 @@ const OrderItem = ({ data }) => {
       <div className="w-full flex flex-col justify-start items-center gap-2 p-4">
         {handleRenderOrderDetailList()}
       </div>
-      <ModalRating
-        isOpen={isOpenModal}
-        setIsOpenModal={setIsOpenModal}
-        data={data}
-      />
     </div>
   );
 };
