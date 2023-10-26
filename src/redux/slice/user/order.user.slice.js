@@ -13,6 +13,11 @@ const initialState = {
   payment: {
     loading: false,
   },
+  cancel_order: {
+    data: null,
+    loading: false,
+    error: "",
+  },
 };
 
 const orderForUserSlice = createSlice({
@@ -52,6 +57,19 @@ const orderForUserSlice = createSlice({
       state.payment.loading = false;
       // state.list_order.data = action.payload;
     },
+    cancelOrder: (state) => {
+      state.cancel_order.loading = true;
+    },
+    cancelOrderSuccess: (state, action) => {
+      state.cancel_order.loading = false;
+      state.cancel_order.error = "";
+      state.cancel_order.data = action.payload;
+    },
+    cancelOrderFailure: (state, action) => {
+      state.cancel_order.loading = false;
+      state.cancel_order.data = null;
+      state.cancel_order.error = action.payload;
+    },
   },
 });
 
@@ -65,6 +83,9 @@ export const {
   handlePayment,
   handlePaymentSuccess,
   handlePaymentFailure,
+  cancelOrder,
+  cancelOrderSuccess,
+  cancelOrderFailure,
 } = orderForUserSlice.actions;
 
 export default orderForUserSlice.reducer;

@@ -20,6 +20,7 @@ const ROUTES = {
     },
     CART: "/customer/cart",
     PURCHASE: "/customer/purchase",
+    RATING: "/customer/rating",
     NOTIFICATION: "/customer/notification",
     NOTIFICATION_ORDER: "/customer/notification/order",
     NOTIFICATION_PROMOTION: "/customer/notification/promotion",

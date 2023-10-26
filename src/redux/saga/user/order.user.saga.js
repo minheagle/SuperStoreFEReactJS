@@ -9,6 +9,9 @@ import {
   handlePayment,
   handlePaymentSuccess,
   handlePaymentFailure,
+  cancelOrder,
+  cancelOrderSuccess,
+  cancelOrderFailure,
 } from "../../slice/user/order.user.slice";
 import orderUserApi from "../../api/user/order.user.api";
 
@@ -30,7 +33,11 @@ function* getLinkPaymentSaga(action) {
       paymentServiceRequest
     );
     yield put(getLinkPaymentSuccess(response));
-    yield callback.openPaymentPage(response.results.data.data.checkoutUrl);
+    if (response?.results?.data?.desc === "Đơn thanh toán đã tồn tại") {
+      yield callback.notification("Payment already exists !");
+    } else {
+      yield callback.openPaymentPage(response.results.data.data.checkoutUrl);
+    }
   } catch (error) {
     yield put(getLinkPaymentFailure(error.message));
   }
@@ -51,10 +58,27 @@ function* handlePaymentSaga(action) {
   }
 }
 
+function* cancelOrderSaga(action) {
+  const { orderId, callback, userId } = action.payload;
+  try {
+    const response = yield call(orderUserApi.cancelOrder, orderId);
+    yield put(cancelOrderSuccess(response));
+    const response2 = yield call(orderUserApi.getAll, userId);
+    yield put(getListOrderSuccess(response2.results.data));
+    yield callback.notification("Delete order success !");
+  } catch (error) {
+    yield put(cancelOrderFailure(error));
+    yield callback.notification("Delete order failure !");
+  } finally {
+    yield callback.finish();
+  }
+}
+
 function* orderForUserSaga() {
   yield takeLatest(getListOrder, getListOrderSaga);
   yield takeLatest(getLinkPayment, getLinkPaymentSaga);
   yield takeLatest(handlePayment, handlePaymentSaga);
+  yield takeLatest(cancelOrder, cancelOrderSaga);
 }
 
 export default orderForUserSaga;

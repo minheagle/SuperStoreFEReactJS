@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
@@ -11,6 +12,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.Auth.login);
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const initialValues = {
     email: "",

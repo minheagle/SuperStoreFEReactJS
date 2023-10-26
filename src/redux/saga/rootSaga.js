@@ -18,6 +18,7 @@ import voucherForSellerSaga from "./seller/voucher.seller.saga";
 import voucherPublicSaga from "./public/voucher.public.saga";
 import voucherUserSaga from "./user/voucher.user.saga";
 import informationForSellerSaga from "./seller/information.seller.saga";
+import productReviewForUserSaga from "./user/rating.user.saga";
 
 function* rootSaga() {
   yield all([
@@ -40,6 +41,7 @@ function* rootSaga() {
     voucherPublicSaga(),
     voucherUserSaga(),
     informationForSellerSaga(),
+    productReviewForUserSaga(),
   ]);
 }
 

@@ -27,6 +27,7 @@ import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 import Cart from "./pages/User/Cart.jsx";
 import OrdersForUser from "./pages/User/Orders.jsx";
+import Rating from "./pages/User/order/Rating.jsx";
 import VoucherForUser from "./pages/User/Vouchers.jsx";
 import ClaimVoucher from "./pages/User/voucher/ClaimVoucher.jsx";
 
@@ -102,6 +103,7 @@ function App() {
           />
           <Route path={ROUTES.USER.CART} element={<Cart />} />
           <Route path={ROUTES.USER.PURCHASE} element={<OrdersForUser />} />
+          <Route path={ROUTES.USER.RATING} element={<Rating />} />
           <Route
             path={ROUTES.USER.VOUCHER_WALLET.LIST}
             element={<VoucherForUser />}

@@ -30,6 +30,15 @@ const handlePayment = async (informationStatusPayment) => {
   }
 };
 
-const orderUserApi = { getAll, getLinkPayment, handlePayment };
+const cancelOrder = async (orderId) => {
+  try {
+    const response = await axios.post(`/cart/order/cancel/${orderId}`);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const orderUserApi = { getAll, getLinkPayment, handlePayment, cancelOrder };
 
 export default orderUserApi;

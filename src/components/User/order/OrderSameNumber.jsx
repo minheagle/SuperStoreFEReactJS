@@ -22,6 +22,7 @@ const OrderSameNumber = ({ data }) => {
 
   const handleRenderOrderItem = () => {
     return data?.data?.map((item) => {
+      console.log(item);
       return (
         <div key={item.id} className="w-full">
           <OrderItem data={item} />

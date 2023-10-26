@@ -6,11 +6,10 @@ import {
   getListOrder,
   handlePayment,
 } from "../../redux/slice/user/order.user.slice";
-import handleOrder from "../../utils/handle/handleOrder";
 import ROUTES from "../../constants/ROUTES";
 
 import LoadingFull from "../../components/common/LoadingFull";
-import OrderSameNumber from "../../components/User/order/OrderSameNumber";
+import OrderItem from "../../components/User/order/OrderItem";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -19,6 +18,7 @@ const Orders = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { data, loading } = useSelector((state) => state.OrderUser.list_order);
+  const { cancel_order } = useSelector((state) => state.OrderUser);
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
@@ -61,15 +61,13 @@ const Orders = () => {
         userId: userData.id,
       })
     );
-  }, [userData.id]);
+  }, [userData.id, cancel_order.loading]);
 
   const handleRenderOrderList = () => {
-    const newData = handleOrder(data);
-    return newData?.map((item) => {
-      console.log(item);
+    return data?.map((item, index) => {
       return (
-        <div key={item.orderNumber} className="w-full">
-          <OrderSameNumber data={item} />
+        <div key={index} className="w-full">
+          <OrderItem data={item} />
         </div>
       );
     });
