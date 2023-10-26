@@ -39,18 +39,20 @@ const QuestionAndAnswer = ({ productId }) => {
   };
 
   const handleAddQuestionAndAnswer = () => {
-    if (comment) {
-      dispatch(
-        addComment({
-          createCommentRequest: {
-            userId: userData.id,
-            productId,
-            content: comment,
-            parentId: null,
-          },
-        })
-      );
-      setComment("");
+    if (userData) {
+      if (comment) {
+        dispatch(
+          addComment({
+            createCommentRequest: {
+              userId: userData.id,
+              productId,
+              content: comment,
+              parentId: null,
+            },
+          })
+        );
+        setComment("");
+      }
     }
   };
   return (
@@ -67,7 +69,7 @@ const QuestionAndAnswer = ({ productId }) => {
           <ListQA
             listQA={comment_by_product.data}
             productId={productId}
-            userId={userData.id}
+            userId={userData?.id}
           />
         )}
       </div>

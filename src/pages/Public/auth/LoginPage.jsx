@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
 import ROUTES from "../../../constants/ROUTES";
 import { login } from "../../../redux/slice/auth.slice";
@@ -33,6 +34,11 @@ const LoginPage = () => {
       })
     );
   };
+
+  const handleLoginGoogle = () => {
+    window.location.href = "YOUR_GOOGLE_OAUTH_URL"; // Điều hướng đến URL xác thực của Google
+  };
+
   return (
     <div className="w-full flex flex-col justify-start items-center gap-4 pt-4">
       <div className="w-1/3 flex flex-col justify-start items-center gap-4 p-8 bg-slate-100 border rounded">
@@ -142,9 +148,19 @@ const LoginPage = () => {
           </button>
         </Link>
         <div className="w-full flex flex-col justify-start items-center gap-2 p-4 ">
-          <div className="w-full border bg-white p-2 rounded">
-            Login with Google
+          <div className="w-full">
+            {/* <GoogleOAuthProvider clientId="409491642889-vbedc7g4neca0i5vsgm9mitgvijetlut.apps.googleusercontent.com"> */}
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+            {/* </GoogleOAuthProvider> */}
           </div>
+
           <div className="w-full border bg-white p-2 rounded">
             Login with Facebook
           </div>
