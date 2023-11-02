@@ -2,7 +2,7 @@ import axios from "../axiosInstance";
 
 const getListByProduct = async (productId) => {
   try {
-    const response = await axios.get(`/comment/${productId}`);
+    const response = await axios.get(`/public/comments/${productId}`);
     return response;
   } catch (error) {
     throw new Error(error.message);

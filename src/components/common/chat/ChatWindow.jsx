@@ -123,7 +123,7 @@ const ChatWindow = ({
           <FontAwesomeIcon icon="fas fa-arrow-left" className="" />
         </button>
       </div>
-      <div className="flex-1 w-full max-h-[300px] flex flex-col justify-end items-center gap-2 p-2 overflow-y-scroll">
+      <div className="flex-1 w-full max-h-[288px] flex flex-col justify-end items-center gap-2 p-2 overflow-auto touch-auto">
         {handleRenderListMessage()}
       </div>
       <div className="shrink-0 w-full h-10 flex justify-start items-center gap-2 border-t border-slate-300 p-2">

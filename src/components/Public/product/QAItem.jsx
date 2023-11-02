@@ -26,7 +26,6 @@ const QAItem = ({ item, productId, userId }) => {
   };
 
   const handleToggleReply = (value) => {
-    console.log(item.id);
     setIsReply(value);
   };
 
@@ -64,12 +63,16 @@ const QAItem = ({ item, productId, userId }) => {
           {item.content}
         </span>
         <div className="w-full flex justify-start items-center gap-4">
-          <button
-            onClick={() => handleToggleReply(!isReply)}
-            className="px-2 py-1 bg-slate-300 text-white rounded"
-          >
-            {isReply ? "Not Reply" : "Reply"}
-          </button>
+          {userId ? (
+            <button
+              onClick={() => handleToggleReply(!isReply)}
+              className="px-2 py-1 bg-slate-300 text-white rounded"
+            >
+              {isReply ? "Not Reply" : "Reply"}
+            </button>
+          ) : (
+            ""
+          )}
           {item.childComments.length !== 0 ? (
             <button
               onClick={() => handleToggleShowChild(!showChild)}

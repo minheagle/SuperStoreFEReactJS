@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { gapi } from "gapi-script";
 
 import ROUTES from "../../../constants/ROUTES";
 import { login } from "../../../redux/slice/auth.slice";
@@ -16,6 +17,14 @@ const LoginPage = () => {
 
   useEffect(() => {
     window.scroll(0, 0);
+    const start = () => {
+      gapi.client.init({
+        clientId:
+          "409491642889-vbedc7g4neca0i5vsgm9mitgvijetlut.apps.googleusercontent.com",
+        scope: "",
+      });
+    };
+    gapi.load("client:auth2", start);
   }, []);
 
   const initialValues = {
@@ -149,16 +158,16 @@ const LoginPage = () => {
         </Link>
         <div className="w-full flex flex-col justify-start items-center gap-2 p-4 ">
           <div className="w-full">
-            {/* <GoogleOAuthProvider clientId="409491642889-vbedc7g4neca0i5vsgm9mitgvijetlut.apps.googleusercontent.com"> */}
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
-            {/* </GoogleOAuthProvider> */}
+            <GoogleOAuthProvider clientId="409491642889-vbedc7g4neca0i5vsgm9mitgvijetlut.apps.googleusercontent.com">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log(credentialResponse);
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+            </GoogleOAuthProvider>
           </div>
 
           <div className="w-full border bg-white p-2 rounded">

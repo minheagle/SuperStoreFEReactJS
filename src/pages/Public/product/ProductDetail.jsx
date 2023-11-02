@@ -27,8 +27,6 @@ const ProductDetail = () => {
   const { shop_detail } = useSelector((state) => state.ShopPublic);
   const { add_to_cart } = useSelector((state) => state.Cart);
 
-  console.log(data);
-
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;

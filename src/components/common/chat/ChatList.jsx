@@ -38,13 +38,13 @@ const ChatList = ({
   };
 
   return (
-    <div className="w-full h-full border-r border-slate-300">
+    <div className="w-full h-full border-r border-slate-300 rounded-tl-xl">
       {get_all_chat?.data?.length === 0 ? (
         <div className="w-full flex justify-center items-center">
           <span>List chat is empty</span>
         </div>
       ) : (
-        <div className="w-full flex flex-col justify-start items-center gap-2 p-2">
+        <div className="w-full flex flex-col justify-start items-center gap-2 rounded-tl-xl p-2 overflow-auto touch-auto">
           {handleRenderListChat()}
         </div>
       )}

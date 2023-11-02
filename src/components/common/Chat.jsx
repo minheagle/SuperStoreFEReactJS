@@ -1,29 +1,33 @@
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ChatWindow from "./chat/ChatWindow";
 import ChatList from "./chat/ChatList";
 import NotAuthentication from "./chat/NotAuthentication";
+import ROUTES from "../../constants/ROUTES";
 
 const Chat = () => {
+  const navigate = useNavigate();
   const [openChat, setOpenChat] = useState(false);
   const [openListChat, setOpenListChat] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
   const [receiverId, setReceiverId] = useState(null);
 
-  console.log(receiverId);
+  // console.log(receiverId);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : null;
 
-  const shopData = localStorage.getItem("shopData")
-    ? JSON.parse(localStorage.getItem("shopData"))
-    : null;
-
   const handleToggleViewChat = (value) => {
-    setOpenChat(value);
+    if (userData) {
+      setOpenChat(value);
+    } else {
+      setOpenChat(false);
+      return navigate(ROUTES.PUBLIC.LOGIN);
+    }
   };
 
   const handleToggleListChat = (value) => {
@@ -39,9 +43,9 @@ const Chat = () => {
   };
 
   return (
-    <div className="sticky bottom-0 right-0 z-40 w-full flex justify-end items-center  pr-2">
+    <div className="fixed bottom-0 right-0 z-40 w-full flex justify-end items-center pr-2">
       {openChat ? (
-        <div className="flex justify-center items-center border border-slate-300 rounded">
+        <div className="flex justify-center items-center border border-slate-300 rounded-lg">
           {openListChat ? (
             <div className="w-48 h-96 bg-white">
               <ChatList
@@ -84,7 +88,7 @@ const Chat = () => {
                   handleChangeReceiverId={handleChangeReceiverId}
                 />
               ) : (
-                <NotAuthentication />
+                <Navigate to={ROUTES.PUBLIC.LOGIN} />
               )}
             </div>
           </div>
