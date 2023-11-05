@@ -84,7 +84,7 @@ function* deleteCategorySaga(action) {
     const { data, callback } = action.payload;
     const deleteCategory = yield call(categoryApi.deleteCategory, data);
     yield put(deleteCategorySuccess(deleteCategory));
-    yield callback.refreshPage();
+    yield callback.finish();
   } catch (error) {
     yield put(deleteCategoryFailure(error.message));
   }

@@ -9,10 +9,11 @@ const createUser = async (newUser) => {
   }
 };
 
-const getAllUser = async () => {
+const getAllUser = async (params) => {
   try {
     const response = await axios.get("/admin/users/list-user", {
       withCredentials: true,
+      params: params,
     });
     return response;
   } catch (error) {

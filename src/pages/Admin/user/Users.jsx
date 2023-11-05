@@ -2,8 +2,14 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, generatePath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Pagination } from "antd";
 
 import { getAllUser } from "../../../redux/slice/admin/userForAdmin.slice";
+import {
+  changePageUsers,
+  changeSizeUsers,
+  changeSortUsers,
+} from "../../../redux/slice/admin/paging.user.admin.slice";
 import defaultAvatar from "../../../assets/default-avatar.jpg";
 
 import Table from "../../../components/common/Table";
@@ -16,14 +22,32 @@ const Users = () => {
   const { data, loading, error, paging } = useSelector(
     (state) => state.UserForAdmin.list
   );
+  const { page, size, sort } = useSelector((state) => state.PagingAdmin.users);
 
   const total = paging?.totalElements
     ? Number.parseInt(paging.totalElements)
     : 0;
 
   useEffect(() => {
-    dispatch(getAllUser());
-  }, [dispatch]);
+    dispatch(
+      getAllUser({
+        params: {
+          page,
+          size,
+          sort,
+        },
+      })
+    );
+  }, [page, size, sort]);
+
+  const handleChangeSize = (pageNew, sizeNew) => {
+    if (pageNew !== page) {
+      dispatch(changePageUsers(pageNew));
+    }
+    if (sizeNew !== size) {
+      dispatch(changeSizeUsers(sizeNew));
+    }
+  };
 
   const columns = [
     {
@@ -148,7 +172,13 @@ const Users = () => {
           styleCellBody="border border-slate-500 p-2"
           className="w-full border-collapse border border-slate-500"
         />
-        <Paging total={total} />
+        <Pagination
+          showSizeChanger
+          defaultCurrent={page}
+          current={page}
+          total={total}
+          onChange={(page, size) => handleChangeSize(page, size)}
+        />
       </div>
     </div>
   );

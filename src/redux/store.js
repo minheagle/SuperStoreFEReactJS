@@ -25,6 +25,7 @@ import voucherUserSlice from "./slice/user/voucher.user.slice";
 import informationSellerSlice from "./slice/seller/information.seller.slice";
 import productReviewForUserSlice from "./slice/user/rating.user.slice";
 import ratingPublicSlice from "./slice/public/rating.public.slice";
+import pagingUserAdminSlice from "./slice/admin/paging.user.admin.slice";
 
 const rootReducer = {
   UIPublic: UIPublicSlice,
@@ -51,6 +52,7 @@ const rootReducer = {
   InformationSeller: informationSellerSlice,
   RatingUser: productReviewForUserSlice,
   RatingPublic: ratingPublicSlice,
+  PagingAdmin: pagingUserAdminSlice,
 };
 
 const sagaMiddleware = createSagaMiddleware();

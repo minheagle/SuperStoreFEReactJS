@@ -21,9 +21,10 @@ function* createUserForAdminSaga(action) {
   }
 }
 
-function* getAllUserForAdminSaga() {
+function* getAllUserForAdminSaga(action) {
   try {
-    const response = yield call(ApiUserForAdmin.getAllUser);
+    const { params } = action.payload;
+    const response = yield call(ApiUserForAdmin.getAllUser, params);
     yield put(
       getAllUserSuccess({
         data: response.results.data,

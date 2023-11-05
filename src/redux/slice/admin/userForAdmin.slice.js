@@ -7,6 +7,11 @@ const initialState = {
     loading: false,
     error: "",
   },
+  paging: {
+    page: 1,
+    size: 10,
+    sort: "ASC",
+  },
   detail: {
     data: null,
     loading: false,
