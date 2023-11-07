@@ -2,7 +2,6 @@ import React from "react";
 import { format } from "timeago.js";
 
 const Message = ({ data, userData }) => {
-  //   console.log(data);
   return (
     <div className="w-full">
       {data.senderId === userData.chatId ? (

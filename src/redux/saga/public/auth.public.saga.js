@@ -22,7 +22,6 @@ function* registerSaga(action) {
     const { data, callback } = action.payload;
     const response = yield call(authApi.register, data);
     const responseChat = yield call(chatApi.createUser, response.userName);
-    console.log(responseChat);
     yield call(authApi.addChatId, response?.id, responseChat.user._id);
     yield put(registerSuccess());
     yield callback.goToLogin();
@@ -35,11 +34,29 @@ function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
     const response = yield call(authApi.login, data);
+    // console.log(response);
+    if (!response?.data?.chatId) {
+      const responseChat = yield call(
+        chatApi.createUser,
+        response.data.userName
+      );
+      const responseAgain = yield call(
+        authApi.addChatId,
+        response?.data?.id,
+        responseChat.user._id
+      );
+      console.log(responseAgain);
+      yield localStorage.setItem(
+        "userData",
+        JSON.stringify(responseAgain.results)
+      );
+    } else {
+      yield localStorage.setItem("userData", JSON.stringify(response.data));
+    }
     yield localStorage.setItem(
       "accessToken",
       JSON.stringify(response.accessToken)
     );
-    yield localStorage.setItem("userData", JSON.stringify(response.data));
     if (response.shopData) {
       yield localStorage.setItem("shopData", JSON.stringify(response.shopData));
     } else {
@@ -63,6 +80,7 @@ function* logoutSaga(action) {
     yield call(authApi.logout);
     yield localStorage.clear();
     yield put(logoutSuccess());
+    yield callback.closeChat();
     yield callback.goToLogin();
   } catch (error) {
     yield put(logoutFailure(error.message));

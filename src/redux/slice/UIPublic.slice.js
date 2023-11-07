@@ -7,6 +7,9 @@ const initialState = {
   auth: {
     isOpen: false,
   },
+  chat: {
+    isOpen: false,
+  },
 };
 
 const UIPublicSlice = createSlice({
@@ -19,9 +22,12 @@ const UIPublicSlice = createSlice({
     toggleAuth: (state) => {
       state.auth.isOpen = !state.auth.isOpen;
     },
+    toggleChat: (state, action) => {
+      state.chat.isOpen = action.payload;
+    },
   },
 });
 
-export const { toggleMenu, toggleAuth } = UIPublicSlice.actions;
+export const { toggleMenu, toggleAuth, toggleChat } = UIPublicSlice.actions;
 
 export default UIPublicSlice.reducer;

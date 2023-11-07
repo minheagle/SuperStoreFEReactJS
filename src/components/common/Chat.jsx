@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { toggleChat } from "../../redux/slice/UIPublic.slice";
 
 import ChatWindow from "./chat/ChatWindow";
 import ChatList from "./chat/ChatList";
-import NotAuthentication from "./chat/NotAuthentication";
 import ROUTES from "../../constants/ROUTES";
 
 const Chat = () => {
   const navigate = useNavigate();
-  const [openChat, setOpenChat] = useState(false);
+  const dispatch = useDispatch();
+  const socket = useRef();
   const [openListChat, setOpenListChat] = useState(false);
-  const [currentChat, setCurrentChat] = useState(null);
   const [receiverId, setReceiverId] = useState(null);
+  const [listUserOnline, setListUserOnline] = useState([]);
 
-  // console.log(receiverId);
+  const { isOpen } = useSelector((state) => state.UIPublic.chat);
+  const { current_chat } = useSelector((state) => state.Chat);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
@@ -23,9 +26,9 @@ const Chat = () => {
 
   const handleToggleViewChat = (value) => {
     if (userData) {
-      setOpenChat(value);
+      dispatch(toggleChat(value));
     } else {
-      setOpenChat(false);
+      dispatch(toggleChat(false));
       return navigate(ROUTES.PUBLIC.LOGIN);
     }
   };
@@ -34,24 +37,21 @@ const Chat = () => {
     setOpenListChat(value);
   };
 
-  const handleChangeCurrentChat = (value) => {
-    setCurrentChat(value);
-  };
-
   const handleChangeReceiverId = (value) => {
     setReceiverId(value);
   };
 
   return (
     <div className="fixed bottom-0 right-0 z-40 w-full flex justify-end items-center pr-2">
-      {openChat ? (
+      {isOpen ? (
         <div className="flex justify-center items-center border border-slate-300 rounded-lg">
           {openListChat ? (
             <div className="w-48 h-96 bg-white">
               <ChatList
                 chatId={userData?.chatId}
-                currentChat={currentChat}
-                handleChangeCurrentChat={handleChangeCurrentChat}
+                currentChat={current_chat?.data}
+                listUserOnline={listUserOnline}
+                socket={socket}
                 handleChangeReceiverId={handleChangeReceiverId}
               />
             </div>
@@ -82,10 +82,9 @@ const Chat = () => {
             <div className="w-full h-88">
               {userData ? (
                 <ChatWindow
-                  currentChat={currentChat}
-                  receiverId={receiverId}
-                  handleChangeCurrentChat={handleChangeCurrentChat}
-                  handleChangeReceiverId={handleChangeReceiverId}
+                  currentChat={current_chat?.data}
+                  socket={socket}
+                  setListUserOnline={setListUserOnline}
                 />
               ) : (
                 <Navigate to={ROUTES.PUBLIC.LOGIN} />

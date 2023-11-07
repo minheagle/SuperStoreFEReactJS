@@ -3,6 +3,9 @@ import {
   addNewChat,
   addNewChatSuccess,
   addNewChatFailure,
+  getDetailCurrent,
+  getDetailCurrentSuccess,
+  getDetailCurrentFailure,
   getAllChat,
   getAllChatSuccess,
   getAllChatFailure,
@@ -20,7 +23,25 @@ import chatApi from "../../api/chat/chat.api";
 
 function* addNewChatSaga(action) {
   try {
-  } catch (error) {}
+    const { senderId, receiverId, callback } = action.payload;
+    const response = yield call(chatApi.createChat, senderId, receiverId);
+    yield put(addNewChatSuccess(response.data));
+    yield callback.changeCurrentChat(response.data._id);
+    yield callback.changeReceiverId(receiverId);
+    yield callback.openChat();
+  } catch (error) {
+    yield put(addNewChatFailure(error.message));
+  }
+}
+
+function* getDetailCurrentSaga(action) {
+  try {
+    const { userId } = action.payload;
+    const response = yield call(chatApi.getDetail, userId);
+    yield put(getDetailCurrentSuccess(response.data));
+  } catch (error) {
+    yield put(getDetailCurrentFailure(error.message));
+  }
 }
 
 function* getAllChatSaga(action) {
@@ -62,6 +83,7 @@ function* getAllMessageSaga(action) {
 
 function* chatSaga() {
   yield takeLatest(addNewChat, addNewChatSaga);
+  yield takeLatest(getDetailCurrent, getDetailCurrentSaga);
   yield takeLatest(getAllChat, getAllChatSaga);
   yield takeLatest(findChat, findChatSaga);
   yield takeLatest(addMessage, addMessageSaga);

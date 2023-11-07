@@ -1,33 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   getAllMessage,
   addMessage,
+  changeCurrentChat,
+  getDetailCurrent,
+  changeReceiverId,
 } from "../../../redux/slice/chat/chat.slice";
-import chatApi from "../../../redux/api/chat/chat.api";
 
 import Message from "./Message";
 
-const ChatWindow = ({
-  currentChat,
-  receiverId,
-  handleChangeCurrentChat,
-  handleChangeReceiverId,
-}) => {
+const ChatWindow = ({ currentChat, socket, setListUserOnline }) => {
   const dispatch = useDispatch();
-  const socket = useRef();
+  const messagesEndRef = useRef(null);
 
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [listUserOnline, setListUserOnline] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
 
-  const { get_all_message } = useSelector((state) => state.Chat);
+  const { get_all_message, get_detail_current, receiver_id } = useSelector(
+    (state) => state.Chat
+  );
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
@@ -40,6 +37,7 @@ const ChatWindow = ({
           chatId: currentChat,
         })
       );
+      dispatch(getDetailCurrent({ userId: receiver_id.data }));
     }
   }, [currentChat]);
 
@@ -51,13 +49,16 @@ const ChatWindow = ({
     const URL = "ws://localhost:5000";
     socket.current = io(URL);
     socket.current.emit("add-user", userData.chatId);
-    socket.current.on("get-users", (users) => {
-      setListUserOnline(users);
-    });
 
     return () => {
       socket.current.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    socket.current.on("get-users", (users) => {
+      setListUserOnline(users);
+    });
   }, []);
 
   useEffect(() => {
@@ -68,7 +69,6 @@ const ChatWindow = ({
 
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log(data);
       setReceivedMessage(data);
     });
   }, []);
@@ -78,6 +78,16 @@ const ChatWindow = ({
       setMessages([...messages, receivedMessage]);
     }
   }, [receivedMessage]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const handleSendMessage = async () => {
     if (socket && newMessage) {
@@ -95,7 +105,7 @@ const ChatWindow = ({
         chatId: currentChat,
         senderId: userData.chatId,
         text: newMessage,
-        receiverId,
+        receiverId: receiver_id.data,
       });
       setNewMessage("");
     }
@@ -113,18 +123,24 @@ const ChatWindow = ({
 
   return currentChat ? (
     <div className="w-full h-88 flex flex-col justify-start items-center">
-      <div className="w-full h-6 flex justify-start items-center border-b border-slate-300 pl-2">
+      <div className="w-full h-6 flex justify-start items-center gap-2 border-b border-slate-300 pl-2">
         <button
           onClick={() => {
-            handleChangeCurrentChat(null);
-            handleChangeReceiverId(null);
+            dispatch(changeCurrentChat(null));
+            dispatch(changeReceiverId(null));
           }}
         >
           <FontAwesomeIcon icon="fas fa-arrow-left" className="" />
         </button>
+        <div>
+          <span>{get_detail_current?.data?.username}</span>
+        </div>
       </div>
-      <div className="flex-1 w-full max-h-[288px] flex flex-col justify-end items-center gap-2 p-2 overflow-auto touch-auto">
-        {handleRenderListMessage()}
+      <div className="flex-1 w-full h-[18rem]">
+        <div className="w-full h-[18rem] flex flex-col justify-end items-center gap-2 p-2 overflow-y-auto">
+          {handleRenderListMessage()}
+          <div ref={messagesEndRef}></div>
+        </div>
       </div>
       <div className="shrink-0 w-full h-10 flex justify-start items-center gap-2 border-t border-slate-300 p-2">
         <div className="flex-1 flex justify-center items-start">

@@ -1,10 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  current_chat: {
+    data: null,
+  },
+  receiver_id: {
+    data: null,
+  },
   add_new_chat: {
     data: null,
     loading: false,
     message: "",
+    error: "",
+  },
+  get_detail_current: {
+    data: null,
+    loading: false,
     error: "",
   },
   get_all_chat: {
@@ -37,6 +48,12 @@ const chatSlice = createSlice({
   name: "Chat_Slice",
   initialState: initialState,
   reducers: {
+    changeCurrentChat: (state, action) => {
+      state.current_chat.data = action.payload;
+    },
+    changeReceiverId: (state, action) => {
+      state.receiver_id.data = action.payload;
+    },
     addNewChat: (state) => {
       state.add_new_chat.loading = true;
     },
@@ -49,6 +66,19 @@ const chatSlice = createSlice({
       state.add_new_chat.loading = false;
       state.add_new_chat.data = null;
       state.add_new_chat.error = action.payload;
+    },
+    getDetailCurrent: (state) => {
+      state.get_detail_current.loading = true;
+    },
+    getDetailCurrentSuccess: (state, action) => {
+      state.get_detail_current.loading = false;
+      state.get_detail_current.error = "";
+      state.get_detail_current.data = action.payload;
+    },
+    getDetailCurrentFailure: (state, action) => {
+      state.get_detail_current.loading = false;
+      state.get_detail_current.data = null;
+      state.get_detail_current.error = action.payload;
     },
     getAllChat: (state) => {
       state.get_all_chat.loading = true;
@@ -106,9 +136,14 @@ const chatSlice = createSlice({
 });
 
 export const {
+  changeCurrentChat,
+  changeReceiverId,
   addNewChat,
   addNewChatSuccess,
   addNewChatFailure,
+  getDetailCurrent,
+  getDetailCurrentSuccess,
+  getDetailCurrentFailure,
   getAllChat,
   getAllChatSuccess,
   getAllChatFailure,

@@ -1,13 +1,46 @@
 import React from "react";
-import { Link, generatePath, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, generatePath, useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  addNewChat,
+  changeCurrentChat,
+  changeReceiverId,
+} from "../../redux/slice/chat/chat.slice";
+import { toggleChat } from "../../redux/slice/UIPublic.slice";
 
 import defaultAvatar from "../../assets/default-avatar.jpg";
 import ROUTES from "../../constants/ROUTES";
 import LoadingFull from "../common/LoadingFull";
 
 const ShopInProduct = ({ shopData }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const shopName = shopData?.storeName?.replaceAll(" ", "-") ?? null;
+
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
+
+  const handleChatWithShop = () => {
+    if (userData) {
+      dispatch(
+        addNewChat({
+          senderId: userData.chatId,
+          receiverId: shopData.chatId,
+          callback: {
+            changeCurrentChat: (chatId) => dispatch(changeCurrentChat(chatId)),
+            changeReceiverId: (receiverId) =>
+              dispatch(changeReceiverId(receiverId)),
+            openChat: () => dispatch(toggleChat(true)),
+          },
+        })
+      );
+    } else {
+      return navigate(ROUTES.PUBLIC.LOGIN);
+    }
+  };
 
   if (!shopData) {
     return (
@@ -40,7 +73,10 @@ const ShopInProduct = ({ shopData }) => {
             <span className="font-medium">{shopData?.storeName}</span>
           </div>
           <div className="w-full flex justify-around items-center gap-4">
-            <button className="bg-primary text-white p-2 rounded">
+            <button
+              onClick={() => handleChatWithShop()}
+              className="bg-primary text-white p-2 rounded"
+            >
               Chat now
             </button>
             <Link

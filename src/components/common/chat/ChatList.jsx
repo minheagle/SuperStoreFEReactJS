@@ -8,14 +8,13 @@ import ChatListItem from "./ChatListItem";
 const ChatList = ({
   chatId,
   currentChat,
-  handleChangeCurrentChat,
+  listUserOnline,
+  socket,
   handleChangeReceiverId,
 }) => {
   const dispatch = useDispatch();
 
   const { get_all_chat } = useSelector((state) => state.Chat);
-
-  console.log(get_all_chat.data);
 
   useEffect(() => {
     dispatch(getAllChat({ userId: chatId }));
@@ -29,7 +28,8 @@ const ChatList = ({
             item={item}
             currentId={chatId}
             currentChat={currentChat}
-            handleChangeCurrentChat={handleChangeCurrentChat}
+            listUserOnline={listUserOnline}
+            socket={socket}
             handleChangeReceiverId={handleChangeReceiverId}
           />
         </div>

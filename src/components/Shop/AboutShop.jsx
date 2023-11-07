@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import defaultAvatar from "../../assets/default-avatar.jpg";
@@ -8,14 +8,26 @@ import {
   getShopDetail,
   getShopDetailByName,
 } from "../../redux/slice/public/shop.public.slice";
+import {
+  addNewChat,
+  changeCurrentChat,
+  changeReceiverId,
+} from "../../redux/slice/chat/chat.slice";
+import { toggleChat } from "../../redux/slice/UIPublic.slice";
+import ROUTES from "../../constants/ROUTES";
 
 const AboutShop = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { shopName } = useParams();
   const { data, loading } = useSelector(
     (state) => state.ShopPublic.shop_detail
   );
+
+  const userData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : null;
 
   const backgroundUrlDefault =
     "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg";
@@ -46,6 +58,25 @@ const AboutShop = () => {
       setBackground(data?.storeBackgroundUrl);
     }
   }, [data]);
+
+  const handleChatWithShop = () => {
+    if (userData) {
+      dispatch(
+        addNewChat({
+          senderId: userData.chatId,
+          receiverId: data.chatId,
+          callback: {
+            changeCurrentChat: (chatId) => dispatch(changeCurrentChat(chatId)),
+            changeReceiverId: (receiverId) =>
+              dispatch(changeReceiverId(receiverId)),
+            openChat: () => dispatch(toggleChat(true)),
+          },
+        })
+      );
+    } else {
+      return navigate(ROUTES.PUBLIC.LOGIN);
+    }
+  };
 
   return (
     <div className="w-full h-64 bg-white grid grid-cols-12 py-4">
@@ -85,6 +116,7 @@ const AboutShop = () => {
                 </button>
                 <button
                   type="button"
+                  onClick={() => handleChatWithShop()}
                   className="w-2/5 h-8 flex justify-center items-center gap-2 bg-primary rounded"
                 >
                   <FontAwesomeIcon icon="fas fa-comments" />

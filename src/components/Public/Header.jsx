@@ -10,6 +10,7 @@ import { log_out } from "../../redux/slice/auth.slice";
 import { getCartList } from "../../redux/slice/cart/cart.slice";
 import { getAllListProduct } from "../../redux/slice/public/product.public.slice";
 import { changeProductName } from "../../redux/slice/search_filter_paging/search.filter.paging.slice";
+import { toggleChat } from "../../redux/slice/UIPublic.slice.js";
 import ROUTES from "../../constants/ROUTES";
 import ROLES from "../../constants/ROLES";
 import handleRoles from "../../utils/handle/handleRoles.js";
@@ -68,6 +69,7 @@ const Header = () => {
       log_out({
         callback: {
           goToLogin: () => navigate(ROUTES.PUBLIC.LOGIN),
+          closeChat: () => dispatch(toggleChat(false)),
         },
       })
     );
