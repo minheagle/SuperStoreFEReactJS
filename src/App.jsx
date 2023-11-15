@@ -27,6 +27,7 @@ import ChangePassword from "./pages/User/ChangePassword.jsx";
 import BecomeSeller from "./pages/User/BecomeSeller.jsx";
 import Cart from "./pages/User/Cart.jsx";
 import OrdersForUser from "./pages/User/Orders.jsx";
+import Transferred from "./pages/User/order/Transferred.jsx";
 import Completed from "./pages/User/order/Completed.jsx";
 import Rejection from "./pages/User/order/Rejection.jsx";
 import Cancelled from "./pages/User/order/Cancelled.jsx";
@@ -116,6 +117,10 @@ function App() {
             <Route
               path={ROUTES.USER.PURCHASE.AWAITING_PAYMENT}
               element={<AwaitingPayment />}
+            />
+            <Route
+              path={ROUTES.USER.PURCHASE.TRANSFERRED}
+              element={<Transferred />}
             />
             <Route path={ROUTES.USER.PURCHASE.PENDING} element={<Pending />} />
             <Route

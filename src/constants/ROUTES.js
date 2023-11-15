@@ -27,6 +27,7 @@ const ROUTES = {
       PENDING: "/customer/purchase/pending",
       REJECTION: "/customer/purchase/rejection",
       CANCELLED: "/customer/purchase/cancelled",
+      TRANSFERRED: "/customer/purchase/transferred",
     },
     RATING: "/customer/rating",
     NOTIFICATION: "/customer/notification",

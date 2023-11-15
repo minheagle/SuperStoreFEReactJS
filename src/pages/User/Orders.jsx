@@ -84,11 +84,12 @@ const Orders = () => {
       content: "Awaiting payment",
       path: ROUTES.USER.PURCHASE.AWAITING_PAYMENT,
     },
-    { id: 2, content: "Pending", path: ROUTES.USER.PURCHASE.PENDING },
-    { id: 3, content: "Processing", path: ROUTES.USER.PURCHASE.PROCESSING },
-    { id: 4, content: "Cancelled", path: ROUTES.USER.PURCHASE.CANCELLED },
-    { id: 5, content: "Rejection", path: ROUTES.USER.PURCHASE.REJECTION },
-    { id: 6, content: "Completed", path: ROUTES.USER.PURCHASE.COMPLETED },
+    { id: 2, content: "Transferred", path: ROUTES.USER.PURCHASE.TRANSFERRED },
+    { id: 3, content: "Pending", path: ROUTES.USER.PURCHASE.PENDING },
+    { id: 4, content: "Processing", path: ROUTES.USER.PURCHASE.PROCESSING },
+    { id: 5, content: "Cancelled", path: ROUTES.USER.PURCHASE.CANCELLED },
+    { id: 6, content: "Rejection", path: ROUTES.USER.PURCHASE.REJECTION },
+    { id: 7, content: "Completed", path: ROUTES.USER.PURCHASE.COMPLETED },
   ];
   const styleActiveNavbar = "bg-primary text-white rounded";
 
