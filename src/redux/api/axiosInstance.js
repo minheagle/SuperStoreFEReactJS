@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://superstorehmh-production.up.railway.app",
+  baseURL: "https://superstorehmh-production.up.railway.app/api/v1",
   withCredentials: true,
   timeout: 3 * 1000,
   headers: {
