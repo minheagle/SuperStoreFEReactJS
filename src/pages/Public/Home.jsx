@@ -45,6 +45,7 @@ const Home = () => {
       <Category />
       <Products />
       <Pagination
+        showSizeChanger
         defaultCurrent={page}
         defaultPageSize={size}
         pageSizeOptions={[24, 48, 96]}

@@ -134,7 +134,7 @@ const ModalViewCheckout = ({
           },
           userId: userData.id,
           callback: {
-            goToOrder: () => navigate(ROUTES.USER.PURCHASE),
+            goToOrder: () => navigate(ROUTES.USER.PURCHASE.AWAITING_PAYMENT),
           },
         })
       );

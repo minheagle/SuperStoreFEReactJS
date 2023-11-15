@@ -40,7 +40,7 @@ const Navbar = () => {
       id: 3,
       title: "Order",
       icon: "fas fa-newspaper",
-      path: ROUTES.USER.PURCHASE,
+      path: ROUTES.USER.PURCHASE.DEFAULT,
       child: [],
     },
     {
