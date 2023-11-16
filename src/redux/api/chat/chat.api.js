@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://chatrealtimeforsuperstore-production.up.railway.app",
+  baseURL: "https://chatrealtimeforsuperstore-production.up.railway.app/api",
   withCredentials: true,
   timeout: 10 * 1000,
   headers: {
