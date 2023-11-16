@@ -46,7 +46,7 @@ const ChatWindow = ({ currentChat, socket, setListUserOnline }) => {
   }, [get_all_message.data]);
 
   useEffect(() => {
-    const URL = "ws://localhost:5000";
+    const URL = "ws://chatrealtimeforsuperstore-production.up.railway.app";
     socket.current = io(URL);
     socket.current.emit("add-user", userData.chatId);
 
