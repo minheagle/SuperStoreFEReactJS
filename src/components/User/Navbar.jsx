@@ -15,7 +15,7 @@ const Navbar = () => {
       path: ROUTES.USER.ACCOUNT.PROFILE,
       child: [
         { id: 1, title: "Profile", path: ROUTES.USER.ACCOUNT.PROFILE },
-        { id: 2, title: "Payment", path: ROUTES.USER.ACCOUNT.PAYMENT },
+        // { id: 2, title: "Payment", path: ROUTES.USER.ACCOUNT.PAYMENT },
         { id: 3, title: "Address", path: ROUTES.USER.ACCOUNT.ADDRESS },
         {
           id: 4,
@@ -43,17 +43,17 @@ const Navbar = () => {
       path: ROUTES.USER.PURCHASE.DEFAULT,
       child: [],
     },
-    {
-      id: 4,
-      title: "Notification",
-      icon: "fas fa-bell",
-      path: ROUTES.USER.NOTIFICATION,
-      child: [
-        { id: 1, title: "Update Order", path: ROUTES.USER.NOTIFICATION_ORDER },
-        { id: 2, title: "Promotion", path: ROUTES.USER.NOTIFICATION_PROMOTION },
-        { id: 3, title: "Wallet", path: ROUTES.USER.NOTIFICATION_WALLET },
-      ],
-    },
+    // {
+    //   id: 4,
+    //   title: "Notification",
+    //   icon: "fas fa-bell",
+    //   path: ROUTES.USER.NOTIFICATION,
+    //   child: [
+    //     { id: 1, title: "Update Order", path: ROUTES.USER.NOTIFICATION_ORDER },
+    //     { id: 2, title: "Promotion", path: ROUTES.USER.NOTIFICATION_PROMOTION },
+    //     { id: 3, title: "Wallet", path: ROUTES.USER.NOTIFICATION_WALLET },
+    //   ],
+    // },
     {
       id: 5,
       title: "Voucher",
