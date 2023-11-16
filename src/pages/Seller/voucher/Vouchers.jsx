@@ -31,7 +31,10 @@ const Vouchers = () => {
 
   const handleRenderListVoucherAvailable = () => {
     const newList = data?.filter((item) => {
-      return item?.isActive && moment(item?.endDate).toDate() >= today;
+      return (
+        (item?.isActive && moment(item?.endDate).toDate() >= today) ||
+        (!item?.isActive && moment(item?.endDate).toDate() >= today)
+      );
     });
     if (newList?.length === 0) {
       return (
@@ -53,7 +56,7 @@ const Vouchers = () => {
 
   const handleRenderListVoucherExpired = () => {
     const newList = data?.filter((item) => {
-      return !item?.isActive || moment(item?.endDate).toDate() <= today;
+      return !item?.isActive && moment(item?.endDate).toDate() <= today;
     });
     if (newList?.length === 0) {
       return (
