@@ -22,6 +22,7 @@ const ChatList = ({
 
   const handleRenderListChat = () => {
     return get_all_chat?.data?.map((item) => {
+      // console.log(item);
       return (
         <div key={item._id} className="w-full">
           <ChatListItem

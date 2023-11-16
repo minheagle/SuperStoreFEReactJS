@@ -27,6 +27,7 @@ const ChatListItem = ({
   const [listNewMessage, setListNewMessage] = useState([]);
 
   useEffect(() => {
+    console.log(secondId);
     if (secondId) {
       async function getData() {
         const response = await chatApi.getDetail(secondId);
