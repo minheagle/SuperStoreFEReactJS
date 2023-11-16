@@ -15,6 +15,7 @@ import ROUTES from "../../constants/ROUTES";
 import LoadingFull from "../common/LoadingFull";
 
 const ShopInProduct = ({ shopData }) => {
+  console.log(shopData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const shopName = shopData?.storeName?.replaceAll(" ", "-") ?? null;
