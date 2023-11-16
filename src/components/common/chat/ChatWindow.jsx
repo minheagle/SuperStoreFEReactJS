@@ -71,6 +71,7 @@ const ChatWindow = ({ currentChat, socket, setListUserOnline }) => {
 
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
+      console.log(data);
       setReceivedMessage(data);
     });
   }, []);

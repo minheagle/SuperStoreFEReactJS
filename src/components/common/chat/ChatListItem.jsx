@@ -20,20 +20,27 @@ const ChatListItem = ({
   const dispatch = useDispatch();
   const secondId = item?.members?.find((item) => item !== currentId);
 
-  const {} = useSelector((state) => state.Chat.get_detail_current);
+  const { data, loading } = useSelector(
+    (state) => state.Chat.get_detail_current
+  );
 
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [isOnline, setIsOnline] = useState(false);
   const [listNewMessage, setListNewMessage] = useState([]);
 
   useEffect(() => {
-    console.log(secondId);
     if (secondId) {
-      async function getData() {
-        const response = await chatApi.getDetail(secondId);
-        setData(response.data);
-      }
-      getData();
+      dispatch(
+        getDetailCurrent({
+          userId: secondId,
+        })
+      );
+      // async function getData() {
+      //   const response = await chatApi.getDetail(secondId);
+      //   console.log(response);
+      //   setData(response.data);
+      // }
+      // getData();
     }
   }, [secondId]);
 

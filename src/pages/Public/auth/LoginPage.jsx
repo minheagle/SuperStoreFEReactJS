@@ -58,7 +58,7 @@ const LoginPage = () => {
                     htmlFor="email"
                     className="w-full flex justify-start items-center font-semibold"
                   >
-                    Email :
+                    Account :
                   </label>
                   {errors.email ? (
                     <div className="w-full flex justify-end items-center gap-2 text-primary">
@@ -73,7 +73,7 @@ const LoginPage = () => {
                   type="text"
                   id="email"
                   name="email"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your email address/phone/username"
                   className={`w-full flex justify-center items-center outline-none shadow appearance-none border rounded pl-2 ${
                     errors.email ? "outline outline-2 outline-red-500" : ""
                   }`}

@@ -59,8 +59,15 @@ const OrderItem = ({ data, sellerId }) => {
             <div className="px-2 py-1 bg-primary text-white rounded">
               Awaiting Payment
             </div>
-          ) : data?.status === "Pending" ? (
+          ) : data?.status === "Pending" || data?.status === "Transferred" ? (
             <>
+              {data?.status === "Transferred" ? (
+                <div className="px-2 py-1 bg-blue-600 text-white rounded">
+                  <span>Transferred</span>
+                </div>
+              ) : (
+                ""
+              )}
               <button
                 onClick={() => handleConfirmOrder()}
                 className="px-2 py-1 bg-primary text-white rounded"

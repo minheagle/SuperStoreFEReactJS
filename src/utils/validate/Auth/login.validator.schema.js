@@ -1,13 +1,7 @@
 import * as Yup from "yup";
 
 const loginValidatorSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Email is invalid")
-    .required("Required")
-    .matches(
-      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-      "Email is invalid"
-    ),
+  email: Yup.string().required("Required"),
   password: Yup.string()
     .required("Required")
     .min(8, "Min 8 character")
