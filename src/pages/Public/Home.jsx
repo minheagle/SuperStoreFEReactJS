@@ -26,7 +26,7 @@ const Home = () => {
       })
     );
     window.scroll(0, 0);
-  }, [dispatch]);
+  }, []);
 
   const handleChangePage = (page, pageSize) => {
     dispatch(
@@ -47,14 +47,18 @@ const Home = () => {
     <div className="w-full min-h-screen flex flex-col justify-start items-center">
       <Category />
       <Products />
-      <Pagination
-        showSizeChanger
-        defaultCurrent={page}
-        defaultPageSize={size}
-        pageSizeOptions={[24, 48, 96]}
-        total={total}
-        onChange={(page, pageSize) => handleChangePage(page, pageSize)}
-      />
+      {total > 0 ? (
+        <Pagination
+          showSizeChanger
+          defaultCurrent={page}
+          defaultPageSize={size}
+          pageSizeOptions={[24, 48, 96]}
+          total={total}
+          onChange={(page, pageSize) => handleChangePage(page, pageSize)}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
