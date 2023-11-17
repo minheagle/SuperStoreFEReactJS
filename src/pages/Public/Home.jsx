@@ -25,8 +25,11 @@ const Home = () => {
         },
       })
     );
-    window.scroll(0, 0);
   }, []);
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [page]);
 
   const handleChangePage = (page, pageSize) => {
     dispatch(
@@ -35,9 +38,6 @@ const Home = () => {
           minPrice,
           page: page,
           size: pageSize,
-        },
-        callback: {
-          scrollTop: () => window.scroll(0, 0),
         },
       })
     );

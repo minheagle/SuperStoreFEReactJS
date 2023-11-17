@@ -24,7 +24,7 @@ function* getAllListSaga(action) {
         total: response.pagination.totalElements,
       })
     );
-    yield callback.scrollTop();
+    // yield callback.scrollTop();
   } catch (error) {
     yield put(getAllListFailure(error.message));
   }
