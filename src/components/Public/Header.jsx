@@ -215,6 +215,11 @@ const Header = () => {
                 <input
                   type="text"
                   onChange={(e) => handleOnChangeProductName(e)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
+                  }}
                   className="w-9/12 outline-none"
                 />
                 <button
