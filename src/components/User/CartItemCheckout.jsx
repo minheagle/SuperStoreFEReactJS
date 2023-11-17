@@ -79,7 +79,8 @@ const CartItemCheckout = ({
     if (voucher && voucher?.name) {
       switch (voucher?.discountType) {
         case "DISCOUNT_PERCENT":
-          amount = amount - amount * voucher?.discountValue;
+          amount = amount - amount * voucher?.discountValue * 0.01;
+          console.log(amount);
           total = amount + shipMoney;
           break;
         case "FIXED_AMOUNT":
@@ -223,7 +224,15 @@ const CartItemCheckout = ({
                 <div className="flex flex-col justify-start items-center gap-2">
                   <span>{voucher?.discountType}</span>
                   <span className="text-red-600">
-                    - {voucher?.discountValue?.toLocaleString()} vnđ
+                    {"- "}
+                    {voucher?.discountType === "DISCOUNT_PERCENT"
+                      ? (
+                          item?.amount *
+                          voucher?.discountValue *
+                          0.01
+                        )?.toLocaleString()
+                      : voucher?.discountValue?.toLocaleString()}{" "}
+                    vnđ
                   </span>
                 </div>
               ) : (
