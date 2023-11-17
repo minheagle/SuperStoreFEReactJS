@@ -28,15 +28,14 @@ const ChatListItem = ({
   const [listNewMessage, setListNewMessage] = useState([]);
 
   useEffect(() => {
-    if (receiver_id.data) {
+    if (secondId) {
       async function getData() {
         const response = await chatApi.getDetail(secondId);
-        console.log(response);
         setData(response.data);
       }
       getData();
     }
-  }, [receiver_id.data]);
+  }, [secondId]);
 
   useEffect(() => {
     const findUser = listUserOnline?.find((item) => item?.userId === secondId);
