@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, generatePath } from "react-router-dom";
 import Star from "react-rating-star-with-type";
@@ -10,6 +10,11 @@ import noResult from "../../../assets/no-result.jpg";
 
 const Products = () => {
   const { list } = useSelector((state) => state.ProductPublic);
+  const { page } = useSelector((state) => state.Filter);
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [page]);
 
   const handleRenderProductList = () => {
     return list?.data?.map((item, index) => {
