@@ -36,6 +36,9 @@ const Home = () => {
           page: page,
           size: pageSize,
         },
+        callback: {
+          scrollTop: () => window.scroll(0, 0),
+        },
       })
     );
   };
