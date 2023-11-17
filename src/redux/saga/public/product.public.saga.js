@@ -16,7 +16,7 @@ import shopApi from "../../api/public/shop.public.api";
 
 function* getAllListSaga(action) {
   try {
-    const { params, callback } = action.payload;
+    const { params } = action.payload;
     const response = yield call(productPublicApi.getAll, params);
     yield put(
       getAllListSuccess({
@@ -24,7 +24,6 @@ function* getAllListSaga(action) {
         total: response.pagination.totalElements,
       })
     );
-    // yield callback.scrollTop();
   } catch (error) {
     yield put(getAllListFailure(error.message));
   }
