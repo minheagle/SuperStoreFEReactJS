@@ -151,6 +151,11 @@ const ChatWindow = ({ currentChat, socket, setListUserOnline }) => {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage();
+              }
+            }}
             className="w-full h-6 outline-none border border-slate-300 rounded pl-2"
           />
         </div>

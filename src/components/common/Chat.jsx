@@ -18,7 +18,7 @@ const Chat = () => {
   const [listUserOnline, setListUserOnline] = useState([]);
 
   const { isOpen } = useSelector((state) => state.UIPublic.chat);
-  const { current_chat } = useSelector((state) => state.Chat);
+  const { current_chat, receiver_id } = useSelector((state) => state.Chat);
 
   const userData = localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))

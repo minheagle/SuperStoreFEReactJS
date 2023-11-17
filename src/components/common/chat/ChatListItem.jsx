@@ -5,6 +5,7 @@ import chatApi from "../../../redux/api/chat/chat.api";
 import {
   changeCurrentChat,
   getDetailCurrent,
+  changeReceiverId,
 } from "../../../redux/slice/chat/chat.slice";
 
 import defaultAvatar from "../../../assets/default-avatar.jpg";
@@ -20,29 +21,22 @@ const ChatListItem = ({
   const dispatch = useDispatch();
   const secondId = item?.members?.find((item) => item !== currentId);
 
-  const { data, loading } = useSelector(
-    (state) => state.Chat.get_detail_current
-  );
+  const { receiver_id } = useSelector((state) => state.Chat);
 
-  // const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
   const [isOnline, setIsOnline] = useState(false);
   const [listNewMessage, setListNewMessage] = useState([]);
 
   useEffect(() => {
-    if (secondId) {
-      dispatch(
-        getDetailCurrent({
-          userId: secondId,
-        })
-      );
-      // async function getData() {
-      //   const response = await chatApi.getDetail(secondId);
-      //   console.log(response);
-      //   setData(response.data);
-      // }
-      // getData();
+    if (receiver_id.data) {
+      async function getData() {
+        const response = await chatApi.getDetail(secondId);
+        console.log(response);
+        setData(response.data);
+      }
+      getData();
     }
-  }, [secondId]);
+  }, [receiver_id.data]);
 
   useEffect(() => {
     const findUser = listUserOnline?.find((item) => item?.userId === secondId);
@@ -66,7 +60,7 @@ const ChatListItem = ({
 
   const handleSelectChatItem = () => {
     dispatch(changeCurrentChat(item._id));
-    handleChangeReceiverId(secondId);
+    dispatch(changeReceiverId(secondId));
   };
 
   return (
